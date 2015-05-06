@@ -15,7 +15,7 @@ package vista;
 
 
 /**
- * TODO Descripción de la clase.
+ * Clase abstracta que representa a todos los objetos dibujables.
  */
 public abstract class ElementoDibujable {
 

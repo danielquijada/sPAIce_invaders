@@ -15,7 +15,8 @@ package modelo;
 
 
 /**
- * TODO Descripción de la clase. Tabla de enemigos.
+ * Tabla que contiene todos los enemigos, dispuestos en una matriz bidimensional.
+ * Incluye métodos para acceder a coordenadas i,j de la matriz.
  */
 public class Tabla {
 

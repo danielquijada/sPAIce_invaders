@@ -1,5 +1,5 @@
 /**
- * sPAIce_invaders.vista.InerteDibujable.java
+ * sPAIce_invaders.modelo.ProyectilBasico.java
  * Proyecto Final: sPAIce invaders.
  *
  * Asignatura: Programación de Aplicaciones Interactivas.
@@ -11,19 +11,11 @@
  *    Francisco J. Palacios Rodríguez.
  *    Héctor Rodríguez Pérez
  */
-package vista;
-
+package modelo;
 
 /**
- * Clase abstracta de elementos intertes dibujables.
+ * Clase que representa un proyectil específico. Con ciertas características únicas tales como su velocidad.
  */
-public abstract class InerteDibujable extends ElementoDibujable {
-
-   /**
-    * 
-    */
-   public InerteDibujable () {
-      // TODO Auto-generated constructor stub
-   }
+public class ProyectilBasico extends Proyectil {
 
 }

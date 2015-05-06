@@ -15,7 +15,7 @@ package vista;
 
 
 /**
- * TODO Descripción de la clase.
+ * Representa los proyectiles dibujables.
  */
 public abstract class ProyectilDibujable extends InerteDibujable {
 

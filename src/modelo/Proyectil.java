@@ -1,5 +1,5 @@
 /**
- * sPAIce_invaders.vista.PantallaJuego.java
+ * sPAIce_invaders.modelo.Proyectiles.java
  * Proyecto Final: sPAIce invaders.
  *
  * Asignatura: Programación de Aplicaciones Interactivas.
@@ -11,22 +11,18 @@
  *    Francisco J. Palacios Rodríguez.
  *    Héctor Rodríguez Pérez
  */
-package vista;
+package modelo;
 
 
 /**
- * Pantalla en la que se mostrará el juego.
- * Muestra:
- *    * Fondo
- *    * Actores (nave, enemigos)
- *    * HUD
+ * Elemento abstracto que representa un proyectil.
  */
-public class PantallaJuego extends Pantalla {
+public abstract class Proyectil extends Inerte {
 
    /**
     * 
     */
-   public PantallaJuego () {
+   public Proyectil () {
       // TODO Auto-generated constructor stub
    }
 

@@ -1,5 +1,5 @@
 /**
- * sPAIce_invaders.modelo.Proyectiles.java
+ * sPAIce_invaders.vista.EnemigoBasicoDibujable.java
  * Proyecto Final: sPAIce invaders.
  *
  * Asignatura: Programación de Aplicaciones Interactivas.
@@ -11,19 +11,18 @@
  *    Francisco J. Palacios Rodríguez.
  *    Héctor Rodríguez Pérez
  */
-package modelo;
+package vista;
 
 
 /**
- * TODO Descripción de la clase.
+ * TODO Clase concreta que permite dibujar un enemigo.
  */
-public abstract class Proyectiles extends Inerte {
+public class EnemigoBasicoDibujable extends EnemigoDibujable {
 
    /**
     * 
     */
-   public Proyectiles () {
+   public EnemigoBasicoDibujable () {
       // TODO Auto-generated constructor stub
    }
-
 }
