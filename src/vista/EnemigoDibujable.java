@@ -15,7 +15,7 @@ package vista;
 
 
 /**
- * TODO Descripción de la clase.
+ * Clase abstracta de enemigos dibujables.
  */
 public abstract class EnemigoDibujable extends VivoDibujable {
 

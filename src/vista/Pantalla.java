@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 
 
 /**
- * TODO Descripción de la clase.
+ * Clase abstracta que representará distintas pantallas.
  */
 public abstract class Pantalla extends JPanel {
 

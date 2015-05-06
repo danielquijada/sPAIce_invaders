@@ -15,7 +15,12 @@ package vista;
 
 
 /**
- * TODO Descripción de la clase.
+ * Pantalla que muestra el menú con distintas opciones:
+ *    * Nuevo Juego
+ *    * Cargar Juego
+ *    * Settings
+ *    * Salir
+ *    etc..
  */
 public class PantallaMenu extends Pantalla {
 

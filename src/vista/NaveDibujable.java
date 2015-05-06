@@ -15,7 +15,7 @@ package vista;
 
 
 /**
- * TODO Descripción de la clase.
+ * Clase abstracta de naves dibujables.
  */
 public abstract class NaveDibujable extends VivoDibujable {
 
@@ -25,5 +25,4 @@ public abstract class NaveDibujable extends VivoDibujable {
    public NaveDibujable () {
       // TODO Auto-generated constructor stub
    }
-
 }

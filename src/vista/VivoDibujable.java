@@ -15,7 +15,7 @@ package vista;
 
 
 /**
- * TODO Descripción de la clase.
+ * Clase abstracta de elementos dibujables vivos.
  */
 public abstract class VivoDibujable extends ElementoDibujable {
 

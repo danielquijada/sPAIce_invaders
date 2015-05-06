@@ -15,7 +15,7 @@ package modelo;
 
 
 /**
- * TODO Descripción de la clase.
+ * Clase abstracta que representa a todos los objetos que tienen vida.
  */
 public abstract class Vivo extends Elemento {
 
