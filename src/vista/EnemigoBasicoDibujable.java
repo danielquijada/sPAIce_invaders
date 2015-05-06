@@ -15,7 +15,7 @@ package vista;
 
 
 /**
- * TODO Clase concreta que permite dibujar un enemigo.
+ * Representa la forma de dibujar un enemigo básico concreto.
  */
 public class EnemigoBasicoDibujable extends EnemigoDibujable {
 
