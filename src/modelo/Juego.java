@@ -15,7 +15,8 @@ package modelo;
 
 
 /**
- * TODO Descripción de la clase. Clase que contendrá todo el juego (lógico).
+ * Esta clase agrupa todos los elementos que participan en el juego o influyen en estos.
+ * En nuestro caso son la nave, enemigos, proyectiles, temporizadores...
  */
 public class Juego {
 

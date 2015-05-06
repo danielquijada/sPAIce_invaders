@@ -15,7 +15,8 @@ package modelo;
 
 
 /**
- * TODO Descripción de la clase.
+ * Clase que describe el elemento vivo "Nave". Es la unidad controlada por el usuario.
+ * La nave tiene una vida determinada, es capaz de moverse en horizontal y disparar hacia arriba.
  */
 public abstract class Nave extends Vivo {
 

@@ -15,7 +15,7 @@ package modelo;
 
 
 /**
- * TODO Descripción de la clase.
+ * Clase para describir todo elemento del juego, desde enemigos y naves hasta proyectiles y escudos
  */
 public abstract class Elemento {
 

@@ -15,7 +15,8 @@ package modelo;
 
 
 /**
- * TODO Descripción de la clase.
+ * Clase que representa un tipo de nave específica.
+ * Reúne aquellas características específicas o únicas y capacidades de una nave básica frente a los demás.
  */
 public class NaveBasica extends Nave {
 

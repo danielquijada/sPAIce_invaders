@@ -14,7 +14,8 @@
 package modelo;
 
 /**
- * TODO Descripción de la clase.
+ * Clase que describe la lógica de los enemigos, que son entidades vivas capaces de disparar.
+ * No son controlables por el usuario.
  */
 public abstract class Enemigo extends Vivo {
 
