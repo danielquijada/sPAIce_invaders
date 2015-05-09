@@ -18,12 +18,12 @@ package modelo;
  * Clase para describir todo elemento del juego, desde enemigos y naves hasta proyectiles y escudos
  */
 public abstract class Elemento {
-
+	
    /**
     * 
     */
    public Elemento () {
-      // TODO Auto-generated constructor stub
+	   
    }
 
 }
