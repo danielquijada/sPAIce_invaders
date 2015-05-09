@@ -13,14 +13,22 @@
  */
 package modelo;
 
+import vista.VentanaJuego;
+
+
 /**
  * TODO Descripción de la clase.
  */
 public class Main {
 
+	
 	public static void main(String args[]) {
+
+		ListenForKey lForKey = new ListenForKey();
+		Juego juego = new Juego();
+		VentanaJuego ventanajuego = new VentanaJuego(juego, lForKey);
 		
 	}
-	
+		
 	
 }
