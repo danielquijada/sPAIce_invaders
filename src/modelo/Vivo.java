@@ -25,5 +25,13 @@ public abstract class Vivo extends Elemento {
    public Vivo () {
       // TODO Auto-generated constructor stub
    }
+   
+   public void moverX(int desplazamiento){
+	   setX(getX() + desplazamiento);
+   }
+   
+   public void moverY(int desplazamiento){
+	   setY(getY() + desplazamiento);
+   }
 
 }

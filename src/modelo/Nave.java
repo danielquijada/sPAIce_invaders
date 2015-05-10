@@ -20,11 +20,19 @@ package modelo;
  */
 public abstract class Nave extends Vivo {
 
-   /**
-    * 
-    */
-   public Nave () {
-      // TODO Auto-generated constructor stub
-   }
+	private int vida;
+	
+	public Nave(int posX, int posY){
+		setX(posX);
+		setY(posY);
+	}
+
+	public int getVida() {
+		return vida;
+	}
+
+	public void setVida(int vida) {
+		this.vida = vida;
+	}
 
 }

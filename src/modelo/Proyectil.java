@@ -22,8 +22,34 @@ public abstract class Proyectil extends Inerte {
    /**
     * 
     */
-   public Proyectil () {
-      // TODO Auto-generated constructor stub
+	final double ZERO = 0.0;
+	private double tiempo;
+	private double velocidad;
+	
+   public Proyectil (int posX, int posY) {
+      setTiempo(ZERO);
+      setX(posX);
+      setY(posY);
    }
+
+	public double getTiempo() {
+		return tiempo;
+	}
+	
+	public void setTiempo(double tiempo) {
+		this.tiempo = tiempo;
+	}
+
+	public double getVelocidad() {
+		return velocidad;
+	}
+
+	public void setVelocidad(double velocidad) {
+		this.velocidad = velocidad;
+	}
+	
+	
+   
+   
 
 }

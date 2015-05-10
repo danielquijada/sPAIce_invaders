@@ -13,6 +13,8 @@
  */
 package modelo;
 
+import java.util.ArrayList;
+
 
 /**
  * Esta clase agrupa todos los elementos que participan en el juego o influyen en estos.
@@ -23,8 +25,39 @@ public class Juego {
    /**
     * 
     */
+	
+	Tabla enemigos;
+	ArrayList<Nave> naves;
+	ArrayList<Proyectil> proyectiles;
+	
    public Juego () {
       // TODO Auto-generated constructor stub
    }
+
+	public Tabla getEnemigos() {
+		return enemigos;
+	}
+	
+	public void setEnemigos(Tabla enemigos) {
+		this.enemigos = enemigos;
+	}
+	
+	public ArrayList<Nave> getNaves() {
+		return naves;
+	}
+	
+	public void setNaves(ArrayList<Nave> naves) {
+		this.naves = naves;
+	}
+	
+	public ArrayList<Proyectil> getProyectiles() {
+		return proyectiles;
+	}
+	
+	public void setProyectiles(ArrayList<Proyectil> proyectiles) {
+		this.proyectiles = proyectiles;
+	}
+   
+   
 
 }

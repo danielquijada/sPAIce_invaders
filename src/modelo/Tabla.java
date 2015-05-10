@@ -23,8 +23,41 @@ public class Tabla {
    /**
     * 
     */
-   public Tabla () {
-      // TODO Auto-generated constructor stub
+	private Enemigo[][] matrizEnemigos;
+	private final int SEPARACION = 10;
+	private final int INICIAL_X = 10;
+	private final int INICIAL_Y = 10;
+   
+   public Tabla (int tamanioX, int tamanioY) {
+	      setMatrizEnemigos(new Enemigo[tamanioX][tamanioY]);
+	      int posX = INICIAL_X;
+	      int posY = INICIAL_Y;
+	      
+	      for(int i = 0; i < tamanioX; i++){
+	    	  for(int j = 0; j < tamanioY; j++){
+	    		  setEnemigo(i, j, new EnemigoBasico(posX, posY));
+	    		  posX += SEPARACION;
+	    	  }
+	    	  posY += SEPARACION;
+	      }
    }
+
+	public Enemigo[][] getMatrizEnemigos() {
+		return matrizEnemigos;
+	}
+	
+	public void setMatrizEnemigos(Enemigo[][] matrizEnemigos) {
+		this.matrizEnemigos = matrizEnemigos;
+	}
+	
+	public Enemigo getEnemigo(int i, int j) {
+		return getMatrizEnemigos()[i][j];
+	}
+	
+	public void setEnemigo(int i, int j, Enemigo enemigo) {
+		getMatrizEnemigos()[i][j] = enemigo;
+	}
+   
+   
 
 }

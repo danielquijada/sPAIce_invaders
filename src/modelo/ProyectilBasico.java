@@ -17,5 +17,11 @@ package modelo;
  * Clase que representa un proyectil específico. Con ciertas características únicas tales como su velocidad.
  */
 public class ProyectilBasico extends Proyectil {
+	private final int VELOCIDAD_PROYECTI_BASICO = 1;
+	
+	public ProyectilBasico(int posX, int posY, double velocidad){
+		super(posX, posY);
+		setVelocidad(VELOCIDAD_PROYECTI_BASICO);
+	}
 
 }

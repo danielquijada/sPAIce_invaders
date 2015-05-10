@@ -18,5 +18,10 @@ package modelo;
  * Reúne las caracterísiticas específicas o únicas de este enemigo frente a otro tipo de enemigos.
  */
 public class EnemigoBasico extends Enemigo {
-
+	private final int VIDA_ENEMIGO_BASICO = 1;
+	
+	public EnemigoBasico(int posX, int posY){
+		super(posX, posY);
+		setVida(VIDA_ENEMIGO_BASICO);
+	}
 }

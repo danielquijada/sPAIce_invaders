@@ -20,11 +20,11 @@ package modelo;
  */
 public class NaveBasica extends Nave {
 
-   /**
-    * 
-    */
-   public NaveBasica () {
-      // TODO Auto-generated constructor stub
-   }
+	private final int VIDA_NAVE_BASICA = 3;
+	
+	public NaveBasica(int posX, int posY){
+		super(posX, posY);
+		setVida(VIDA_NAVE_BASICA);
+	}
 
 }
