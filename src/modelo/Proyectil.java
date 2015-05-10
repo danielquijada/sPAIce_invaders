@@ -13,6 +13,8 @@
  */
 package modelo;
 
+import java.awt.Point;
+
 
 /**
  * Elemento abstracto que representa un proyectil.
@@ -25,11 +27,17 @@ public abstract class Proyectil extends Inerte {
 	final double ZERO = 0.0;
 	private double tiempo;
 	private double velocidad;
+	private Point posInicial;
 	
    public Proyectil (int posX, int posY) {
       setTiempo(ZERO);
       setX(posX);
       setY(posY);
+      posInicial = new Point(posX, posY);
+   }
+   
+   public void calcularNuevaPosicion(){
+	   setY(getY() + (int) (velocidad * tiempo));
    }
 
 	public double getTiempo() {

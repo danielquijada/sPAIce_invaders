@@ -13,6 +13,8 @@
  */
 package modelo;
 
+import java.awt.Point;
+
 
 /**
  * Clase para describir todo elemento del juego, desde enemigos y naves hasta proyectiles y escudos
@@ -23,28 +25,37 @@ public abstract class Elemento {
     * 
     */
 	
-	private int x;
-	private int y;
+	private Point coordenadas;
 	
    public Elemento () {
 	   
    }
 
    public int getX() {
-		return x;
+		return (int) coordenadas.getX();
    }
 	
 	public void setX(int x) {
-		this.x = x;
+		this.coordenadas.x = x;
 	}
 	
 	public int getY() {
-		return y;
+		return (int) coordenadas.getY();
 	}
 	
 	public void setY(int y) {
-		this.y = y;
+		this.coordenadas.y = y;
 	}
+
+	public Point getCoordenadas() {
+		return coordenadas;
+	}
+
+	public void setCoordenadas(Point coordenadas) {
+		this.coordenadas = coordenadas;
+	}
+	
+	
    
    
 
