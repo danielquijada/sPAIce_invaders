@@ -15,16 +15,20 @@
 package vista;
 
 import java.awt.Graphics;
+import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
 import modelo.Enemigo;
 import modelo.Juego;
 import modelo.Nave;
-import modelo.NaveBasica;
+import modelo.Tabla;
 
 
 /**
  * Pantalla en la que se mostrará el juego. Muestra: * Fondo * Actores (nave, enemigos) * HUD
  */
-public class PantallaJuego extends Pantalla {
+@SuppressWarnings ("serial")
+public class PantallaJuego extends Pantalla implements Observer {
 
    private static final int TAM = 30;
    private Juego juego;
@@ -42,11 +46,18 @@ public class PantallaJuego extends Pantalla {
    @Override
    protected void paintComponent (Graphics g) {
       super.paintComponent (g);
-      for (Enemigo enemy : getJuego ().getEnemigos ()) {
-         new EnemigoBasicoDibujable ().dibujar (g, enemy.getX (), enemy.getY (), TAM, TAM);
+      Tabla t = getJuego ().getEnemigos ();
+      Iterator<Enemigo> iter = getJuego ().getEnemigos ().iterator ();
+      while (iter.hasNext ()) {
+         Enemigo enemy = iter.next ();
+         int x = (int)((double)enemy.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
+         int y = (int)((double)enemy.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
+         new EnemigoBasicoDibujable ().dibujar (g, x, y, TAM, TAM);
       }
       for (Nave nave : getJuego ().getNaves ()) {
-         new NaveBasicaDibujable ().dibujar (g, nave.getX(), nave.getY (), TAM, TAM);
+         int x = (int)((double)nave.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
+         int y = (int)((double)nave.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
+         new NaveBasicaDibujable ().dibujar (g, x, y, TAM, TAM);
       }
    }
    
@@ -63,5 +74,13 @@ public class PantallaJuego extends Pantalla {
     */
    public void setJuego (Juego juego) {
       this.juego = juego;
+   }
+
+   /* (non-Javadoc)
+    * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+    */
+   @Override
+   public void update (Observable o, Object arg) {
+      repaint ();
    }
 }

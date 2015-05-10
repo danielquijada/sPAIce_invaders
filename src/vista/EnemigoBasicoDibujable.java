@@ -26,6 +26,6 @@ public class EnemigoBasicoDibujable extends EnemigoDibujable {
     */
    @Override
    public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
-      g.drawOval (x, y, tamX, tamY);
+      g.fillOval (x, y, tamX, tamY);
    }
 }

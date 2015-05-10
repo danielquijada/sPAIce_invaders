@@ -14,8 +14,8 @@
 package vista;
 
 import javax.swing.JFrame;
+import controlador.ListenForKey;
 import modelo.Juego;
-import modelo.ListenForKey;
 
 
 

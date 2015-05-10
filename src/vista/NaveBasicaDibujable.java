@@ -26,7 +26,7 @@ public class NaveBasicaDibujable extends NaveDibujable {
     */
    @Override
    public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
-      g.drawRect (x, y, tamX, tamY);
+      g.fillRect (x, y, tamX, tamY);
    }
 
 }

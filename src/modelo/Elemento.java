@@ -28,7 +28,7 @@ public abstract class Elemento {
 	private Point coordenadas;
 	
    public Elemento () {
-	   
+	   setCoordenadas (new Point ());
    }
 
    public int getX() {

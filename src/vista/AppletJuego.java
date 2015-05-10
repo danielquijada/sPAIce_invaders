@@ -15,8 +15,8 @@
 package vista;
 
 import javax.swing.JApplet;
+import controlador.ListenForKey;
 import modelo.Juego;
-import modelo.ListenForKey;
 
 
 /**
@@ -27,31 +27,32 @@ public class AppletJuego extends JApplet {
    private static final int ANCHO = 800;
    private static final int ALTO = ANCHO;
    
-   private PantallaJuego juego;
+   private PantallaJuego pantallaJuego;
 
    /**
     * @param juego
     * @param lForKey
     */
    public AppletJuego (Juego juego) {
-      setJuego (new PantallaJuego (juego));
-      add (getJuego ());
+      setPantallaJuego (new PantallaJuego (juego));
+      add (getPantallaJuego ());
       setSize (ANCHO, ALTO);
       setPreferredSize (getSize ());
    }
 
+   
    /**
-    * @return the juego
+    * @return the pantallaJuego
     */
-   public PantallaJuego getJuego () {
-      return juego;
+   public PantallaJuego getPantallaJuego () {
+      return pantallaJuego;
    }
 
+   
    /**
-    * @param juego
-    *           the juego to set
+    * @param pantallaJuego the pantallaJuego to set
     */
-   public void setJuego (PantallaJuego juego) {
-      this.juego = juego;
+   public void setPantallaJuego (PantallaJuego pantallaJuego) {
+      this.pantallaJuego = pantallaJuego;
    }
 }
