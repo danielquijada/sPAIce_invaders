@@ -13,6 +13,8 @@
  */
 package vista;
 
+import java.awt.Graphics;
+
 
 /**
  * Clase abstracta que representa a todos los objetos dibujables.
@@ -20,10 +22,11 @@ package vista;
 public abstract class ElementoDibujable {
 
    /**
-    * 
+    * @param g Graphics en la que se dibujará.
+    * @param x Coordenada X.
+    * @param y Coordenada Y.
+    * @param tamX Tamaño en el eje X.
+    * @param tamY Tamaño en el eje Y.
     */
-   public ElementoDibujable () {
-      // TODO Auto-generated constructor stub
-   }
-
+   public abstract void dibujar (Graphics g, int x, int y, int tamX, int tamY);
 }

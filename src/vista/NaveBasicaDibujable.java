@@ -1,5 +1,5 @@
 /**
- * sPAIce_invaders.vista.EnemigoBasicoDibujable.java
+ * sPAIce_invaders.vista.NaveBasicaDibujable.java
  * Proyecto Final: sPAIce invaders.
  *
  * Asignatura: Programación de Aplicaciones Interactivas.
@@ -17,15 +17,16 @@ import java.awt.Graphics;
 
 
 /**
- * Representa la forma de dibujar un enemigo básico concreto.
+ * TODO Descripción de la clase.
  */
-public class EnemigoBasicoDibujable extends EnemigoDibujable {
+public class NaveBasicaDibujable extends NaveDibujable {
 
    /* (non-Javadoc)
     * @see vista.ElementoDibujable#dibujar(java.awt.Graphics, int, int, int, int)
     */
    @Override
    public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
-      g.drawOval (x, y, tamX, tamY);
+      g.drawRect (x, y, tamX, tamY);
    }
+
 }

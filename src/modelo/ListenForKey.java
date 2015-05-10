@@ -2,14 +2,14 @@
  * sPAIce_invaders.modelo.ListenForKey.java
  * Proyecto Final: sPAIce invaders.
  *
- * Asignatura: Programación de Aplicaciones Interactivas.
+ * Asignatura: Programaciï¿½n de Aplicaciones Interactivas.
  * Universidad de La Laguna.
  * Curso: 2014-2015
  *
  * Autores: 
- *    Daniel E. Quijada Díaz
- *    Francisco J. Palacios Rodríguez.
- *    Héctor Rodríguez Pérez
+ *    Daniel E. Quijada Dï¿½az
+ *    Francisco J. Palacios Rodrï¿½guez.
+ *    Hï¿½ctor Rodrï¿½guez Pï¿½rez
  */
 package modelo;
 
@@ -17,17 +17,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * TODO Descripción de la clase.
+ * TODO Descripciï¿½n de la clase.
  */
 public class ListenForKey implements KeyListener{
 
+   private Juego juego;
+   
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	/* (non-Javadoc)
@@ -60,5 +60,21 @@ public class ListenForKey implements KeyListener{
 		else if (e.getKeyCode() == KeyEvent.VK_SPACE){
 			System.out.println("Space released");
 		}	}
+
+   
+   /**
+    * @return the juego
+    */
+   public Juego getJuego () {
+      return juego;
+   }
+
+   
+   /**
+    * @param juego the juego to set
+    */
+   public void setJuego (Juego juego) {
+      this.juego = juego;
+   }
 
 }

@@ -14,6 +14,8 @@
 package vista;
 
 import javax.swing.JFrame;
+import modelo.Juego;
+import modelo.ListenForKey;
 
 
 
@@ -21,4 +23,33 @@ import javax.swing.JFrame;
  * TODO Descripción de la clase.
  */
 public class VentanaJuego extends JFrame {
+
+   private AppletJuego applet;
+   /**
+    * @param juego
+    * @param lForKey
+    */
+   public VentanaJuego (Juego juego, ListenForKey lForKey) {
+      setTitle ("sPAIce invaders");
+      setDefaultCloseOperation (EXIT_ON_CLOSE);
+      addKeyListener (lForKey);
+      setApplet (new AppletJuego (juego));
+      add (getApplet ());
+      pack ();
+      setLocationRelativeTo (null);
+   }
+   
+   /**
+    * @return the applet
+    */
+   public AppletJuego getApplet () {
+      return applet;
+   }
+   
+   /**
+    * @param applet the applet to set
+    */
+   public void setApplet (AppletJuego applet) {
+      this.applet = applet;
+   }
 }
