@@ -33,15 +33,15 @@ public class Juego extends Observable {
 
 	private static final int M = 10;
 	private static final int N = 6;
-   public static final int TOTAL_X = 100;
-   public static final int TOTAL_Y = 100;
-   public static final int ALTURA_INICIAL_ENEMIGOS = 50;
-   public static final int ALTURA_SUELO = 5;
+   public static final int TOTAL_X = 1000;
+   public static final int TOTAL_Y = 1000;
+   public static final int ALTURA_INICIAL_ENEMIGOS = 500;
+   public static final int ALTURA_SUELO = 50;
    public static final int NAVES = 1;
 	
    public static final int IZQUIERDA = 0;
    public static final int DERECHA = 1;
-   private static final int MOVIMIENTO = 10;
+   private static final int MOVIMIENTO = 30;
    
    /**
     * 
