@@ -24,7 +24,8 @@ public abstract class Proyectil extends Inerte {
    /**
     * 
     */
-	final double ZERO = 0.0;
+	public static final double ZERO = 0.0;
+	public static final int DESPLAZAMIENTO_BASICO = 15;
 	private double tiempo;
 	private double velocidad;
 	private Point posInicial;
@@ -37,7 +38,7 @@ public abstract class Proyectil extends Inerte {
    }
    
    public void calcularNuevaPosicion(){
-	   setY(getY() + (int) (velocidad * tiempo));
+	   setY(getY() - DESPLAZAMIENTO_BASICO);
    }
 
 	public double getTiempo() {

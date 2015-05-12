@@ -26,7 +26,7 @@ public class Tabla implements Iterable {
     * 
     */
 	private Enemigo[][] matrizEnemigos;
-	private final static int SEPARACION = 50;
+	private final static int SEPARACION = 10;
 	private int ancho;
 	private int alto;
    

@@ -15,7 +15,10 @@ package controlador;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+
 import modelo.Juego;
+import modelo.Proyectil;
 
 /**
  * TODO Descripci�n de la clase.
@@ -43,7 +46,7 @@ public class ListenForKey implements KeyListener{
          getJuego ().moverNave (0, Juego.DERECHA);
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_SPACE){
-			System.out.println("Space pressed");
+			getJuego ().disparar (0);
 		}
 	}
 
@@ -59,6 +62,7 @@ public class ListenForKey implements KeyListener{
 			System.out.println("Right released");
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_SPACE){
+			ArrayList<Proyectil> aux = getJuego().getProyectiles();
 			System.out.println("Space released");
 		}	}
 

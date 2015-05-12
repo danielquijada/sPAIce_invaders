@@ -18,9 +18,11 @@ import java.awt.Graphics;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
+
 import modelo.Enemigo;
 import modelo.Juego;
 import modelo.Nave;
+import modelo.Proyectil;
 import modelo.Tabla;
 
 
@@ -59,6 +61,11 @@ public class PantallaJuego extends Pantalla implements Observer {
          int y = (int)((double)nave.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
          new NaveBasicaDibujable ().dibujar (g, x, y, TAM, TAM);
       }
+      for (Proyectil proyectil : getJuego ().getProyectiles() ) {
+          int x = (int)((double)proyectil.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
+          int y = (int)((double)proyectil.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
+          new ProyectilBasicoDibujable ().dibujar (g, x, y, TAM, TAM);
+       }
    }
    
    /**
