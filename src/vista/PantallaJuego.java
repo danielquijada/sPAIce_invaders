@@ -50,22 +50,32 @@ public class PantallaJuego extends Pantalla implements Observer {
       super.paintComponent (g);
       Tabla t = getJuego ().getEnemigos ();
       Iterator<Enemigo> iter = getJuego ().getEnemigos ().iterator ();
+      Iterator<Proyectil> it = getJuego ().getProyectiles ().iterator ();
+      
       while (iter.hasNext ()) {
          Enemigo enemy = iter.next ();
          int x = (int)((double)enemy.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
          int y = (int)((double)enemy.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
          new EnemigoBasicoDibujable ().dibujar (g, x, y, TAM, TAM);
       }
+      
       for (Nave nave : getJuego ().getNaves ()) {
          int x = (int)((double)nave.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
          int y = (int)((double)nave.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
-         new NaveBasicaDibujable ().dibujar (g, x, y, TAM, TAM);
+         new NaveBasicaDibujable ().dibujar (g, x , y, TAM, TAM);
       }
-      for (Proyectil proyectil : getJuego ().getProyectiles() ) {
+      
+      while(it.hasNext()){
+    	  Proyectil proyectil = it.next();
           int x = (int)((double)proyectil.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
           int y = (int)((double)proyectil.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
-          new ProyectilBasicoDibujable ().dibujar (g, x, y, TAM, TAM);
-       }
+          new ProyectilBasicoDibujable ().dibujar (g, x, y, TAM, TAM);                    
+    	  if (proyectil.getY() < 0) {
+        	  it.remove();
+    	  }
+
+      }
+  
    }
    
    /**

@@ -26,6 +26,7 @@ import modelo.Proyectil;
 public class ListenForKey implements KeyListener{
 
    private Juego juego;
+  
    
 	/* (non-Javadoc)
 	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
@@ -46,7 +47,9 @@ public class ListenForKey implements KeyListener{
          getJuego ().moverNave (0, Juego.DERECHA);
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_SPACE){
-			getJuego ().disparar (0);
+			if(getJuego ().getProyectiles().isEmpty()) {
+				getJuego ().disparar (0);				
+			}
 		}
 	}
 
@@ -56,15 +59,16 @@ public class ListenForKey implements KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-			System.out.println("Left released");
+			
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
-			System.out.println("Right released");
+			
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_SPACE){
 			ArrayList<Proyectil> aux = getJuego().getProyectiles();
-			System.out.println("Space released");
-		}	}
+			
+		}	
+	}
 
    
    /**
