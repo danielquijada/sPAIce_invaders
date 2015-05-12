@@ -64,7 +64,7 @@ public class Juego extends Observable {
       setEnemigos (new Tabla (M, N, TOTAL_X, TOTAL_Y - ALTURA_INICIAL_ENEMIGOS));
       inicializarNaves (NAVES);
       setProyectiles (new ArrayList<Proyectil> ());
-      setEstadoEnemigos(0);
+      setEstadoEnemigos(1);
       setDireccionEnemigos(false);
       bucleJuego = new Timer(40, new ActionListener () 
 			{ 
@@ -130,13 +130,13 @@ public class Juego extends Observable {
 	      else if(isDireccionEnemigos()){
 		      while (iter.hasNext ()) {
 		         Enemigo enemy = iter.next ();
-		         enemy.moverX(MOVIMIENTO_ENEMIGOS);
+		         enemy.moverX(MOVIMIENTO_ENEMIGOS / 2);
 		      }
 	      }
 	      else {
 	    	  while (iter.hasNext ()) {
 			         Enemigo enemy = iter.next ();
-			         enemy.moverX(- MOVIMIENTO_ENEMIGOS);
+			         enemy.moverX(- MOVIMIENTO_ENEMIGOS / 2);
 			      }
 	      }
 	      
