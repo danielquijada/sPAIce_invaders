@@ -25,4 +25,11 @@ interface Estado {
    public abstract void abajo ();
    public abstract void accion ();
    public abstract void salir ();
+
+   public abstract void paraIzquierda ();
+   public abstract void paraDerecha ();
+   public abstract void paraArriba ();
+   public abstract void paraAbajo ();
+   public abstract void paraAccion ();
+   public abstract void paraSalir ();
 }

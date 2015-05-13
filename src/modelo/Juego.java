@@ -14,15 +14,12 @@
 
 package modelo;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Observable;
+
 import javax.swing.Timer;
+
 import controlador.OyenteTimers;
-import vista.EnemigoBasicoDibujable;
-import vista.ProyectilBasicoDibujable;
 
 
 /**
@@ -40,7 +37,7 @@ public class Juego extends Observable implements Estado {
    private ArrayList<Proyectil> proyectiles;
    private int                  estadoEnemigos;
    private int                  direccionEnemigos;
-   public int                   dir;
+   private int                   dir;
    private static Juego         juego;
    private int                  contador;
 
@@ -55,6 +52,7 @@ public class Juego extends Observable implements Estado {
 
    public static final int      IZQUIERDA               = 0;
    public static final int      DERECHA                 = 1;
+   public static final int      INMOVIL                 = 3;
    private static final int     MOVIMIENTO              = 5;
    private static final int     MOVIMIENTO_ENEMIGOS     = 50;
    private static final int     DELAY                   = 15;
@@ -225,8 +223,7 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void izquierda () {
-      // TODO Auto-generated method stub
-
+	  setDir(Juego.IZQUIERDA);
    }
 
    /*
@@ -236,8 +233,7 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void derecha () {
-      // TODO Auto-generated method stub
-
+	   setDir(Juego.DERECHA);
    }
 
    /*
@@ -247,8 +243,7 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void arriba () {
-      // TODO Auto-generated method stub
-
+      //No hace nada
    }
 
    /*
@@ -258,8 +253,7 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void abajo () {
-      // TODO Auto-generated method stub
-
+	 //No hace nada
    }
 
    /*
@@ -269,8 +263,7 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void accion () {
-      // TODO Auto-generated method stub
-
+	   disparar(0);
    }
 
    /*
@@ -280,7 +273,69 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void salir () {
-      // TODO Auto-generated method stub
-
+	 //Falta por implementar
    }
+
+public int getDir() {
+	return dir;
+}
+
+public void setDir(int dir) {
+	this.dir = dir;
+}
+
+/* (non-Javadoc)
+ * @see modelo.Estado#paraIzquierda()
+ */
+@Override
+public void paraIzquierda() {
+	if (getDir() == Juego.IZQUIERDA) {
+		setDir(Juego.INMOVIL);
+	}
+	
+}
+
+/* (non-Javadoc)
+ * @see modelo.Estado#paraDerecha()
+ */
+@Override
+public void paraDerecha() {
+	if (getDir() == Juego.DERECHA) {
+		setDir(Juego.INMOVIL);
+	}
+}
+
+/* (non-Javadoc)
+ * @see modelo.Estado#paraArriba()
+ */
+@Override
+public void paraArriba() {
+	//Falta por implementar
+	
+}
+
+/* (non-Javadoc)
+ * @see modelo.Estado#paraAbajo()
+ */
+@Override
+public void paraAbajo() {
+	//Falta por implementar
+}
+
+/* (non-Javadoc)
+ * @see modelo.Estado#paraAccion()
+ */
+@Override
+public void paraAccion() {
+	//Falta por implementar
+	
+}
+
+/* (non-Javadoc)
+ * @see modelo.Estado#paraSalir()
+ */
+@Override
+public void paraSalir() {
+	//Falta por implementar
+}
 }
