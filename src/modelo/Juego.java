@@ -29,7 +29,7 @@ import vista.ProyectilBasicoDibujable;
  * Esta clase agrupa todos los elementos que participan en el juego o influyen en estos. En nuestro caso son la nave,
  * enemigos, proyectiles, temporizadores...
  */
-public class Juego extends Observable {
+public class Juego extends Observable implements Estado {
 
    /**
     * 
@@ -58,7 +58,7 @@ public class Juego extends Observable {
    private static final int     MOVIMIENTO              = 5;
    private static final int     MOVIMIENTO_ENEMIGOS     = 50;
    private static final int     DELAY                   = 15;
-   private static final int RETRASO_ENEMIGOS = 40;
+   private static final int     RETRASO_ENEMIGOS        = 40;
 
    /**
     * 
@@ -138,7 +138,7 @@ public class Juego extends Observable {
          setContador (0);
          moverEnemigos ();
       } else {
-         setContador (getContador() + 1);
+         setContador (getContador () + 1);
       }
       setChanged ();
       notifyObservers ();
@@ -216,5 +216,71 @@ public class Juego extends Observable {
     */
    public void setContador (int contador) {
       this.contador = contador;
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#izquierda()
+    */
+   @Override
+   public void izquierda () {
+      // TODO Auto-generated method stub
+
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#derecha()
+    */
+   @Override
+   public void derecha () {
+      // TODO Auto-generated method stub
+
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#arriba()
+    */
+   @Override
+   public void arriba () {
+      // TODO Auto-generated method stub
+
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#abajo()
+    */
+   @Override
+   public void abajo () {
+      // TODO Auto-generated method stub
+
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#accion()
+    */
+   @Override
+   public void accion () {
+      // TODO Auto-generated method stub
+
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#salir()
+    */
+   @Override
+   public void salir () {
+      // TODO Auto-generated method stub
+
    }
 }
