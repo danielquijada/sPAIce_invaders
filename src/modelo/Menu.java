@@ -29,16 +29,24 @@ public class Menu implements Estado {
    private ArrayList<String>   opciones;
    private int                 seleccionada;
 
+   private static Menu menu;
+   
    /**
     * 
     */
-   public Menu () {
+   private Menu () {
       setSeleccionada (0);
       setOpciones (new ArrayList<String> ());
       getOpciones ().add (NEW);
       getOpciones ().add (LOA);
       getOpciones ().add (OPC);
       getOpciones ().add (EXT);
+   }
+   
+   public static Menu getInstance () {
+      if (getMenu () == null)
+         setMenu (new Menu ());
+      return getMenu ();
    }
 
    /*
@@ -66,7 +74,6 @@ public class Menu implements Estado {
     */
    private void seleccionar () {
       // TODO Auto-generated method stub
-      
    }
 
    /*
@@ -189,5 +196,21 @@ public class Menu implements Estado {
    @Override
    public void paraSalir () {
       // Nada
+   }
+
+   
+   /**
+    * @return the menu
+    */
+   public static Menu getMenu () {
+      return menu;
+   }
+
+   
+   /**
+    * @param menu the menu to set
+    */
+   public static void setMenu (Menu menu) {
+      Menu.menu = menu;
    }
 }

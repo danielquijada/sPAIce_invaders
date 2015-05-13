@@ -17,7 +17,7 @@ package modelo;
 /**
  * TODO Descripción de la clase.
  */
-interface Estado {
+public interface Estado {
 
    public abstract void izquierda ();
    public abstract void derecha ();

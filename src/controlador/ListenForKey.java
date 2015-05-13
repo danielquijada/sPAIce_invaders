@@ -16,24 +16,21 @@ package controlador;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
+import modelo.Estado;
 import modelo.Juego;
-import modelo.Menu;
-import modelo.Proyectil;
 
 /**
  * TODO Descripci�n de la clase.
  */
 public class ListenForKey implements KeyListener {
 
-   private Juego juego;
-   private Menu  menu;
+   private Estado estado;
 
    /**
     * 
     */
    public ListenForKey () {
-      setJuego (Juego.getInstance ());
+      setEstado (Juego.getInstance ()); //TODO Modificar estado inicial.
    }
 
    /*
@@ -53,11 +50,17 @@ public class ListenForKey implements KeyListener {
    @Override
    public void keyPressed (KeyEvent e) {
       if (e.getKeyCode () == KeyEvent.VK_LEFT) {
-         getJuego ().izquierda ();
+         getEstado ().izquierda ();
       } else if (e.getKeyCode () == KeyEvent.VK_RIGHT) {
-         getJuego ().derecha ();
+         getEstado ().derecha ();
+      } else if (e.getKeyCode () == KeyEvent.VK_UP) {
+         getEstado ().arriba ();
+      } else if (e.getKeyCode () == KeyEvent.VK_DOWN) {
+         getEstado ().abajo ();
       } else if (e.getKeyCode () == KeyEvent.VK_SPACE) {
-
+         getEstado ().accion ();
+      } else if (e.getKeyCode () == KeyEvent.VK_ESCAPE) {
+         getEstado ().salir ();
       }
    }
 
@@ -69,25 +72,32 @@ public class ListenForKey implements KeyListener {
    @Override
    public void keyReleased (KeyEvent e) {
       if (e.getKeyCode () == KeyEvent.VK_LEFT) {
+         getEstado ().paraIzquierda ();
       } else if (e.getKeyCode () == KeyEvent.VK_RIGHT) {
+         getEstado ().paraDerecha ();
+      } else if (e.getKeyCode () == KeyEvent.VK_UP) {
+         getEstado ().paraArriba ();
+      } else if (e.getKeyCode () == KeyEvent.VK_DOWN) {
+         getEstado ().paraAbajo ();
       } else if (e.getKeyCode () == KeyEvent.VK_SPACE) {
-         ArrayList<Proyectil> aux = getJuego ().getProyectiles ();
+         getEstado ().paraAccion ();
+      } else if (e.getKeyCode () == KeyEvent.VK_ESCAPE) {
+         getEstado ().paraSalir ();
       }
    }
-
+   
    /**
-    * @return the juego
+    * @return the estado
     */
-   public Juego getJuego () {
-      return juego;
+   public Estado getEstado () {
+      return estado;
    }
 
-
+   
    /**
-    * @param juego
-    *           the juego to set
+    * @param estado the estado to set
     */
-   public void setJuego (Juego juego) {
-      this.juego = juego;
+   public void setEstado (Estado estado) {
+      this.estado = estado;
    }
 }
