@@ -20,22 +20,13 @@ package modelo;
  */
 public abstract class Nave extends Vivo {
 
-	private int vida;
 	private int puntuacion;
 	
 	public Nave(int posX, int posY){
 		setX(posX);
 		setY(posY);
 	}
-
-	public int getVida() {
-		return vida;
-	}
-
-	public void setVida(int vida) {
-		this.vida = vida;
-	}
-
+ 
 	public int getPuntiacion() {
 		return puntuacion;
 	}

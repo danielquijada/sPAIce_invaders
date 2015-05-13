@@ -2,14 +2,14 @@
  * sPAIce_invaders.vista.Hud.java
  * Proyecto Final: sPAIce invaders.
  *
- * Asignatura: Programación de Aplicaciones Interactivas.
+ * Asignatura: Programaciï¿½n de Aplicaciones Interactivas.
  * Universidad de La Laguna.
  * Curso: 2014-2015
  *
  * Autores: 
- *    Daniel E. Quijada Díaz
- *    Francisco J. Palacios Rodríguez.
- *    Héctor Rodríguez Pérez
+ *    Daniel E. Quijada Dï¿½az
+ *    Francisco J. Palacios Rodrï¿½guez.
+ *    Hï¿½ctor Rodrï¿½guez Pï¿½rez
  */
 package vista;
 
@@ -20,7 +20,7 @@ import java.awt.Graphics;
 import modelo.Juego;
 
 /**
- * TODO Descripción de la clase.
+ * TODO Descripciï¿½n de la clase.
  */
 @SuppressWarnings("serial")
 public class Hud extends Pantalla{
@@ -50,14 +50,14 @@ public class Hud extends Pantalla{
 		g.drawString("Vidas: ", width - OFFSET_X_STRING, OFFSET_Y_STRING);
 	
 		g.setColor(Color.red);	
-		if (getJuego().getNaves().get(0).getVida() == 1) {
+		if (getJuego().getNaves().get(0).getVidas() == 1) {
 			g.fillOval(width - OFFSET_X_VIDAS - SEPARACION , OFFSET_Y_VIDAS, 10, 10);			
 		}
-		else if (getJuego().getNaves().get(0).getVida() == 2) {
+		else if (getJuego().getNaves().get(0).getVidas() == 2) {
 			g.fillOval(width - OFFSET_X_VIDAS - SEPARACION, OFFSET_Y_VIDAS, 10, 10);						
 			g.fillOval(width - OFFSET_X_VIDAS - (SEPARACION * 2), OFFSET_Y_VIDAS, 10, 10);						
 		}
-		else if(getJuego().getNaves().get(0).getVida() == 3) {
+		else if(getJuego().getNaves().get(0).getVidas() == 3) {
 			g.fillOval(width - OFFSET_X_VIDAS - SEPARACION, OFFSET_Y_VIDAS, 10, 10);						
 			g.fillOval(width - OFFSET_X_VIDAS - (SEPARACION * 2), OFFSET_Y_VIDAS, 10, 10);					
 			g.fillOval(width - OFFSET_X_VIDAS - (SEPARACION * 3), OFFSET_Y_VIDAS, 10, 10);									

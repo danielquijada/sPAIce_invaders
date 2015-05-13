@@ -18,20 +18,9 @@ package modelo;
  * No son controlables por el usuario.
  */
 public abstract class Enemigo extends Vivo {
-	private int vida;
 	
 	public Enemigo(int posX, int posY){
 		setX(posX);
 		setY(posY);
 	}
-
-	public int getVida() {
-		return vida;
-	}
-
-	public void setVida(int vida) {
-		this.vida = vida;
-	}
-	
-	
 }

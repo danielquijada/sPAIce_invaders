@@ -52,6 +52,55 @@ public class Tabla implements Iterable {
 	      }
    }
 
+   public Enemigo izquierda () {
+      Iterator<Enemigo> iter = this.iterator ();
+      Enemigo limite = iter.next ();
+      while (iter.hasNext ()) {
+         Enemigo aux = iter.next ();
+         if (aux.isVivo () && aux.getX () < limite.getX ()) {
+            limite = aux;
+         }
+      }
+      return limite;
+   }
+   
+   public Enemigo derecha () {
+      Iterator<Enemigo> iter = this.iterator ();
+      Enemigo limite = iter.next ();
+      while (iter.hasNext ()) {
+         Enemigo aux = iter.next ();
+         if (aux.isVivo () && aux.getX () > limite.getX ()) {
+            limite = aux;
+         }
+      }
+      return limite;
+   }
+   
+   public Enemigo arriba () {
+      Iterator<Enemigo> iter = this.iterator ();
+      Enemigo limite = iter.next ();
+      while (iter.hasNext ()) {
+         Enemigo aux = iter.next ();
+
+         if (aux.isVivo () && aux.getY () > limite.getY ()) {
+            limite = aux;
+         }
+      }
+      return limite;
+   }
+   
+   public Enemigo abajo () {
+      Iterator<Enemigo> iter = this.iterator ();
+      Enemigo limite = iter.next ();
+      while (iter.hasNext ()) {
+         Enemigo aux = iter.next ();
+         if (aux.isVivo () && aux.getY () < limite.getY ()) {
+            limite = aux;
+         }
+      }
+      return limite;
+   }
+   
 	public Enemigo[][] getMatrizEnemigos() {
 		return matrizEnemigos;
 	}
@@ -107,7 +156,41 @@ public class Tabla implements Iterable {
    public void setAlto (int alto) {
       this.alto = alto;
    }
-   
-   
 
+   /**
+    * @param movimiento
+    */
+   public void moverAbajo (int movimiento) {
+      Iterator<Enemigo> iter = iterator ();
+      while (iter.hasNext ()) {
+         iter.next ().moverY (movimiento);
+      }
+   }
+   /**
+    * @param movimiento
+    */
+   public void moverArriba (int movimiento) {
+      Iterator<Enemigo> iter = iterator ();
+      while (iter.hasNext ()) {
+         iter.next ().moverY (-movimiento);
+      }
+   }
+   /**
+    * @param movimiento
+    */
+   public void moverIzquierda (int movimiento) {
+      Iterator<Enemigo> iter = iterator ();
+      while (iter.hasNext ()) {
+         iter.next ().moverX (-movimiento);
+      }
+   }
+   /**
+    * @param movimiento
+    */
+   public void moverDerecha (int movimiento) {
+      Iterator<Enemigo> iter = iterator ();
+      while (iter.hasNext ()) {
+         iter.next ().moverX (movimiento);
+      }
+   }
 }

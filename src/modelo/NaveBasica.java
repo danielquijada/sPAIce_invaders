@@ -25,8 +25,7 @@ public class NaveBasica extends Nave {
 	
 	public NaveBasica(int posX, int posY){
 		super(posX, posY);
-		setVida(VIDA_NAVE_BASICA);
+		setVidas(VIDA_NAVE_BASICA);
 		setPuntuacion(puntuacion_inicial);
 	}
-
 }

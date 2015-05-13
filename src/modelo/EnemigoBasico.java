@@ -22,6 +22,6 @@ public class EnemigoBasico extends Enemigo {
 	
 	public EnemigoBasico(int posX, int posY){
 		super(posX, posY);
-		setVida(VIDA_ENEMIGO_BASICO);
+		setVidas(VIDA_ENEMIGO_BASICO);
 	}
 }

@@ -11,6 +11,7 @@
  *    Francisco J. Palacios Rodríguez.
  *    Héctor Rodríguez Pérez
  */
+
 package modelo;
 
 import java.awt.event.ActionEvent;
@@ -18,89 +19,68 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
-
 import javax.swing.Timer;
-
+import controlador.OyenteTimers;
 import vista.EnemigoBasicoDibujable;
 import vista.ProyectilBasicoDibujable;
 
 
 /**
- * Esta clase agrupa todos los elementos que participan en el juego o influyen en estos.
- * En nuestro caso son la nave, enemigos, proyectiles, temporizadores...
+ * Esta clase agrupa todos los elementos que participan en el juego o influyen en estos. En nuestro caso son la nave,
+ * enemigos, proyectiles, temporizadores...
  */
 public class Juego extends Observable {
 
    /**
     * 
     */
-	
-	private Tabla enemigos;
-	private ArrayList<Nave> naves;
-	private ArrayList<Proyectil> proyectiles;
-	private int estadoEnemigos;
-	private boolean direccionEnemigos;
-	private Timer bucleJuego;
-	private Timer movimientoEnemigos;
-	public Timer smoothmoveTimer;
-	public int dir;
 
-	private static final int M = 10;
-	private static final int N = 6;
-   public static final int TOTAL_X = 1000;
-   public static final int TOTAL_Y = 1000;
-   public static final int ALTURA_INICIAL_ENEMIGOS = 500;
-   public static final int ALTURA_SUELO = 50;
-   public static final int NAVES = 1;
-   public static final int VELOCIDAD_BASE = 5;
-	
-   public static final int IZQUIERDA = 0;
-   public static final int DERECHA = 1;
-   private static final int MOVIMIENTO = 5;
-   private static final int MOVIMIENTO_ENEMIGOS = 50;
-   
+   private Tabla                enemigos;
+   private ArrayList<Nave>      naves;
+   private ArrayList<Proyectil> proyectiles;
+   private int                  estadoEnemigos;
+   private int                  direccionEnemigos;
+   public int                   dir;
+   private static Juego         juego;
+   private int                  contador;
+
+   private static final int     M                       = 5;
+   private static final int     N                       = 5;
+   public static final int      TOTAL_X                 = 1000;
+   public static final int      TOTAL_Y                 = 1000;
+   public static final int      ALTURA_INICIAL_ENEMIGOS = 500;
+   public static final int      ALTURA_SUELO            = 50;
+   public static final int      NAVES                   = 1;
+   public static final int      VELOCIDAD_BASE          = 5;
+
+   public static final int      IZQUIERDA               = 0;
+   public static final int      DERECHA                 = 1;
+   private static final int     MOVIMIENTO              = 5;
+   private static final int     MOVIMIENTO_ENEMIGOS     = 50;
+   private static final int     DELAY                   = 15;
+   private static final int RETRASO_ENEMIGOS = 40;
+
    /**
     * 
     */
-   public Juego () {
+   private Juego (OyenteTimers timerListener) {
       setEnemigos (new Tabla (M, N, TOTAL_X, TOTAL_Y - ALTURA_INICIAL_ENEMIGOS));
       inicializarNaves (NAVES);
       setProyectiles (new ArrayList<Proyectil> ());
-      setEstadoEnemigos(1);
-      setDireccionEnemigos(false);
-      
-      bucleJuego = new Timer(10, new ActionListener () 
-			{ 
-			    public void actionPerformed(ActionEvent e) 
-			    { 
-			    	step();
-			     } 
-			});
-      
-      movimientoEnemigos = new Timer(1600, new ActionListener () 
-		{ 
-		    public void actionPerformed(ActionEvent e) 
-		    { 
-		    	moverEnemigos();
-		     } 
-		});
-      
-      bucleJuego.start();
-      movimientoEnemigos.start();
-      
-      smoothmoveTimer = new Timer(30, new ActionListener() {
+      setEstadoEnemigos (1);
+      setDireccionEnemigos (IZQUIERDA);
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			moverNave(0, dir);
-			
-		}
-    	  
-      });
-     
+      Timer bucleJuego = new Timer (DELAY, timerListener);
+      bucleJuego.start ();
    }
-	
-	/**
+
+   public static Juego getInstance () {
+      if (getJuego () == null)
+         setJuego (new Juego (new OyenteTimers ()));
+      return getJuego ();
+   }
+
+   /**
     * 
     */
    private void inicializarNaves (int numeroNaves) {
@@ -113,119 +93,128 @@ public class Juego extends Observable {
    public void moverNave (int nave, int direccion) {
       switch (direccion) {
          case IZQUIERDA:
-        	if(getNaves ().get (nave).getX() > (ALTURA_SUELO))
-        		 getNaves ().get (nave).moverX (-MOVIMIENTO);
+            if (getNaves ().get (nave).getX () > (ALTURA_SUELO))
+               getNaves ().get (nave).moverX (-MOVIMIENTO);
             break;
          case DERECHA:
-        	if(getNaves ().get (nave).getX() < (TOTAL_X - ALTURA_SUELO))
-        		getNaves ().get (nave).moverX (MOVIMIENTO);
+            if (getNaves ().get (nave).getX () < (TOTAL_X - ALTURA_SUELO))
+               getNaves ().get (nave).moverX (MOVIMIENTO);
             break;
+      }
+   }
+
+   public void disparar (int nave) {
+      getProyectiles ().add (
+            new ProyectilBasico (getNaves ().get (nave).getX (), getNaves ().get (nave).getY (), VELOCIDAD_BASE));
+      setChanged ();
+      notifyObservers ();
+   }
+
+   public void moverEnemigos () {
+
+      if (getDireccionEnemigos () == IZQUIERDA) {
+         if (getEnemigos ().izquierda ().getX () - MOVIMIENTO_ENEMIGOS < 0) { // Caso especial, llega al borde
+            getEnemigos ().moverAbajo (MOVIMIENTO_ENEMIGOS);
+            setDireccionEnemigos (DERECHA);
+         } else {
+            getEnemigos ().moverIzquierda (MOVIMIENTO_ENEMIGOS);
+         }
+      } else {
+         if (getEnemigos ().derecha ().getX () + MOVIMIENTO_ENEMIGOS >= TOTAL_X) {
+            getEnemigos ().moverAbajo (MOVIMIENTO_ENEMIGOS);
+            setDireccionEnemigos (IZQUIERDA);
+         } else {
+            getEnemigos ().moverDerecha (MOVIMIENTO_ENEMIGOS);
+         }
+      }
+   }
+
+   public void step () {
+      for (Proyectil proyectil : getProyectiles ()) {
+         proyectil.setTiempo (proyectil.getTiempo () + 1);
+         proyectil.calcularNuevaPosicion ();
+      }
+      if (getContador () == RETRASO_ENEMIGOS) {
+         setContador (0);
+         moverEnemigos ();
+      } else {
+         setContador (getContador() + 1);
       }
       setChanged ();
       notifyObservers ();
    }
-   
-   public void disparar (int nave) {
-	   getProyectiles().add(new ProyectilBasico(getNaves ().get (nave).getX(), getNaves ().get (nave).getY(), VELOCIDAD_BASE));
-	   setChanged ();
-	   notifyObservers ();
+
+   public Tabla getEnemigos () {
+      return enemigos;
    }
-   
-   public void moverEnemigos(){
-	   Tabla t = getEnemigos ();
-	      Iterator<Enemigo> iter = getEnemigos ().iterator ();
 
-	      if(getEstadoEnemigos() % 2 == 0){
-	    	  while (iter.hasNext ()) {
-			         Enemigo enemy = iter.next ();
-			         enemy.moverY(MOVIMIENTO_ENEMIGOS / 2);
-			      }
-	    	  setDireccionEnemigos(! isDireccionEnemigos());
-	      }
-	      
-	      else if(isDireccionEnemigos()){
-		      while (iter.hasNext ()) {
-		         Enemigo enemy = iter.next ();
-		         enemy.moverX(MOVIMIENTO_ENEMIGOS / 2);
-		      }
-	      }
-	      else {
-	    	  while (iter.hasNext ()) {
-			         Enemigo enemy = iter.next ();
-			         enemy.moverX(- MOVIMIENTO_ENEMIGOS / 2);
-			      }
-	      }
-	      
-	      setEstadoEnemigos(getEstadoEnemigos() + 1);
+   public void setEnemigos (Tabla enemigos) {
+      this.enemigos = enemigos;
    }
-   
-   public void step (){
-	   boolean aux = false;
-		   for (Proyectil proyectil : getProyectiles() ) {
-		          proyectil.setTiempo(proyectil.getTiempo() + 1);
-		          proyectil.calcularNuevaPosicion();
-		       }
-		   setChanged ();
-		   notifyObservers ();
+
+   public ArrayList<Nave> getNaves () {
+      return naves;
    }
-   
-   public Tabla getEnemigos() {
-		return enemigos;
-	}
-	
-	public void setEnemigos(Tabla enemigos) {
-		this.enemigos = enemigos;
-	}
-	
-	public ArrayList<Nave> getNaves() {
-		return naves;
-	}
-	
-	public void setNaves(ArrayList<Nave> naves) {
-		this.naves = naves;
-	}
-	
-	public ArrayList<Proyectil> getProyectiles() {
-		return proyectiles;
-	}
-	
-	public void setProyectiles(ArrayList<Proyectil> proyectiles) {
-		this.proyectiles = proyectiles;
-	}
 
-	public int getEstadoEnemigos() {
-		return estadoEnemigos;
-	}
+   public void setNaves (ArrayList<Nave> naves) {
+      this.naves = naves;
+   }
 
-	public void setEstadoEnemigos(int estadoEnemigos) {
-		this.estadoEnemigos = estadoEnemigos;
-	}
+   public ArrayList<Proyectil> getProyectiles () {
+      return proyectiles;
+   }
 
-	public Timer getBucleJuego() {
-		return bucleJuego;
-	}
+   public void setProyectiles (ArrayList<Proyectil> proyectiles) {
+      this.proyectiles = proyectiles;
+   }
 
-	public void setBucleJuego(Timer bucleJuego) {
-		this.bucleJuego = bucleJuego;
-	}
+   public int getEstadoEnemigos () {
+      return estadoEnemigos;
+   }
 
-	public Timer getMovimientoEnemigos() {
-		return movimientoEnemigos;
-	}
+   public void setEstadoEnemigos (int estadoEnemigos) {
+      this.estadoEnemigos = estadoEnemigos;
+   }
 
-	public void setMovimientoEnemigos(Timer movimientoEnemigos) {
-		this.movimientoEnemigos = movimientoEnemigos;
-	}
+   public int getDireccionEnemigos () {
+      return direccionEnemigos;
+   }
 
-	public boolean isDireccionEnemigos() {
-		return direccionEnemigos;
-	}
+   public void setDireccionEnemigos (int direccionEnemigos) {
+      this.direccionEnemigos = direccionEnemigos;
+   }
 
-	public void setDireccionEnemigos(boolean direccionEnemigos) {
-		this.direccionEnemigos = direccionEnemigos;
-	}
-	
-	
-	
-	
+
+   /**
+    * @return the juego
+    */
+   private static Juego getJuego () {
+      return juego;
+   }
+
+
+   /**
+    * @param juego
+    *           the juego to set
+    */
+   public static void setJuego (Juego juego) {
+      Juego.juego = juego;
+   }
+
+
+   /**
+    * @return the contador
+    */
+   public int getContador () {
+      return contador;
+   }
+
+
+   /**
+    * @param contador
+    *           the contador to set
+    */
+   public void setContador (int contador) {
+      this.contador = contador;
+   }
 }

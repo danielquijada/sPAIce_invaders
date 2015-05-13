@@ -27,7 +27,7 @@ public class Main {
    public static void main (String args[]) {
 
       ListenForKey lForKey = new ListenForKey ();
-      Juego juego = new Juego ();
+      Juego juego = Juego.getInstance ();
       lForKey.setJuego (juego);
       VentanaJuego ventanaJuego = new VentanaJuego (juego, lForKey);
       juego.addObserver (ventanaJuego.getApplet ().getPantallaJuego ());

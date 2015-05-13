@@ -19,6 +19,8 @@ package modelo;
  */
 public abstract class Vivo extends Elemento {
 
+   private int vidas;
+   
    public void moverX(int desplazamiento){
 	   setX(getX() + desplazamiento);
    }
@@ -27,4 +29,23 @@ public abstract class Vivo extends Elemento {
 	   setY(getY() + desplazamiento);
    }
 
+   
+   /**
+    * @return the vidas
+    */
+   public int getVidas () {
+      return vidas;
+   }
+
+   
+   /**
+    * @param vidas the vidas to set
+    */
+   public void setVidas (int vidas) {
+      this.vidas = vidas;
+   }
+
+   public boolean isVivo () {
+      return (getVidas () > 0);
+   }
 }
