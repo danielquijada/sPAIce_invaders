@@ -41,10 +41,14 @@ public class ListenForKey implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-			getJuego ().moverNave (0, Juego.IZQUIERDA);
+			//getJuego ().moverNave (0, Juego.IZQUIERDA);
+			getJuego ().smoothmoveTimer.start();
+			getJuego ().dir = Juego.IZQUIERDA;
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
-         getJuego ().moverNave (0, Juego.DERECHA);
+         //getJuego ().moverNave (0, Juego.DERECHA);
+			getJuego ().smoothmoveTimer.start();
+			getJuego ().dir = Juego.DERECHA;
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_SPACE){
 			if(getJuego ().getProyectiles().isEmpty()) {
@@ -59,10 +63,10 @@ public class ListenForKey implements KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-			
+			getJuego ().smoothmoveTimer.stop();
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_RIGHT){
-			
+			getJuego ().smoothmoveTimer.stop();
 		}
 		else if (e.getKeyCode() == KeyEvent.VK_SPACE){
 			ArrayList<Proyectil> aux = getJuego().getProyectiles();

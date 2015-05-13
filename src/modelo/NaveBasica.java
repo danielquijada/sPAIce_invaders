@@ -21,10 +21,12 @@ package modelo;
 public class NaveBasica extends Nave {
 
 	private final int VIDA_NAVE_BASICA = 3;
+	private int puntuacion_inicial = 0;
 	
 	public NaveBasica(int posX, int posY){
 		super(posX, posY);
 		setVida(VIDA_NAVE_BASICA);
+		setPuntuacion(puntuacion_inicial);
 	}
 
 }

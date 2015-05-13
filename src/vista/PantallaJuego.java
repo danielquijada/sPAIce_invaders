@@ -14,6 +14,7 @@
 
 package vista;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Iterator;
 import java.util.Observable;
@@ -34,7 +35,7 @@ public class PantallaJuego extends Pantalla implements Observer {
 
    private static final int TAM = 30;
    private Juego juego;
-
+   
    /**
     * @param juego
     */
@@ -73,9 +74,10 @@ public class PantallaJuego extends Pantalla implements Observer {
     	  if (proyectil.getY() < 0) {
         	  it.remove();
     	  }
-
       }
   
+      //HUD
+      new Hud (getJuego ()).dibujar(g,getWidth());
    }
    
    /**
