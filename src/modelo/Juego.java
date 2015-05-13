@@ -42,6 +42,8 @@ public class Juego extends Observable {
 	private boolean direccionEnemigos;
 	private Timer bucleJuego;
 	private Timer movimientoEnemigos;
+	public Timer smoothmoveTimer;
+	public int dir;
 
 	private static final int M = 10;
 	private static final int N = 6;
@@ -54,7 +56,7 @@ public class Juego extends Observable {
 	
    public static final int IZQUIERDA = 0;
    public static final int DERECHA = 1;
-   private static final int MOVIMIENTO = 7;
+   private static final int MOVIMIENTO = 5;
    private static final int MOVIMIENTO_ENEMIGOS = 50;
    
    /**
@@ -66,13 +68,15 @@ public class Juego extends Observable {
       setProyectiles (new ArrayList<Proyectil> ());
       setEstadoEnemigos(1);
       setDireccionEnemigos(false);
-      bucleJuego = new Timer(40, new ActionListener () 
+      
+      bucleJuego = new Timer(10, new ActionListener () 
 			{ 
 			    public void actionPerformed(ActionEvent e) 
 			    { 
 			    	step();
 			     } 
 			});
+      
       movimientoEnemigos = new Timer(1600, new ActionListener () 
 		{ 
 		    public void actionPerformed(ActionEvent e) 
@@ -80,8 +84,20 @@ public class Juego extends Observable {
 		    	moverEnemigos();
 		     } 
 		});
+      
       bucleJuego.start();
       movimientoEnemigos.start();
+      
+      smoothmoveTimer = new Timer(30, new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			moverNave(0, dir);
+			
+		}
+    	  
+      });
+     
    }
 	
 	/**
@@ -118,8 +134,8 @@ public class Juego extends Observable {
    public void moverEnemigos(){
 	   Tabla t = getEnemigos ();
 	      Iterator<Enemigo> iter = getEnemigos ().iterator ();
-	      
-	      if(getEstadoEnemigos() % 5 == 0){
+
+	      if(getEstadoEnemigos() % 2 == 0){
 	    	  while (iter.hasNext ()) {
 			         Enemigo enemy = iter.next ();
 			         enemy.moverY(MOVIMIENTO_ENEMIGOS / 2);
