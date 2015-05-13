@@ -35,7 +35,8 @@ public class AppletJuego extends JApplet {
     */
    public AppletJuego (Juego juego) {
       setPantallaJuego (new PantallaJuego (juego));
-      add (getPantallaJuego ());
+//      add (getPantallaJuego ());
+      add (new PantallaMenu ());
       setSize (ANCHO, ALTO);
       setPreferredSize (getSize ());
    }
