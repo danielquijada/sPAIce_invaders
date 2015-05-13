@@ -143,4 +143,51 @@ public class Menu implements Estado {
       this.seleccionada = seleccionada;
    }
 
+   /* (non-Javadoc)
+    * @see modelo.Estado#paraIzquierda()
+    */
+   @Override
+   public void paraIzquierda () {
+      // Nada
+   }
+
+   /* (non-Javadoc)
+    * @see modelo.Estado#paraDerecha()
+    */
+   @Override
+   public void paraDerecha () {
+      // Nada
+   }
+
+   /* (non-Javadoc)
+    * @see modelo.Estado#paraArriba()
+    */
+   @Override
+   public void paraArriba () {
+      // Nada
+   }
+
+   /* (non-Javadoc)
+    * @see modelo.Estado#paraAbajo()
+    */
+   @Override
+   public void paraAbajo () {
+      // Nada
+   }
+
+   /* (non-Javadoc)
+    * @see modelo.Estado#paraAccion()
+    */
+   @Override
+   public void paraAccion () {
+      // Nada
+   }
+
+   /* (non-Javadoc)
+    * @see modelo.Estado#paraSalir()
+    */
+   @Override
+   public void paraSalir () {
+      // Nada
+   }
 }
