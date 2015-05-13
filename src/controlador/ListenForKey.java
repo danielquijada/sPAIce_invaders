@@ -31,6 +31,7 @@ public class ListenForKey implements KeyListener {
     */
    public ListenForKey () {
       setEstado (Juego.getInstance ()); //TODO Modificar estado inicial.
+      
    }
 
    /*
