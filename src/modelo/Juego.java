@@ -19,6 +19,7 @@ import java.util.Observable;
 
 import javax.swing.Timer;
 
+import vista.EnemigoBasicoDibujable;
 import controlador.OyenteTimers;
 
 
@@ -37,7 +38,7 @@ public class Juego extends Observable implements Estado {
    private ArrayList<Proyectil> proyectiles;
    private int                  estadoEnemigos;
    private int                  direccionEnemigos;
-   private int                   dir;
+   private int                  dir;
    private static Juego         juego;
    private int                  contador;
 
@@ -50,9 +51,9 @@ public class Juego extends Observable implements Estado {
    public static final int      NAVES                   = 1;
    public static final int      VELOCIDAD_BASE          = 5;
 
-   public static final int      IZQUIERDA               = 0;
-   public static final int      DERECHA                 = 1;
-   public static final int      INMOVIL                 = 3;
+   public static final int      IZQUIERDA               = 1;
+   public static final int      DERECHA                 = 2;
+   public static final int      INMOVIL                 = 0;
    private static final int     MOVIMIENTO              = 5;
    private static final int     MOVIMIENTO_ENEMIGOS     = 50;
    private static final int     DELAY                   = 15;
@@ -109,7 +110,7 @@ public class Juego extends Observable implements Estado {
    }
 
    public void moverEnemigos () {
-
+	   
       if (getDireccionEnemigos () == IZQUIERDA) {
          if (getEnemigos ().izquierda ().getX () - MOVIMIENTO_ENEMIGOS < 0) { // Caso especial, llega al borde
             getEnemigos ().moverAbajo (MOVIMIENTO_ENEMIGOS);
@@ -138,6 +139,13 @@ public class Juego extends Observable implements Estado {
       } else {
          setContador (getContador () + 1);
       }
+      
+      if (getDir() == Juego.IZQUIERDA)
+    	  moverNave(0, Juego.IZQUIERDA);
+      
+      if (getDir() == Juego.DERECHA)
+    	  moverNave(0, Juego.DERECHA);
+      
       setChanged ();
       notifyObservers ();
    }
@@ -266,6 +274,7 @@ public class Juego extends Observable implements Estado {
 	   disparar(0);
    }
 
+   
    /*
     * (non-Javadoc)
     * 
