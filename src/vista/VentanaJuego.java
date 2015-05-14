@@ -14,8 +14,10 @@
 package vista;
 
 import javax.swing.JFrame;
-import controlador.ListenForKey;
+
+import modelo.Fuentes;
 import modelo.Juego;
+import controlador.ListenForKey;
 
 
 
@@ -29,11 +31,11 @@ public class VentanaJuego extends JFrame {
     * @param juego
     * @param lForKey
     */
-   public VentanaJuego (Juego juego, ListenForKey lForKey) {
+   public VentanaJuego (Juego juego, ListenForKey lForKey, Fuentes fuentes) {
       setTitle ("sPAIce invaders");
       setDefaultCloseOperation (EXIT_ON_CLOSE);
       addKeyListener (lForKey);
-      setApplet (new AppletJuego (juego));
+      setApplet (new AppletJuego (juego, fuentes));
       add (getApplet ());
       pack ();
       setLocationRelativeTo (null);

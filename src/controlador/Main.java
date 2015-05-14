@@ -14,6 +14,7 @@
 
 package controlador;
 
+import modelo.Fuentes;
 import modelo.Juego;
 import vista.VentanaJuego;
 
@@ -28,8 +29,9 @@ public class Main {
 
       ListenForKey lForKey = new ListenForKey ();
       Juego juego = Juego.getInstance ();
+      Fuentes fuentes = new Fuentes();
       lForKey.setEstado (juego);
-      VentanaJuego ventanaJuego = new VentanaJuego (juego, lForKey);
+      VentanaJuego ventanaJuego = new VentanaJuego (juego, lForKey, fuentes);
       juego.addObserver (ventanaJuego.getApplet ().getPantallaJuego ());
       ventanaJuego.setVisible (true);
    }

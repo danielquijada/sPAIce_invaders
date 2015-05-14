@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+import modelo.Fuentes;
+
 
 /**
  * Pantalla que muestra el menÃº con distintas opciones:
@@ -42,23 +44,14 @@ public class PantallaMenu extends Pantalla implements Observer {
 	private static final int OFFSETY_SELECTOR = 17;
 	private static final int DIAMETRO = 15; //Tamaño del selector
 	
-	private final String path_arcade = "./res/font/ARCADECLASSIC.TTF";
-	private final String path_chess = "./res/font/ChessType.ttf";
-	private final String path_invaders = "./res/font/invadersfont.ttf";
-	private final String path_safety = "./res/font/SafetyMedium.ttf";
-	
-	private Font arcade;
-	private Font chess;
-	private Font invaders;
-	private Font safety;
-	
+	private Fuentes fuentes;
 	
    /**
     * 
     */
-   public PantallaMenu () {
+   public PantallaMenu (Fuentes fuentes) {
 	   setBackground(Color.BLACK);
-	   loadFonts();
+	   setFuentes(fuentes);
    }
 
 
@@ -69,13 +62,13 @@ public class PantallaMenu extends Pantalla implements Observer {
 			int mitad_alto = getHeight() / 2 - OFFSETY;
 			
 			g.setColor(Color.WHITE);
-			g.setFont(invaders);
+			g.setFont(getFuentes().getInvadersFont().deriveFont(Font.PLAIN, 80));
 			g.drawString("BDFL", mitad_ancho - 80, 100);
-			g.setFont(chess);
+			g.setFont(getFuentes().getChessFont().deriveFont(Font.PLAIN, 80));
 			g.drawString("SPAICE", mitad_ancho - 60, 170);
-			g.setFont(safety);
+			g.setFont(getFuentes().getSafetyFont().deriveFont(Font.PLAIN,70));
 			g.drawString("INVADERS", mitad_ancho - 80, 250);		
-			g.setFont(arcade);
+			g.setFont(getFuentes().getArcadeFont().deriveFont(Font.PLAIN, 30));
 			g.drawString("Nuevo Juego", mitad_ancho, mitad_alto);
 			g.drawString("Cargar partida", mitad_ancho, mitad_alto + SEPARACION);
 			g.drawString("Opciones", mitad_ancho, mitad_alto + (SEPARACION * 2));
@@ -96,28 +89,13 @@ public class PantallaMenu extends Pantalla implements Observer {
 		
 	}
 		
-	public void loadFonts() {
-		  
-	    File filearcade = new File(path_arcade);
-	    File filechess = new File(path_chess);
-	    File fileinvaders = new File(path_invaders);
-	    File filesafety = new File(path_safety);
-	    
-	    try {
-	    	arcade = Font.createFont(Font.TRUETYPE_FONT, filearcade);
-	    	chess = Font.createFont(Font.TRUETYPE_FONT, filechess);
-	    	invaders = Font.createFont(Font.TRUETYPE_FONT, fileinvaders);
-	    	safety = Font.createFont(Font.TRUETYPE_FONT, filesafety);
-	    }
-	    catch (FontFormatException | IOException e) {
-			e.printStackTrace();
-		}
-	    
-	    safety = safety.deriveFont(Font.PLAIN,70);
-		arcade = arcade.deriveFont(Font.PLAIN,30);
-		chess = chess.deriveFont(Font.PLAIN, 80);
-		invaders = invaders.deriveFont(Font.PLAIN, 80);
 	
+	public void setFuentes(Fuentes fuentes) {
+		this.fuentes = fuentes;
+	}
+	
+	public Fuentes getFuentes() {
+		return fuentes;
 	}
 	
 
