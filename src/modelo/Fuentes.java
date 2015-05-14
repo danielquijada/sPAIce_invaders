@@ -23,10 +23,10 @@ import java.io.IOException;
  */
 public class Fuentes {
 
-	private final String path_arcade = "./res/font/ARCADECLASSIC.TTF";
-	private final String path_chess = "./res/font/ChessType.ttf";
-	private final String path_invaders = "./res/font/invadersfont.ttf";
-	private final String path_safety = "./res/font/SafetyMedium.ttf";
+	private static final String RUTA_ARCADE_FONT = "./res/font/ARCADECLASSIC.TTF";
+	private static final String RUTA_CHESS_FONT = "./res/font/ChessType.ttf";
+	private static final String RUTA_INVADERS_FONT = "./res/font/invadersfont.ttf";
+	private static final String RUTA_SAFETY_FONT = "./res/font/SafetyMedium.ttf";
 	
 	private Font arcadeFont;
 	private Font chessFont;
@@ -34,10 +34,10 @@ public class Fuentes {
 	private Font safetyFont;
 	
 	public Fuentes() {
-	    File filearcade = new File(path_arcade);
-	    File filechess = new File(path_chess);
-	    File fileinvaders = new File(path_invaders);
-	    File filesafety = new File(path_safety);
+	    File filearcade = new File(RUTA_ARCADE_FONT);
+	    File filechess = new File(RUTA_CHESS_FONT);
+	    File fileinvaders = new File(RUTA_INVADERS_FONT);
+	    File filesafety = new File(RUTA_SAFETY_FONT);
 	    
 	    try {
 	    	setArcadeFont(Font.createFont(Font.TRUETYPE_FONT, filearcade));
