@@ -16,9 +16,7 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.Observable;
-
 import javax.swing.Timer;
-
 import vista.EnemigoBasicoDibujable;
 import controlador.OyenteTimers;
 
@@ -33,6 +31,7 @@ public class Juego extends Observable implements Estado {
     * 
     */
 
+   private Timer                bucleJuego;
    private Tabla                enemigos;
    private ArrayList<Nave>      naves;
    private ArrayList<Proyectil> proyectiles;
@@ -55,22 +54,15 @@ public class Juego extends Observable implements Estado {
    public static final int      DERECHA                 = 2;
    public static final int      INMOVIL                 = 0;
    private static final int     MOVIMIENTO              = 5;
-   private static final int     MOVIMIENTO_ENEMIGOS     = 50;
+   private static final int     MOVIMIENTO_ENEMIGOS     = 15;
    private static final int     DELAY                   = 15;
-   private static final int     RETRASO_ENEMIGOS        = 40;
+   private static final int     RETRASO_ENEMIGOS        = 20;
 
    /**
     * 
     */
    private Juego (OyenteTimers timerListener) {
-      setEnemigos (new Tabla (M, N, TOTAL_X, TOTAL_Y - ALTURA_INICIAL_ENEMIGOS));
-      inicializarNaves (NAVES);
-      setProyectiles (new ArrayList<Proyectil> ());
-      setEstadoEnemigos (1);
-      setDireccionEnemigos (IZQUIERDA);
-
-      Timer bucleJuego = new Timer (DELAY, timerListener);
-      bucleJuego.start ();
+      nuevo ();
    }
 
    public static Juego getInstance () {
@@ -110,7 +102,7 @@ public class Juego extends Observable implements Estado {
    }
 
    public void moverEnemigos () {
-	   
+
       if (getDireccionEnemigos () == IZQUIERDA) {
          if (getEnemigos ().izquierda ().getX () - MOVIMIENTO_ENEMIGOS < 0) { // Caso especial, llega al borde
             getEnemigos ().moverAbajo (MOVIMIENTO_ENEMIGOS);
@@ -139,13 +131,13 @@ public class Juego extends Observable implements Estado {
       } else {
          setContador (getContador () + 1);
       }
-      
-      if (getDir() == Juego.IZQUIERDA)
-    	  moverNave(0, Juego.IZQUIERDA);
-      
-      if (getDir() == Juego.DERECHA)
-    	  moverNave(0, Juego.DERECHA);
-      
+
+      if (getDir () == Juego.IZQUIERDA)
+         moverNave (0, Juego.IZQUIERDA);
+
+      if (getDir () == Juego.DERECHA)
+         moverNave (0, Juego.DERECHA);
+
       setChanged ();
       notifyObservers ();
    }
@@ -231,7 +223,7 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void izquierda () {
-	  setDir(Juego.IZQUIERDA);
+      setDir (Juego.IZQUIERDA);
    }
 
    /*
@@ -241,7 +233,7 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void derecha () {
-	   setDir(Juego.DERECHA);
+      setDir (Juego.DERECHA);
    }
 
    /*
@@ -251,7 +243,7 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void arriba () {
-      //No hace nada
+      // No hace nada
    }
 
    /*
@@ -261,7 +253,7 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void abajo () {
-	 //No hace nada
+      // No hace nada
    }
 
    /*
@@ -271,10 +263,10 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void accion () {
-	   disparar(0);
+      disparar (0);
    }
 
-   
+
    /*
     * (non-Javadoc)
     * 
@@ -282,69 +274,114 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void salir () {
-	 //Falta por implementar
+      // Falta por implementar
    }
 
-public int getDir() {
-	return dir;
-}
+   public int getDir () {
+      return dir;
+   }
 
-public void setDir(int dir) {
-	this.dir = dir;
-}
+   public void setDir (int dir) {
+      this.dir = dir;
+   }
 
-/* (non-Javadoc)
- * @see modelo.Estado#paraIzquierda()
- */
-@Override
-public void paraIzquierda() {
-	if (getDir() == Juego.IZQUIERDA) {
-		setDir(Juego.INMOVIL);
-	}
-	
-}
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#paraIzquierda()
+    */
+   @Override
+   public void paraIzquierda () {
+      if (getDir () == Juego.IZQUIERDA) {
+         setDir (Juego.INMOVIL);
+      }
 
-/* (non-Javadoc)
- * @see modelo.Estado#paraDerecha()
- */
-@Override
-public void paraDerecha() {
-	if (getDir() == Juego.DERECHA) {
-		setDir(Juego.INMOVIL);
-	}
-}
+   }
 
-/* (non-Javadoc)
- * @see modelo.Estado#paraArriba()
- */
-@Override
-public void paraArriba() {
-	//Falta por implementar
-	
-}
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#paraDerecha()
+    */
+   @Override
+   public void paraDerecha () {
+      if (getDir () == Juego.DERECHA) {
+         setDir (Juego.INMOVIL);
+      }
+   }
 
-/* (non-Javadoc)
- * @see modelo.Estado#paraAbajo()
- */
-@Override
-public void paraAbajo() {
-	//Falta por implementar
-}
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#paraArriba()
+    */
+   @Override
+   public void paraArriba () {
+      // Falta por implementar
 
-/* (non-Javadoc)
- * @see modelo.Estado#paraAccion()
- */
-@Override
-public void paraAccion() {
-	//Falta por implementar
-	
-}
+   }
 
-/* (non-Javadoc)
- * @see modelo.Estado#paraSalir()
- */
-@Override
-public void paraSalir() {
-	//Falta por implementar
-}
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#paraAbajo()
+    */
+   @Override
+   public void paraAbajo () {
+      // Falta por implementar
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#paraAccion()
+    */
+   @Override
+   public void paraAccion () {
+      // Falta por implementar
+
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
+    * @see modelo.Estado#paraSalir()
+    */
+   @Override
+   public void paraSalir () {
+      // Falta por implementar
+   }
+
+   /**
+    * @param timerListener
+    * 
+    */
+   public void nuevo () {
+      setEnemigos (new Tabla (M, N, TOTAL_X, TOTAL_Y - ALTURA_INICIAL_ENEMIGOS));
+      inicializarNaves (NAVES);
+      setProyectiles (new ArrayList<Proyectil> ());
+      setEstadoEnemigos (1);
+      setDireccionEnemigos (IZQUIERDA);
+
+      Timer bucleJuego = new Timer (DELAY, new OyenteTimers ());
+      setBucleJuego (bucleJuego);
+      bucleJuego.start ();
+   }
+
+
+   /**
+    * @return the bucleJuego
+    */
+   public Timer getBucleJuego () {
+      return bucleJuego;
+   }
+
+
+   /**
+    * @param bucleJuego
+    *           the bucleJuego to set
+    */
+   public void setBucleJuego (Timer bucleJuego) {
+      this.bucleJuego = bucleJuego;
+   }
 }

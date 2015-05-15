@@ -35,12 +35,18 @@ public class PantallaJuego extends Pantalla implements Observer {
 
    private static final int TAM = 30;
    private Juego juego;
-   
+   private static PantallaJuego pantallaJuego;
    /**
     * @param juego
     */
-   public PantallaJuego (Juego juego) {
+   private PantallaJuego (Juego juego) {
       setJuego (juego);
+   }
+   
+   public static PantallaJuego getInstance () {
+      if (getPantallaJuego () == null)
+         setPantallaJuego (new PantallaJuego (Juego.getInstance ()));
+      return getPantallaJuego ();
    }
 
    /* (non-Javadoc)
@@ -101,5 +107,21 @@ public class PantallaJuego extends Pantalla implements Observer {
    @Override
    public void update (Observable o, Object arg) {
       repaint ();
+   }
+
+   
+   /**
+    * @return the pantallaJuego
+    */
+   public static PantallaJuego getPantallaJuego () {
+      return pantallaJuego;
+   }
+
+   
+   /**
+    * @param pantallaJuego the pantallaJuego to set
+    */
+   public static void setPantallaJuego (PantallaJuego pantallaJuego) {
+      PantallaJuego.pantallaJuego = pantallaJuego;
    }
 }

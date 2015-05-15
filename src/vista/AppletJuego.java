@@ -14,47 +14,36 @@
 
 package vista;
 
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.JApplet;
-
-import modelo.Fuentes;
-import modelo.Juego;
+import modelo.Master;
 
 
 /**
  * TODO Descripción de la clase.
  */
-public class AppletJuego extends JApplet {
+public class AppletJuego extends JApplet implements Observer {
 
    private static final int ANCHO = 800;
    private static final int ALTO = ANCHO;
-   
-   private PantallaJuego pantallaJuego;
 
    /**
     * @param juego
     * @param lForKey
     */
-   public AppletJuego (Juego juego,Fuentes fuentes) {
-      setPantallaJuego (new PantallaJuego (juego));
-    //add (getPantallaJuego ());
-      add (new PantallaMenu (fuentes));
+   public AppletJuego () {
+      add (Master.getInstance ().getPantalla ());
       setSize (ANCHO, ALTO);
       setPreferredSize (getSize ());
    }
 
-   
-   /**
-    * @return the pantallaJuego
+   /* (non-Javadoc)
+    * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
     */
-   public PantallaJuego getPantallaJuego () {
-      return pantallaJuego;
-   }
-
-   
-   /**
-    * @param pantallaJuego the pantallaJuego to set
-    */
-   public void setPantallaJuego (PantallaJuego pantallaJuego) {
-      this.pantallaJuego = pantallaJuego;
+   @Override
+   public void update (Observable o, Object arg) {
+      add (Master.getInstance ().getPantalla ());
+      validate ();
    }
 }

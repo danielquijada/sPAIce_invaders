@@ -15,14 +15,11 @@ package vista;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
-import java.io.File;
-import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-
 import modelo.Fuentes;
+import modelo.Menu;
 
 
 /**
@@ -42,18 +39,25 @@ public class PantallaMenu extends Pantalla implements Observer {
 	
 	private static final int OFFSETX_SELECTOR = 20;
 	private static final int OFFSETY_SELECTOR = 17;
-	private static final int DIAMETRO = 15; //Tamaño del selector
+	private static final int DIAMETRO = 15; //Tamaï¿½o del selector
 	
 	private Fuentes fuentes;
-	
+	private static PantallaMenu pantallaMenu;
+	private Menu menu;
    /**
     * 
     */
-   public PantallaMenu (Fuentes fuentes) {
+   private PantallaMenu (Fuentes fuentes) {
 	   setBackground(Color.BLACK);
 	   setFuentes(fuentes);
+	   setMenu (Menu.getInstance ());
    }
 
+   public static PantallaMenu getInstance () {
+      if (getPantallaMenu () == null)
+         setPantallaMenu (new PantallaMenu (new Fuentes ()));
+      return getPantallaMenu ();
+   }
 
 	protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
@@ -73,9 +77,9 @@ public class PantallaMenu extends Pantalla implements Observer {
 			g.drawString("Cargar partida", mitad_ancho, mitad_alto + SEPARACION);
 			g.drawString("Opciones", mitad_ancho, mitad_alto + (SEPARACION * 2));
 			g.drawString("Salir", mitad_ancho, mitad_alto + (SEPARACION * 3));
-		   
+			
 			g.setColor(Color.RED);
-			g.fillOval(mitad_ancho - OFFSETX_SELECTOR, mitad_alto - OFFSETY_SELECTOR, DIAMETRO, DIAMETRO);
+			g.fillOval(mitad_ancho - OFFSETX_SELECTOR, mitad_alto + (SEPARACION * getMenu ().getSeleccionada ()) - OFFSETY_SELECTOR, DIAMETRO, DIAMETRO);
 		   
 	}
 
@@ -86,7 +90,6 @@ public class PantallaMenu extends Pantalla implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		repaint();
-		
 	}
 		
 	
@@ -97,6 +100,38 @@ public class PantallaMenu extends Pantalla implements Observer {
 	public Fuentes getFuentes() {
 		return fuentes;
 	}
-	
+
+   
+   /**
+    * @return the pantallaMenu
+    */
+   public static PantallaMenu getPantallaMenu () {
+      return pantallaMenu;
+   }
+
+   
+   /**
+    * @param pantallaMenu the pantallaMenu to set
+    */
+   public static void setPantallaMenu (PantallaMenu pantallaMenu) {
+      PantallaMenu.pantallaMenu = pantallaMenu;
+   }
+
+   
+   /**
+    * @return the menu
+    */
+   public Menu getMenu () {
+      return menu;
+   }
+
+   
+   /**
+    * @param menu the menu to set
+    */
+   public void setMenu (Menu menu) {
+      this.menu = menu;
+   }
+
 
 }

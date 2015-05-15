@@ -31,11 +31,11 @@ public class VentanaJuego extends JFrame {
     * @param juego
     * @param lForKey
     */
-   public VentanaJuego (Juego juego, ListenForKey lForKey, Fuentes fuentes) {
+   public VentanaJuego (ListenForKey lForKey) {
       setTitle ("sPAIce invaders");
       setDefaultCloseOperation (EXIT_ON_CLOSE);
       addKeyListener (lForKey);
-      setApplet (new AppletJuego (juego, fuentes));
+      setApplet (new AppletJuego ());
       add (getApplet ());
       pack ();
       setLocationRelativeTo (null);

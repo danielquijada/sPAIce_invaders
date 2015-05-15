@@ -15,15 +15,16 @@
 package modelo;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 
 /**
  * TODO Descripción de la clase.
  */
-public class Menu implements Estado {
+public class Menu extends Observable implements Estado {
 
    private static final String NEW = "Nuevo Juego";
-   private static final String LOA = "Cargar Partida";
+   private static final String LOAD = "Continuar";
    private static final String OPC = "Opciones";
    private static final String EXT = "Salir";
    private ArrayList<String>   opciones;
@@ -38,7 +39,7 @@ public class Menu implements Estado {
       setSeleccionada (0);
       setOpciones (new ArrayList<String> ());
       getOpciones ().add (NEW);
-      getOpciones ().add (LOA);
+      getOpciones ().add (LOAD);
       getOpciones ().add (OPC);
       getOpciones ().add (EXT);
    }
@@ -67,13 +68,23 @@ public class Menu implements Estado {
    @Override
    public void derecha () {
       seleccionar ();
+      setChanged ();
+      notifyObservers ();
    }
 
    /**
     * 
     */
    private void seleccionar () {
-      // TODO Auto-generated method stub
+      // TODO Añadir todas las opciones, o quitar las que no sean implementadas por ahora
+      System.out.println ("hola");
+      switch (getOpciones ().get (seleccionada)) {
+         case NEW:
+            Juego.getInstance ().nuevo ();
+            Master.getInstance ().cambiarEstado (Master.JUEGO);
+            break;
+         case LOAD:
+      }
    }
 
    /*
@@ -83,7 +94,9 @@ public class Menu implements Estado {
     */
    @Override
    public void arriba () {
-      setSeleccionada ((getSeleccionada () - 1) % getOpciones ().size ());
+      setSeleccionada ((getSeleccionada () - 1 + getOpciones ().size ()) % getOpciones ().size ());
+      setChanged ();
+      notifyObservers ();
    }
 
    /*
@@ -94,6 +107,8 @@ public class Menu implements Estado {
    @Override
    public void abajo () {
       setSeleccionada ((getSeleccionada () + 1) % getOpciones ().size ());
+      setChanged ();
+      notifyObservers ();
    }
 
    /*
@@ -104,6 +119,8 @@ public class Menu implements Estado {
    @Override
    public void accion () {
       seleccionar ();
+      setChanged ();
+      notifyObservers ();
    }
 
    /*
@@ -114,6 +131,8 @@ public class Menu implements Estado {
    @Override
    public void salir () {
       setSeleccionada (getOpciones ().size () - 1);
+      setChanged ();
+      notifyObservers ();
    }
 
 

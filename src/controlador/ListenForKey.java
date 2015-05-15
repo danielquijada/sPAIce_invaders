@@ -16,13 +16,16 @@ package controlador;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Observable;
+import java.util.Observer;
 import modelo.Estado;
 import modelo.Juego;
+import modelo.Master;
 
 /**
  * TODO Descripci�n de la clase.
  */
-public class ListenForKey implements KeyListener {
+public class ListenForKey implements KeyListener, Observer {
 
    private Estado estado;
 
@@ -30,8 +33,8 @@ public class ListenForKey implements KeyListener {
     * 
     */
    public ListenForKey () {
-      setEstado (Juego.getInstance ()); //TODO Modificar estado inicial.
-      
+      setEstado (Master.getInstance ().getEstado ()); //TODO Modificar estado inicial.
+      Master.getInstance ().addObserver (this);
    }
 
    /*
@@ -100,5 +103,13 @@ public class ListenForKey implements KeyListener {
     */
    public void setEstado (Estado estado) {
       this.estado = estado;
+   }
+
+   /* (non-Javadoc)
+    * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+    */
+   @Override
+   public void update (Observable o, Object arg) {
+      setEstado (Master.getInstance ().getEstado ());
    }
 }

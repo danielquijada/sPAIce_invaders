@@ -16,6 +16,10 @@ package controlador;
 
 import modelo.Fuentes;
 import modelo.Juego;
+import modelo.Master;
+import modelo.Menu;
+import vista.PantallaJuego;
+import vista.PantallaMenu;
 import vista.VentanaJuego;
 
 
@@ -27,12 +31,11 @@ public class Main {
 
    public static void main (String args[]) {
 
-      ListenForKey lForKey = new ListenForKey ();
       Juego juego = Juego.getInstance ();
-      Fuentes fuentes = new Fuentes();
-      lForKey.setEstado (juego);
-      VentanaJuego ventanaJuego = new VentanaJuego (juego, lForKey, fuentes);
-      juego.addObserver (ventanaJuego.getApplet ().getPantallaJuego ());
+      VentanaJuego ventanaJuego = new VentanaJuego (new ListenForKey ());
+      Master.getInstance ().addObserver (ventanaJuego.getApplet ());
+      juego.addObserver (PantallaJuego.getInstance ());
+      Menu.getInstance ().addObserver (PantallaMenu.getInstance ());
       ventanaJuego.setVisible (true);
    }
 
