@@ -13,6 +13,8 @@
  */
 package modelo;
 
+import java.awt.Point;
+
 
 /**
  * Clase que representa un tipo de nave específica.
@@ -26,6 +28,7 @@ public class NaveBasica extends Nave {
 	public NaveBasica(int posX, int posY){
 		super(posX, posY);
 		setVidas(VIDA_NAVE_BASICA);
+		setSize (new Point (30,30));
 		setPuntuacion(puntuacion_inicial);
 	}
 }

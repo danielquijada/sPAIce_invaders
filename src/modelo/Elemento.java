@@ -26,6 +26,7 @@ public abstract class Elemento {
     */
 	
 	private Point coordenadas;
+	private Point size; //Tamaño tanto en X como en Y.
 	
    public Elemento () {
 	   setCoordenadas (new Point ());
@@ -54,6 +55,22 @@ public abstract class Elemento {
 	public void setCoordenadas(Point coordenadas) {
 		this.coordenadas = coordenadas;
 	}
+
+   
+   /**
+    * @return the size
+    */
+   public Point getSize () {
+      return size;
+   }
+
+   
+   /**
+    * @param size the size to set
+    */
+   public void setSize (Point size) {
+      this.size = size;
+   }
 	
 	
    

@@ -47,6 +47,7 @@ public class Juego extends Observable implements Estado {
    public static final int      TOTAL_Y                 = 1000;
    public static final int      ALTURA_INICIAL_ENEMIGOS = 500;
    public static final int      ALTURA_SUELO            = 50;
+   public static final int      MARGEN_LATERAL            = 40;
    public static final int      NAVES                   = 1;
    public static final int      VELOCIDAD_BASE          = 5;
 
@@ -56,7 +57,7 @@ public class Juego extends Observable implements Estado {
    private static final int     MOVIMIENTO              = 5;
    private static final int     MOVIMIENTO_ENEMIGOS     = 15;
    private static final int     DELAY                   = 15;
-   private static final int     RETRASO_ENEMIGOS        = 20;
+   private static final int     RETRASO_ENEMIGOS        = 1;
 
    /**
     * 
@@ -84,11 +85,11 @@ public class Juego extends Observable implements Estado {
    public void moverNave (int nave, int direccion) {
       switch (direccion) {
          case IZQUIERDA:
-            if (getNaves ().get (nave).getX () > (ALTURA_SUELO))
+            if (getNaves ().get (nave).getX () > (MARGEN_LATERAL))
                getNaves ().get (nave).moverX (-MOVIMIENTO);
             break;
          case DERECHA:
-            if (getNaves ().get (nave).getX () < (TOTAL_X - ALTURA_SUELO))
+            if (getNaves ().get (nave).getX () < (TOTAL_X - MARGEN_LATERAL - getNaves ().get (nave).getSize ().x))
                getNaves ().get (nave).moverX (MOVIMIENTO);
             break;
       }
