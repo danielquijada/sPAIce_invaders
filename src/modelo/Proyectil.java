@@ -22,14 +22,12 @@ import java.awt.Point;
 public abstract class Proyectil extends Inerte {
 
    public static final int VELOCIDAD = 0;
-   public static final int DAMAGE = 1;
    
    private int damage;
    
    public Proyectil (int posX, int posY) {
       setX(posX);
       setY(posY);
-      setDamage (DAMAGE);
    }
    /**
     * @return

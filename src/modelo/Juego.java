@@ -193,7 +193,7 @@ public class Juego extends Observable implements Estado {
          }
       }
       if (chocan (proyectil, elemento)) {
-         int a = Math.max (proyectil.getColision (), elemento.getColision ());
+         int a = Math.min (proyectil.getColision (), elemento.getColision ());
          proyectil.setColision (proyectil.getColision () - a);
          elemento.setColision (elemento.getColision () - a);
       }

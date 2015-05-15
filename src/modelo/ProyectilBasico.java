@@ -17,11 +17,13 @@ package modelo;
  * Clase que representa un proyectil específico. Con ciertas características únicas tales como su velocidad.
  */
 public class ProyectilBasico extends Proyectil {
-	
+
+   public static final int DAMAGE = 1;
    public static final int VELOCIDAD = -12;
 	
 	public ProyectilBasico(int posX, int posY, double velocidad){
 		super(posX, posY);
+		setDamage (DAMAGE);
 	}
 
    /* (non-Javadoc)
