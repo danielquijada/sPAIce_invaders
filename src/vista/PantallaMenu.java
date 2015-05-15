@@ -62,24 +62,24 @@ public class PantallaMenu extends Pantalla implements Observer {
 	protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			
-			int mitad_ancho = getWidth() / 2 - OFFSETX;
-			int mitad_alto = getHeight() / 2 - OFFSETY;
+			int mitadAncho = getWidth() / 2 - OFFSETX;
+			int mitadAlto = getHeight() / 2 - OFFSETY;
 			
 			g.setColor(Color.WHITE);
 			g.setFont(getFuentes().getInvadersFont().deriveFont(Font.PLAIN, 80));
-			g.drawString("BDFL", mitad_ancho - 80, 100);
+			g.drawString("BDFL", mitadAncho - 80, 100);
 			g.setFont(getFuentes().getChessFont().deriveFont(Font.PLAIN, 80));
-			g.drawString("SPAICE", mitad_ancho - 60, 170);
+			g.drawString("SPAICE", mitadAncho - 60, 170);
 			g.setFont(getFuentes().getSafetyFont().deriveFont(Font.PLAIN,70));
-			g.drawString("INVADERS", mitad_ancho - 80, 250);		
+			g.drawString("INVADERS", mitadAncho - 80, 250);		
 			g.setFont(getFuentes().getArcadeFont().deriveFont(Font.PLAIN, 30));
-			g.drawString("Nuevo Juego", mitad_ancho, mitad_alto);
-			g.drawString("Cargar partida", mitad_ancho, mitad_alto + SEPARACION);
-			g.drawString("Opciones", mitad_ancho, mitad_alto + (SEPARACION * 2));
-			g.drawString("Salir", mitad_ancho, mitad_alto + (SEPARACION * 3));
+			
+			for (int i = 0; i < getMenu ().getOpciones ().size (); i++) {
+			   g.drawString (getMenu ().getOpciones ().get (i), mitadAncho, mitadAlto + SEPARACION * i);
+			}
 			
 			g.setColor(Color.RED);
-			g.fillOval(mitad_ancho - OFFSETX_SELECTOR, mitad_alto + (SEPARACION * getMenu ().getSeleccionada ()) - OFFSETY_SELECTOR, DIAMETRO, DIAMETRO);
+			g.fillOval(mitadAncho - OFFSETX_SELECTOR, mitadAlto + (SEPARACION * getMenu ().getSeleccionada ()) - OFFSETY_SELECTOR, DIAMETRO, DIAMETRO);
 		   
 	}
 

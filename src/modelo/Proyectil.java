@@ -21,44 +21,13 @@ import java.awt.Point;
  */
 public abstract class Proyectil extends Inerte {
 
-   /**
-    * 
-    */
-	public static final double ZERO = 0.0;
-	public static final int DESPLAZAMIENTO_BASICO = 15;
-	private double tiempo;
-	private double velocidad;
-	private Point posInicial;
-	
+   public static final int VELOCIDAD = 0;
    public Proyectil (int posX, int posY) {
-      setTiempo(ZERO);
       setX(posX);
       setY(posY);
-      posInicial = new Point(posX, posY);
    }
-   
-   public void calcularNuevaPosicion(){
-	   setY(getY() - DESPLAZAMIENTO_BASICO);
-   }
-
-	public double getTiempo() {
-		return tiempo;
-	}
-	
-	public void setTiempo(double tiempo) {
-		this.tiempo = tiempo;
-	}
-
-	public double getVelocidad() {
-		return velocidad;
-	}
-
-	public void setVelocidad(double velocidad) {
-		this.velocidad = velocidad;
-	}
-	
-	
-   
-   
-
+   /**
+    * @return
+    */
+   public abstract int getVelocidad ();
 }

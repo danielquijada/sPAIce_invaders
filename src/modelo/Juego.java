@@ -123,10 +123,7 @@ public class Juego extends Observable implements Estado {
    }
 
    public void step () {
-      for (Proyectil proyectil : getProyectiles ()) {
-         proyectil.setTiempo (proyectil.getTiempo () + 1);
-         proyectil.calcularNuevaPosicion ();
-      }
+      moverProyectiles ();
       if (getContadorMovimientoEnemigos () == RETRASO_ENEMIGOS) {
          setContadorMovimientoEnemigos (0);
          moverEnemigos ();
@@ -142,6 +139,15 @@ public class Juego extends Observable implements Estado {
 
       setChanged ();
       notifyObservers ();
+   }
+
+   /**
+    * 
+    */
+   private void moverProyectiles () {
+      for (Proyectil proyectil : getProyectiles ()) {
+         proyectil.setY (proyectil.getY () + proyectil.getVelocidad ());
+      }
    }
 
    public Tabla getEnemigos () {
