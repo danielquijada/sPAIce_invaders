@@ -14,7 +14,9 @@
 
 package modelo;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 import javax.swing.Timer;
 import vista.EnemigoBasicoDibujable;
@@ -47,7 +49,7 @@ public class Juego extends Observable implements Estado {
    public static final int      TOTAL_Y                 = 1000;
    public static final int      ALTURA_INICIAL_ENEMIGOS = 500;
    public static final int      ALTURA_SUELO            = 50;
-   public static final int      MARGEN_LATERAL            = 40;
+   public static final int      MARGEN_LATERAL          = 40;
    public static final int      NAVES                   = 1;
    public static final int      VELOCIDAD_BASE          = 5;
 
@@ -106,14 +108,16 @@ public class Juego extends Observable implements Estado {
    public void moverEnemigos () {
 
       if (getDireccionEnemigos () == IZQUIERDA) {
-         if (getEnemigos ().izquierda ().getX () - MOVIMIENTO_ENEMIGOS < MARGEN_LATERAL) { // Caso especial, llega al borde
+         if (getEnemigos ().izquierda ().getX () - MOVIMIENTO_ENEMIGOS < MARGEN_LATERAL) { // Caso especial, llega al
+                                                                                           // borde
             getEnemigos ().moverAbajo (MOVIMIENTO_ENEMIGOS);
             setDireccionEnemigos (DERECHA);
          } else {
             getEnemigos ().moverIzquierda (MOVIMIENTO_ENEMIGOS);
          }
       } else {
-         if (getEnemigos ().derecha ().getX () + MOVIMIENTO_ENEMIGOS >= TOTAL_X - MARGEN_LATERAL - getEnemigos ().derecha ().getSize ().x) {
+         if (getEnemigos ().derecha ().getX () + MOVIMIENTO_ENEMIGOS >= TOTAL_X - MARGEN_LATERAL
+               - getEnemigos ().derecha ().getSize ().x) {
             getEnemigos ().moverAbajo (MOVIMIENTO_ENEMIGOS);
             setDireccionEnemigos (IZQUIERDA);
          } else {
@@ -137,8 +141,75 @@ public class Juego extends Observable implements Estado {
       if (getDir () == Juego.DERECHA)
          moverNave (0, Juego.DERECHA);
 
+      calcularColisiones ();
+
       setChanged ();
       notifyObservers ();
+   }
+
+   /**
+    * 
+    */
+   private void calcularColisiones () {
+      int i = 0;
+      for (Proyectil proyectil : getProyectiles ()) {
+         for (Proyectil proyectil2 : getProyectiles ()) {
+            if (!proyectil.equals (proyectil2))
+               comprobarColisiones (proyectil, proyectil2);
+         }
+         Iterator<Enemigo> iter = getEnemigos ().iterator ();
+         if (proyectil.getVelocidad () < 0)
+            while (iter.hasNext ()) {
+               Enemigo enemigo = iter.next ();
+               comprobarColisiones (proyectil, enemigo);
+            }
+      }
+      limpiarProyectiles ();
+   }
+
+   /**
+    * 
+    */
+   private void limpiarProyectiles () {
+      Iterator<Proyectil> iter = getProyectiles ().iterator ();
+      while (iter.hasNext ()) {
+         if (iter.next ().getColision () <= 0)
+            iter.remove ();
+      }
+   }
+
+   /**
+    * @param proyectil
+    * @param proyectil2
+    */
+   private void comprobarColisiones (Proyectil proyectil, Elemento elemento) {
+      if (elemento instanceof Proyectil)
+         if ((proyectil.VELOCIDAD * ((Proyectil) elemento).VELOCIDAD) > 0) {
+            return;
+         }
+      if (elemento instanceof Enemigo) {
+         if (!((Enemigo) elemento).isVivo ()) {
+            return;
+         }
+      }
+      if (chocan (proyectil, elemento)) {
+         int a = Math.max (proyectil.getColision (), elemento.getColision ());
+         proyectil.setColision (proyectil.getColision () - a);
+         elemento.setColision (elemento.getColision () - a);
+      }
+   }
+
+   /**
+    * @param proyectil
+    * @param elemento
+    * @return
+    */
+   private boolean chocan (Proyectil proyectil, Elemento elemento) {
+      Rectangle proyect = new Rectangle (proyectil.getX (), proyectil.getY (), proyectil.getSize ().x, proyectil
+            .getSize ().y);
+      Rectangle element = new Rectangle (elemento.getX (), elemento.getY (), elemento.getSize ().x,
+            elemento.getSize ().y);
+      return proyect.intersects (element);
    }
 
    /**
@@ -373,7 +444,6 @@ public class Juego extends Observable implements Estado {
 
       Timer bucleJuego = new Timer (DELAY, new OyenteTimers ());
       setBucleJuego (bucleJuego);
-      getBucleJuego ().start ();
    }
 
 

@@ -78,7 +78,7 @@ public abstract class Elemento {
 	public void setSize (int x, int y) {
 	   setSize (new Point (x, y));
 	}
-   
-   
-
+	
+	public abstract int getColision ();
+	public abstract void setColision (int colision);
 }

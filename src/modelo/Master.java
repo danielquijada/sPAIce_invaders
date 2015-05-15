@@ -49,7 +49,7 @@ public class Master extends Observable {
             break;
          case JUEGO:
             setEstado (Juego.getInstance ());
-            ((Juego)getEstado ()).getBucleJuego ().stop ();
+            ((Juego)getEstado ()).getBucleJuego ().start ();
             setPantalla (PantallaJuego.getInstance ());
             break;
       }

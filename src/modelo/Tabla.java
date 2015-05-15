@@ -11,71 +11,92 @@
  *    Francisco J. Palacios Rodríguez.
  *    Héctor Rodríguez Pérez
  */
+
 package modelo;
 
 import java.util.Iterator;
 
 
 /**
- * Tabla que contiene todos los enemigos, dispuestos en una matriz bidimensional.
- * Incluye métodos para acceder a coordenadas i,j de la matriz.
+ * Tabla que contiene todos los enemigos, dispuestos en una matriz bidimensional. Incluye métodos para acceder a
+ * coordenadas i,j de la matriz.
  */
 public class Tabla implements Iterable {
 
    /**
     * 
     */
-	private Enemigo[][] matrizEnemigos;
-	private final static int SEPARACION = 10;
-	private int ancho;
-	private int alto;
-   
+   private Enemigo[][]      matrizEnemigos;
+   private final static int SEPARACION = 10;
+   private int              ancho;
+   private int              alto;
+
    public Tabla (int tamanioX, int tamanioY, int totalX, int totalY) {
-	      setMatrizEnemigos(new Enemigo[tamanioX][tamanioY]);
-	      setAncho (tamanioX);
-	      setAlto (tamanioY);
-	      
-	      int inicialX = (int)((double)totalX / (double)(2 * tamanioX));
-	      int inicialY = (int)((double)totalY / (double)(2 * tamanioY));
-	      
-	      int posX = inicialX;
-	      int posY = inicialY;
-         int separacionX = EnemigoBasico.ANCHO * 2;
-         int separacionY = EnemigoBasico.ALTO + EnemigoBasico.ALTO / 2;
-	      for(int i = 0; i < tamanioX; i++){
-	    	  for(int j = 0; j < tamanioY; j++){
-	    		  setEnemigo(i, j, new EnemigoBasico(posX, posY));
-	    		  posY += separacionY;
-	    	  }
-	    	  posY = inicialY;
-	    	  posX += separacionX;
-	      }
+      setMatrizEnemigos (new Enemigo[tamanioX][tamanioY]);
+      setAncho (tamanioX);
+      setAlto (tamanioY);
+
+      int inicialX = (int) ((double) totalX / (double) (2 * tamanioX));
+      int inicialY = (int) ((double) totalY / (double) (2 * tamanioY));
+
+      int posX = inicialX;
+      int posY = inicialY;
+      int separacionX = EnemigoBasico.ANCHO * 2;
+      int separacionY = EnemigoBasico.ALTO + EnemigoBasico.ALTO / 2;
+      for (int i = 0; i < tamanioX; i++) {
+         for (int j = 0; j < tamanioY; j++) {
+            setEnemigo (i, j, new EnemigoBasico (posX, posY));
+            posY += separacionY;
+         }
+         posY = inicialY;
+         posX += separacionX;
+      }
    }
 
    public Enemigo izquierda () {
       Iterator<Enemigo> iter = this.iterator ();
-      Enemigo limite = iter.next ();
+      Enemigo limite = null;
+      
+      while (iter.hasNext ()) {
+         limite = iter.next ();
+         if (limite.isVivo ()) {
+            break;
+         }
+      }
+      
       while (iter.hasNext ()) {
          Enemigo aux = iter.next ();
-         if (aux.isVivo () && aux.getX () < limite.getX ()) {
-            limite = aux;
+         if (aux.isVivo ()) {
+            if (aux.getX () < limite.getX ()) {
+               limite = aux;
+            }
          }
       }
       return limite;
    }
-   
+
    public Enemigo derecha () {
       Iterator<Enemigo> iter = this.iterator ();
-      Enemigo limite = iter.next ();
+      Enemigo limite = null;
+      
+      while (iter.hasNext ()) {
+         limite = iter.next ();
+         if (limite.isVivo ()) {
+            break;
+         }
+      }
+      
       while (iter.hasNext ()) {
          Enemigo aux = iter.next ();
-         if (aux.isVivo () && aux.getX () > limite.getX ()) {
-            limite = aux;
+         if (aux.isVivo ()) {
+            if (aux.getX () > limite.getX ()) {
+               limite = aux;
+            }
          }
       }
       return limite;
    }
-   
+
    public Enemigo arriba () {
       Iterator<Enemigo> iter = this.iterator ();
       Enemigo limite = iter.next ();
@@ -88,7 +109,7 @@ public class Tabla implements Iterable {
       }
       return limite;
    }
-   
+
    public Enemigo abajo () {
       Iterator<Enemigo> iter = this.iterator ();
       Enemigo limite = iter.next ();
@@ -100,24 +121,26 @@ public class Tabla implements Iterable {
       }
       return limite;
    }
-   
-	public Enemigo[][] getMatrizEnemigos() {
-		return matrizEnemigos;
-	}
-	
-	public void setMatrizEnemigos(Enemigo[][] matrizEnemigos) {
-		this.matrizEnemigos = matrizEnemigos;
-	}
-	
-	public Enemigo getEnemigo(int i, int j) {
-		return getMatrizEnemigos()[i][j];
-	}
-	
-	public void setEnemigo(int i, int j, Enemigo enemigo) {
-		getMatrizEnemigos()[i][j] = enemigo;
-	}
 
-   /* (non-Javadoc)
+   public Enemigo[][] getMatrizEnemigos () {
+      return matrizEnemigos;
+   }
+
+   public void setMatrizEnemigos (Enemigo[][] matrizEnemigos) {
+      this.matrizEnemigos = matrizEnemigos;
+   }
+
+   public Enemigo getEnemigo (int i, int j) {
+      return getMatrizEnemigos ()[i][j];
+   }
+
+   public void setEnemigo (int i, int j, Enemigo enemigo) {
+      getMatrizEnemigos ()[i][j] = enemigo;
+   }
+
+   /*
+    * (non-Javadoc)
+    * 
     * @see java.lang.Iterable#iterator()
     */
    @Override
@@ -125,7 +148,7 @@ public class Tabla implements Iterable {
       return new IteratorTabla (this);
    }
 
-   
+
    /**
     * @return the ancho
     */
@@ -133,15 +156,16 @@ public class Tabla implements Iterable {
       return ancho;
    }
 
-   
+
    /**
-    * @param ancho the ancho to set
+    * @param ancho
+    *           the ancho to set
     */
    public void setAncho (int ancho) {
       this.ancho = ancho;
    }
 
-   
+
    /**
     * @return the alto
     */
@@ -149,9 +173,10 @@ public class Tabla implements Iterable {
       return alto;
    }
 
-   
+
    /**
-    * @param alto the alto to set
+    * @param alto
+    *           the alto to set
     */
    public void setAlto (int alto) {
       this.alto = alto;
@@ -166,6 +191,7 @@ public class Tabla implements Iterable {
          iter.next ().moverY (movimiento);
       }
    }
+
    /**
     * @param movimiento
     */
@@ -175,6 +201,7 @@ public class Tabla implements Iterable {
          iter.next ().moverY (-movimiento);
       }
    }
+
    /**
     * @param movimiento
     */
@@ -184,6 +211,7 @@ public class Tabla implements Iterable {
          iter.next ().moverX (-movimiento);
       }
    }
+
    /**
     * @param movimiento
     */

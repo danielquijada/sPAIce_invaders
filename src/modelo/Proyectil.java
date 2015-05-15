@@ -22,12 +22,39 @@ import java.awt.Point;
 public abstract class Proyectil extends Inerte {
 
    public static final int VELOCIDAD = 0;
+   public static final int DAMAGE = 1;
+   
+   private int damage;
+   
    public Proyectil (int posX, int posY) {
       setX(posX);
       setY(posY);
+      setDamage (DAMAGE);
    }
    /**
     * @return
     */
    public abstract int getVelocidad ();
+   
+   /**
+    * @return the damage
+    */
+   public int getDamage () {
+      return damage;
+   }
+   
+   /**
+    * @param damage the damage to set
+    */
+   public void setDamage (int damage) {
+      this.damage = damage;
+   }
+   
+   public int getColision () {
+      return getDamage ();
+   }
+   
+   public void setColision (int colision) {
+      setDamage (colision);
+   }
 }

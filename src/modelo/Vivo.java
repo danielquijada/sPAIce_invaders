@@ -29,14 +29,12 @@ public abstract class Vivo extends Elemento {
 	   setY(getY() + desplazamiento);
    }
 
-   
    /**
     * @return the vidas
     */
    public int getVidas () {
       return vidas;
    }
-
    
    /**
     * @param vidas the vidas to set
@@ -47,5 +45,13 @@ public abstract class Vivo extends Elemento {
 
    public boolean isVivo () {
       return (getVidas () > 0);
+   }
+   
+   public int getColision () {
+      return getVidas ();
+   }
+   
+   public void setColision (int colision) {
+      setVidas (colision);
    }
 }
