@@ -26,7 +26,7 @@ public class Menu extends Observable implements Estado {
    private static final String NEW = "Nuevo Juego";
    private static final String LOAD = "Continuar";
    private static final String OPC = "Opciones";
-   private static final String EXT = "Salir";
+   private static final String EXIT = "Salir";
    private ArrayList<String>   opciones;
    private int                 seleccionada;
 
@@ -41,7 +41,7 @@ public class Menu extends Observable implements Estado {
       getOpciones ().add (NEW);
       getOpciones ().add (LOAD);
       getOpciones ().add (OPC);
-      getOpciones ().add (EXT);
+      getOpciones ().add (EXIT);
    }
    
    public static Menu getInstance () {
@@ -77,7 +77,6 @@ public class Menu extends Observable implements Estado {
     */
    private void seleccionar () {
       // TODO Añadir todas las opciones, o quitar las que no sean implementadas por ahora
-      System.out.println ("hola");
       switch (getOpciones ().get (seleccionada)) {
          case NEW:
             Juego.getInstance ().nuevo ();
@@ -85,6 +84,9 @@ public class Menu extends Observable implements Estado {
             break;
          case LOAD:
             Master.getInstance ().cambiarEstado (Master.JUEGO);
+            break;
+         case EXIT:
+            System.exit (0);
             break;
       }
    }
