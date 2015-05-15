@@ -274,7 +274,7 @@ public class Juego extends Observable implements Estado {
     */
    @Override
    public void salir () {
-      // Falta por implementar
+      Master.getInstance ().cambiarEstado (Master.MENU);
    }
 
    public int getDir () {
@@ -365,7 +365,7 @@ public class Juego extends Observable implements Estado {
 
       Timer bucleJuego = new Timer (DELAY, new OyenteTimers ());
       setBucleJuego (bucleJuego);
-      bucleJuego.start ();
+      getBucleJuego ().start ();
    }
 
 
@@ -373,6 +373,8 @@ public class Juego extends Observable implements Estado {
     * @return the bucleJuego
     */
    public Timer getBucleJuego () {
+      setChanged ();
+      notifyObservers ();
       return bucleJuego;
    }
 

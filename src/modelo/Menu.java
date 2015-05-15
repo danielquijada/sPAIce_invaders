@@ -84,6 +84,8 @@ public class Menu extends Observable implements Estado {
             Master.getInstance ().cambiarEstado (Master.JUEGO);
             break;
          case LOAD:
+            Master.getInstance ().cambiarEstado (Master.JUEGO);
+            break;
       }
    }
 

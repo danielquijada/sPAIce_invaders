@@ -27,6 +27,7 @@ public class Master extends Observable {
    private Estado estado;
    private Pantalla pantalla;
    private static Master master;
+   private int numEstado;
    
    public static final int MENU = 0;
    public static final int JUEGO = 1;
@@ -40,16 +41,21 @@ public class Master extends Observable {
    public void cambiarEstado (int nuevoEstado) {
       switch (nuevoEstado) {
          case MENU:
+            if (numEstado == JUEGO) {
+               ((Juego)getEstado ()).getBucleJuego ().stop ();
+            }
             setEstado (Menu.getInstance ());
             setPantalla (PantallaMenu.getInstance ());
             break;
          case JUEGO:
             setEstado (Juego.getInstance ());
+            ((Juego)getEstado ()).getBucleJuego ().stop ();
             setPantalla (PantallaJuego.getInstance ());
             break;
       }
       setChanged ();
       notifyObservers ();
+      setNumEstado (nuevoEstado);
    }
    
    public static Master getInstance () {
@@ -103,5 +109,21 @@ public class Master extends Observable {
     */
    public static void setMaster (Master master) {
       Master.master = master;
+   }
+
+   
+   /**
+    * @return the numEstado
+    */
+   public int getNumEstado () {
+      return numEstado;
+   }
+
+   
+   /**
+    * @param numEstado the numEstado to set
+    */
+   public void setNumEstado (int numEstado) {
+      this.numEstado = numEstado;
    }
 }

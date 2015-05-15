@@ -28,12 +28,14 @@ public class AppletJuego extends JApplet implements Observer {
    private static final int ANCHO = 800;
    private static final int ALTO = ANCHO;
 
+   private Pantalla pantalla;
    /**
     * @param juego
     * @param lForKey
     */
    public AppletJuego () {
-      add (Master.getInstance ().getPantalla ());
+      setPantalla (Master.getInstance ().getPantalla ());
+      add (getPantalla ());
       setSize (ANCHO, ALTO);
       setPreferredSize (getSize ());
    }
@@ -43,7 +45,26 @@ public class AppletJuego extends JApplet implements Observer {
     */
    @Override
    public void update (Observable o, Object arg) {
-      add (Master.getInstance ().getPantalla ());
+      remove (getPantalla ());
+      setPantalla (Master.getInstance ().getPantalla ());
+      add (getPantalla ());
       validate ();
+      repaint ();
+   }
+
+   
+   /**
+    * @return the pantalla
+    */
+   public Pantalla getPantalla () {
+      return pantalla;
+   }
+
+   
+   /**
+    * @param pantalla the pantalla to set
+    */
+   public void setPantalla (Pantalla pantalla) {
+      this.pantalla = pantalla;
    }
 }
