@@ -21,6 +21,8 @@ import java.awt.Point;
  */
 public abstract class Elemento {
 	
+   private static final int ALTO = 100;
+   private static final int ANCHO = 100;
    /**
     * 
     */
@@ -30,6 +32,7 @@ public abstract class Elemento {
 	
    public Elemento () {
 	   setCoordenadas (new Point ());
+	   setSize (ANCHO, ALTO);
    }
 
    public int getX() {
@@ -68,11 +71,13 @@ public abstract class Elemento {
    /**
     * @param size the size to set
     */
-   public void setSize (Point size) {
+   private void setSize (Point size) {
       this.size = size;
    }
 	
-	
+	public void setSize (int x, int y) {
+	   setSize (new Point (x, y));
+	}
    
    
 

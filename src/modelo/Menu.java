@@ -40,7 +40,6 @@ public class Menu extends Observable implements Estado {
       setOpciones (new ArrayList<String> ());
       getOpciones ().add (NEW);
       getOpciones ().add (LOAD);
-      getOpciones ().add (OPC);
       getOpciones ().add (EXIT);
    }
    

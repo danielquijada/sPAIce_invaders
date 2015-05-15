@@ -55,7 +55,6 @@ public class PantallaJuego extends Pantalla implements Observer {
    @Override
    protected void paintComponent (Graphics g) {
       super.paintComponent (g);
-      Tabla t = getJuego ().getEnemigos ();
       Iterator<Enemigo> iter = getJuego ().getEnemigos ().iterator ();
       Iterator<Proyectil> it = getJuego ().getProyectiles ().iterator ();
       
@@ -63,13 +62,17 @@ public class PantallaJuego extends Pantalla implements Observer {
          Enemigo enemy = iter.next ();
          int x = (int)((double)enemy.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
          int y = (int)((double)enemy.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
-         new EnemigoBasicoDibujable ().dibujar (g, x, y, TAM, TAM);
+         int tamX = (int)((enemy.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
+         int tamY = (int)((enemy.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
+         new EnemigoBasicoDibujable ().dibujar (g, x, y, tamX, tamY);
       }
       
       for (Nave nave : getJuego ().getNaves ()) {
          int x = (int)((double)nave.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
          int y = (int)((double)nave.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
-         new NaveBasicaDibujable ().dibujar (g, x , y, TAM, TAM);
+         int tamX = (int)((nave.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
+         int tamY = (int)((nave.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
+         new NaveBasicaDibujable ().dibujar (g, x , y, tamX, tamY);
       }
       
       while(it.hasNext()){

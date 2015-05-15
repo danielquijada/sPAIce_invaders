@@ -39,10 +39,10 @@ public class Juego extends Observable implements Estado {
    private int                  direccionEnemigos;
    private int                  dir;
    private static Juego         juego;
-   private int                  contador;
+   private int                  contadorMovimientoEnemigos;
 
-   private static final int     M                       = 5;
-   private static final int     N                       = 5;
+   private static final int     M                       = 10;
+   private static final int     N                       = 6;
    public static final int      TOTAL_X                 = 1000;
    public static final int      TOTAL_Y                 = 1000;
    public static final int      ALTURA_INICIAL_ENEMIGOS = 500;
@@ -57,7 +57,7 @@ public class Juego extends Observable implements Estado {
    private static final int     MOVIMIENTO              = 5;
    private static final int     MOVIMIENTO_ENEMIGOS     = 15;
    private static final int     DELAY                   = 15;
-   private static final int     RETRASO_ENEMIGOS        = 1;
+   private static final int     RETRASO_ENEMIGOS        = 10;
 
    /**
     * 
@@ -78,7 +78,8 @@ public class Juego extends Observable implements Estado {
    private void inicializarNaves (int numeroNaves) {
       setNaves (new ArrayList<Nave> ());
       for (int i = 1; i <= numeroNaves; i++) {
-         getNaves ().add (new NaveBasica (TOTAL_Y / (numeroNaves + 1) * i, TOTAL_X - ALTURA_SUELO));
+         Nave nave = new NaveBasica (TOTAL_X / (numeroNaves + 1) * i, TOTAL_Y - ALTURA_SUELO - NaveBasica.ALTO);
+         getNaves ().add (nave);
       }
    }
 
@@ -105,14 +106,14 @@ public class Juego extends Observable implements Estado {
    public void moverEnemigos () {
 
       if (getDireccionEnemigos () == IZQUIERDA) {
-         if (getEnemigos ().izquierda ().getX () - MOVIMIENTO_ENEMIGOS < 0) { // Caso especial, llega al borde
+         if (getEnemigos ().izquierda ().getX () - MOVIMIENTO_ENEMIGOS < MARGEN_LATERAL) { // Caso especial, llega al borde
             getEnemigos ().moverAbajo (MOVIMIENTO_ENEMIGOS);
             setDireccionEnemigos (DERECHA);
          } else {
             getEnemigos ().moverIzquierda (MOVIMIENTO_ENEMIGOS);
          }
       } else {
-         if (getEnemigos ().derecha ().getX () + MOVIMIENTO_ENEMIGOS >= TOTAL_X) {
+         if (getEnemigos ().derecha ().getX () + MOVIMIENTO_ENEMIGOS >= TOTAL_X - MARGEN_LATERAL - getEnemigos ().derecha ().getSize ().x) {
             getEnemigos ().moverAbajo (MOVIMIENTO_ENEMIGOS);
             setDireccionEnemigos (IZQUIERDA);
          } else {
@@ -126,11 +127,11 @@ public class Juego extends Observable implements Estado {
          proyectil.setTiempo (proyectil.getTiempo () + 1);
          proyectil.calcularNuevaPosicion ();
       }
-      if (getContador () == RETRASO_ENEMIGOS) {
-         setContador (0);
+      if (getContadorMovimientoEnemigos () == RETRASO_ENEMIGOS) {
+         setContadorMovimientoEnemigos (0);
          moverEnemigos ();
       } else {
-         setContador (getContador () + 1);
+         setContadorMovimientoEnemigos (getContadorMovimientoEnemigos () + 1);
       }
 
       if (getDir () == Juego.IZQUIERDA)
@@ -204,8 +205,8 @@ public class Juego extends Observable implements Estado {
    /**
     * @return the contador
     */
-   public int getContador () {
-      return contador;
+   public int getContadorMovimientoEnemigos () {
+      return contadorMovimientoEnemigos;
    }
 
 
@@ -213,8 +214,8 @@ public class Juego extends Observable implements Estado {
     * @param contador
     *           the contador to set
     */
-   public void setContador (int contador) {
-      this.contador = contador;
+   public void setContadorMovimientoEnemigos (int contador) {
+      this.contadorMovimientoEnemigos = contador;
    }
 
    /*

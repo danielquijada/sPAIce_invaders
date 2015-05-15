@@ -11,17 +11,22 @@
  *    Francisco J. Palacios Rodríguez.
  *    Héctor Rodríguez Pérez
  */
+
 package modelo;
 
 /**
- * Clase que describe el enemigo más básico del juego
- * Reúne las caracterísiticas específicas o únicas de este enemigo frente a otro tipo de enemigos.
+ * Clase que describe el enemigo más básico del juego Reúne las caracterísiticas específicas o únicas de este enemigo
+ * frente a otro tipo de enemigos.
  */
 public class EnemigoBasico extends Enemigo {
-	private final int VIDA_ENEMIGO_BASICO = 1;
-	
-	public EnemigoBasico(int posX, int posY){
-		super(posX, posY);
-		setVidas(VIDA_ENEMIGO_BASICO);
-	}
+
+   public static final int ANCHO = 40;
+   public static final int ALTO  = 40;
+   private final int        VIDAS = 1;
+
+   public EnemigoBasico (int posX, int posY) {
+      super (posX, posY);
+      setSize (ANCHO, ALTO);
+      setVidas (VIDAS);
+   }
 }

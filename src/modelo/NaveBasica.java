@@ -22,13 +22,15 @@ import java.awt.Point;
  */
 public class NaveBasica extends Nave {
 
-	private final int VIDA_NAVE_BASICA = 3;
+   public static final int ALTO = 50;
+   public static final int ANCHO = 50;
+   private final int VIDA_NAVE_BASICA = 3;
 	private int puntuacion_inicial = 0;
 	
 	public NaveBasica(int posX, int posY){
 		super(posX, posY);
 		setVidas(VIDA_NAVE_BASICA);
-		setSize (new Point (30,30));
+		setSize (ANCHO, ALTO);
 		setPuntuacion(puntuacion_inicial);
 	}
 }
