@@ -13,6 +13,7 @@
  */
 package vista;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 
@@ -21,11 +22,13 @@ import java.awt.Graphics;
  */
 public class EnemigoBasicoDibujable extends EnemigoDibujable {
 
+	
    /* (non-Javadoc)
     * @see vista.ElementoDibujable#dibujar(java.awt.Graphics, int, int, int, int)
     */
    @Override
    public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
-      g.fillOval (x, y, tamX, tamY);
+	   g.setColor(Color.WHITE);
+	   g.fillOval (x, y, tamX, tamY);
    }
 }

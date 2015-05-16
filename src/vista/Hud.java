@@ -44,7 +44,7 @@ public class Hud extends Pantalla{
 
 	
 	public void dibujar(Graphics g, int width) {
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.setFont(font1);
 		g.drawString("Puntuacion: " + getJuego ().getNaves().get(0).getPuntiacion(), 10, OFFSET_Y_STRING);
 		g.drawString("Vidas: ", width - OFFSET_X_STRING, OFFSET_Y_STRING);

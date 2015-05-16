@@ -41,6 +41,7 @@ public class PantallaJuego extends Pantalla implements Observer {
     */
    private PantallaJuego (Juego juego) {
       setJuego (juego);
+      setBackground(Color.BLACK);
    }
 
    public static PantallaJuego getInstance () {

@@ -13,7 +13,11 @@
  */
 package vista;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+
+import modelo.Fuentes;
 
 
 /**
@@ -21,12 +25,17 @@ import java.awt.Graphics;
  */
 public class NaveBasicaDibujable extends NaveDibujable {
 
+	private Font font = new Fuentes().getInvadersFont();
+	
    /* (non-Javadoc)
     * @see vista.ElementoDibujable#dibujar(java.awt.Graphics, int, int, int, int)
     */
    @Override
    public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
-      g.fillRect (x, y, tamX, tamY);
+    //  g.fillRect (x, y, tamX, tamY);
+	   g.setFont(font.deriveFont(Font.PLAIN,60));
+	   g.setColor(Color.GREEN);
+	   g.drawString("w", x, y);
    }
 
 }
