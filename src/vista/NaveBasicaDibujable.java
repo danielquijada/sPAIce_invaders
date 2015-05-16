@@ -26,14 +26,14 @@ import modelo.Juego;
  */
 public class NaveBasicaDibujable extends NaveDibujable {
 
-	private Font font = new Fuentes().getInvadersFont();
+	private Font font = Fuentes.getInvadersFont();
 	
    /* (non-Javadoc)
     * @see vista.ElementoDibujable#dibujar(java.awt.Graphics, int, int, int, int)
     */
    @Override
-   public void dibujar (Graphics g, int x, int y, Juego juego) {
-	   g.setFont(font.deriveFont(Font.PLAIN, juego.getNaves().get(0).getSize().x));
+   public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
+	   g.setFont(font.deriveFont(Font.PLAIN, tamX));
 	   g.setColor(Color.GREEN);
 	   g.drawString("w", x, y);
    }

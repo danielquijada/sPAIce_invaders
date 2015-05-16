@@ -27,7 +27,7 @@ public abstract class Nave extends Vivo {
 		setY(posY);
 	}
  
-	public int getPuntiacion() {
+	public int getPuntuacion() {
 		return puntuacion;
 	}
 	

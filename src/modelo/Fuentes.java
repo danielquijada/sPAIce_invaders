@@ -28,10 +28,10 @@ public class Fuentes {
 	private static final String RUTA_INVADERS_FONT = "./res/font/invadersfont.ttf";
 	private static final String RUTA_SAFETY_FONT = "./res/font/SafetyMedium.ttf";
 	
-	private Font arcadeFont;
-	private Font chessFont;
-	private Font invadersFont;
-	private Font safetyFont;
+	private static Font arcadeFont;
+	private static Font chessFont;
+	private static Font invadersFont;
+	private static Font safetyFont;
 	
 	public Fuentes() {
 	    File filearcade = new File(RUTA_ARCADE_FONT);
@@ -44,6 +44,7 @@ public class Fuentes {
 	    	setChessFont(Font.createFont(Font.TRUETYPE_FONT, filechess));
 	    	setInvadersFont(Font.createFont(Font.TRUETYPE_FONT, fileinvaders));
 	    	setSafetyFont(Font.createFont(Font.TRUETYPE_FONT, filesafety));
+
 	    }
 	    catch (FontFormatException | IOException e) {
 			e.printStackTrace();
@@ -51,35 +52,36 @@ public class Fuentes {
 	}
 
 
-	public Font getSafetyFont() {
+	public static Font getSafetyFont() {
 		return safetyFont;
 	}
 
 	public void setSafetyFont(Font safety) {
-		this.safetyFont = safety;
+		safetyFont = safety;
 	}
 
-	public Font getInvadersFont() {
+	public static Font getInvadersFont() {
 		return invadersFont;
 	}
 
-	public void setInvadersFont(Font invadersFont) {
-		this.invadersFont = invadersFont;
+	public void setInvadersFont(Font invaders) {
+		invadersFont = invaders;
 	}
 
-	public Font getChessFont() {
+	public static Font getChessFont() {
 		return chessFont;
 	}
 
-	public void setChessFont(Font chessFont) {
-		this.chessFont = chessFont;
+	public void setChessFont(Font chess) {
+		chessFont = chess;
 	}
 
-	public Font getArcadeFont() {
+	public static Font getArcadeFont() {
 		return arcadeFont;
 	}
 
-	public void setArcadeFont(Font arcadeFont) {
-		this.arcadeFont = arcadeFont;
+	public void setArcadeFont(Font arcade) {
+		arcadeFont = arcade;
 	}
+
 }

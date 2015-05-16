@@ -27,12 +27,16 @@ import modelo.Juego;
  */
 public class EnemigoBasicoDibujable extends EnemigoDibujable {
 
+	private Font font = Fuentes.getInvadersFont();
+	
    /* (non-Javadoc)
     * @see vista.ElementoDibujable#dibujar(java.awt.Graphics, int, int, int, int)
     */
    @Override
-   public void dibujar (Graphics g, int x, int y, Juego juego) {
+   public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
 	   g.setColor(Color.WHITE);
-	   g.fillOval (x, y, EnemigoBasico.ALTO, EnemigoBasico.ANCHO);
+	   g.setFont(font.deriveFont(Font.PLAIN, tamX));
+	   	
+	   g.drawString("b", x, y);
    }
 }

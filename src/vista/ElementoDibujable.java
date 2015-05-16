@@ -30,5 +30,5 @@ public abstract class ElementoDibujable {
     * @param tamX Tamaño en el eje X.
     * @param tamY Tamaño en el eje Y.
     */
-   public abstract void dibujar (Graphics g, int x, int y, Juego juego);
+   public abstract void dibujar (Graphics g, int x, int y, int tamX, int tamY);
 }

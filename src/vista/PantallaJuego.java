@@ -32,7 +32,8 @@ import modelo.Tabla;
 @SuppressWarnings ("serial")
 public class PantallaJuego extends Pantalla implements Observer {
 
-   private static final int     TAM = 30;
+   private static final int     TAMX = 5; //tamaño del proyectil
+   private static final int		TAMY = 10;
    private Juego                juego;
    private static PantallaJuego pantallaJuego;
 
@@ -68,7 +69,7 @@ public class PantallaJuego extends Pantalla implements Observer {
             int y = (int) ((double) enemy.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
             int tamX = (int) ((enemy.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
             int tamY = (int) ((enemy.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
-            new EnemigoBasicoDibujable ().dibujar (g, x, y, getJuego());
+            new EnemigoBasicoDibujable ().dibujar (g, x, y, tamX, tamY);
          }
       }
 
@@ -77,14 +78,14 @@ public class PantallaJuego extends Pantalla implements Observer {
          int y = (int) ((double) nave.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
          int tamX = (int) ((nave.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
          int tamY = (int) ((nave.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
-         new NaveBasicaDibujable ().dibujar (g, x, y, getJuego());
+         new NaveBasicaDibujable ().dibujar (g, x, y, tamX, tamY);
       }
 
       while (it.hasNext ()) {
          Proyectil proyectil = it.next ();
          int x = (int) ((double) proyectil.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
          int y = (int) ((double) proyectil.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
-         new ProyectilBasicoDibujable ().dibujar (g, x, y, getJuego());
+         new ProyectilBasicoDibujable ().dibujar (g, x, y, TAMX,TAMY);
          if (proyectil.getY () < 0) {
             it.remove ();
          }

@@ -22,8 +22,8 @@ import java.awt.Point;
  */
 public class NaveBasica extends Nave {
 
-   public static final int ALTO = 50;
-   public static final int ANCHO = 50;
+   public static final int ALTO = 70;
+   public static final int ANCHO = 70;
    private final int VIDA_NAVE_BASICA = 3;
 	private int puntuacion_inicial = 0;
 	

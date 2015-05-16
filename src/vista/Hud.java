@@ -19,6 +19,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import modelo.Fuentes;
 import modelo.Juego;
 
 /**
@@ -32,13 +33,15 @@ public class Hud extends Pantalla{
 	private static final int OFFSET_X_STRING = 200;
 	private static final int OFFSET_Y_STRING = 20;
 
-	private static final int OFFSET_Y_VIDAS = 10;
-	private static final int OFFSET_X_VIDAS = 50;
-	
+	private static final int OFFSET_Y_VIDAS = 20;
+	private static final int OFFSET_X_VIDAS = 60;
+
+	private static final int OFFSET_LINEAINFERIOR = 70;
 	private static final int SEPARACION = 20;
 	
-	private Font font1 = new Font("Monospaced", Font.BOLD, 20);
-	
+	private Font fontArcade = Fuentes.getArcadeFont().deriveFont(Font.PLAIN, 20);
+	private Font fontInvader = Fuentes.getInvadersFont().deriveFont(Font.PLAIN, 25);
+	private Font normal = new Font("Monospace",Font.PLAIN,20);
 	public Hud(Juego juego) {
 		setJuego(juego);
 		
@@ -46,29 +49,35 @@ public class Hud extends Pantalla{
 
 	
 	public void dibujar(Graphics g, int width, int height) {
+		//Linea inferior
 		Graphics2D g2d = (Graphics2D) g;
-		
 		g2d.setColor(Color.GREEN);
 		g2d.setStroke(new BasicStroke(3));
-		g2d.drawLine(8, height - 70, width - 10, height - 70);
+		g2d.drawLine(8, height - OFFSET_LINEAINFERIOR, width - 10, height - OFFSET_LINEAINFERIOR);
 		
 		g.setColor(Color.WHITE);
-		g.setFont(font1);
-		g.drawString("Puntuacion: " + getJuego ().getNaves().get(0).getPuntiacion(), 10, OFFSET_Y_STRING);
-		g.drawString("Vidas: ", width - OFFSET_X_STRING, OFFSET_Y_STRING);
+		//Caracter especial
+		g.setFont(normal);
+		g.drawString(":", 75, OFFSET_Y_STRING);
+		g.drawString(":", width - 145, OFFSET_Y_STRING);
+		//Puntuacion y vidas
+		g.setFont(fontArcade);
+		g.drawString("PUNTOS   " + getJuego ().getNaves().get(0).getPuntuacion(), 10, OFFSET_Y_STRING);
+		g.drawString("VIDAS ", width - OFFSET_X_STRING, OFFSET_Y_STRING);
 	
-		g.setColor(Color.red);	
-		if (getJuego().getNaves().get(0).getVidas() == 1) {
-			g.fillOval(width - OFFSET_X_VIDAS - SEPARACION , OFFSET_Y_VIDAS, 10, 10);			
+		g.setColor(Color.GREEN);	
+		g.setFont(fontInvader);
+		if (getJuego().getNaves().get(0).getVidas() == 1) {			
+			g.drawString("w",width - OFFSET_X_VIDAS - SEPARACION , OFFSET_Y_VIDAS);
 		}
 		else if (getJuego().getNaves().get(0).getVidas() == 2) {
-			g.fillOval(width - OFFSET_X_VIDAS - SEPARACION, OFFSET_Y_VIDAS, 10, 10);						
-			g.fillOval(width - OFFSET_X_VIDAS - (SEPARACION * 2), OFFSET_Y_VIDAS, 10, 10);						
+			g.drawString("w",width - OFFSET_X_VIDAS - SEPARACION , OFFSET_Y_VIDAS);
+			g.drawString("w",width - OFFSET_X_VIDAS - (SEPARACION * 2) , OFFSET_Y_VIDAS);						
 		}
 		else if(getJuego().getNaves().get(0).getVidas() == 3) {
-			g.fillOval(width - OFFSET_X_VIDAS - SEPARACION, OFFSET_Y_VIDAS, 10, 10);						
-			g.fillOval(width - OFFSET_X_VIDAS - (SEPARACION * 2), OFFSET_Y_VIDAS, 10, 10);					
-			g.fillOval(width - OFFSET_X_VIDAS - (SEPARACION * 3), OFFSET_Y_VIDAS, 10, 10);									
+			g.drawString("w",width - OFFSET_X_VIDAS - SEPARACION , OFFSET_Y_VIDAS);
+			g.drawString("w",width - OFFSET_X_VIDAS - (SEPARACION * 2), OFFSET_Y_VIDAS);
+			g.drawString("w",width - OFFSET_X_VIDAS - (SEPARACION * 3) , OFFSET_Y_VIDAS);
 		}
 		
 	}
