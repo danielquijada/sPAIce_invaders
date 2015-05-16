@@ -16,6 +16,8 @@ package vista;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import modelo.Juego;
+
 
 /**
  * Representa los proyectiles dibujables.
@@ -23,7 +25,7 @@ import java.awt.Graphics;
 public  class ProyectilBasicoDibujable extends InerteDibujable {
 
 	   @Override
-	   public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
+	   public void dibujar (Graphics g, int x, int y, Juego juego) {
 		   g.setColor(Color.WHITE);
 		   g.fillRect (x + 20, y - 30, 5, 10);
 	   }

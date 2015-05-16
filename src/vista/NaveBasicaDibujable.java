@@ -18,6 +18,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import modelo.Fuentes;
+import modelo.Juego;
 
 
 /**
@@ -31,9 +32,8 @@ public class NaveBasicaDibujable extends NaveDibujable {
     * @see vista.ElementoDibujable#dibujar(java.awt.Graphics, int, int, int, int)
     */
    @Override
-   public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
-    //  g.fillRect (x, y, tamX, tamY);
-	   g.setFont(font.deriveFont(Font.PLAIN,60));
+   public void dibujar (Graphics g, int x, int y, Juego juego) {
+	   g.setFont(font.deriveFont(Font.PLAIN, juego.getNaves().get(0).getSize().x));
 	   g.setColor(Color.GREEN);
 	   g.drawString("w", x, y);
    }

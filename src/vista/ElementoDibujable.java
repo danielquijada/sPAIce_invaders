@@ -15,6 +15,8 @@ package vista;
 
 import java.awt.Graphics;
 
+import modelo.Juego;
+
 
 /**
  * Clase abstracta que representa a todos los objetos dibujables.
@@ -28,5 +30,5 @@ public abstract class ElementoDibujable {
     * @param tamX Tamaño en el eje X.
     * @param tamY Tamaño en el eje Y.
     */
-   public abstract void dibujar (Graphics g, int x, int y, int tamX, int tamY);
+   public abstract void dibujar (Graphics g, int x, int y, Juego juego);
 }

@@ -13,9 +13,11 @@
  */
 package vista;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import modelo.Juego;
 
@@ -43,7 +45,13 @@ public class Hud extends Pantalla{
 	}
 
 	
-	public void dibujar(Graphics g, int width) {
+	public void dibujar(Graphics g, int width, int height) {
+		Graphics2D g2d = (Graphics2D) g;
+		
+		g2d.setColor(Color.GREEN);
+		g2d.setStroke(new BasicStroke(3));
+		g2d.drawLine(8, height - 70, width - 10, height - 70);
+		
 		g.setColor(Color.WHITE);
 		g.setFont(font1);
 		g.drawString("Puntuacion: " + getJuego ().getNaves().get(0).getPuntiacion(), 10, OFFSET_Y_STRING);
@@ -63,7 +71,6 @@ public class Hud extends Pantalla{
 			g.fillOval(width - OFFSET_X_VIDAS - (SEPARACION * 3), OFFSET_Y_VIDAS, 10, 10);									
 		}
 		
-
 	}
 	
 	public Juego getJuego() {
