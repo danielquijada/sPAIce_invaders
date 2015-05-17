@@ -16,13 +16,16 @@ package vista;
 
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.JApplet;
+
 import modelo.Master;
 
 
 /**
  * TODO Descripción de la clase.
  */
+@SuppressWarnings("serial")
 public class AppletJuego extends JApplet implements Observer {
 
    private static final int ANCHO = 800;

@@ -18,8 +18,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
+
 import modelo.Estado;
-import modelo.Juego;
 import modelo.Master;
 
 /**

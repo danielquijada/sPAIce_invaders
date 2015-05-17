@@ -18,7 +18,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import modelo.Fuentes;
-import modelo.Juego;
 
 
 /**

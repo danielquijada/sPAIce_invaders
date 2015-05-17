@@ -19,11 +19,11 @@ import java.awt.Graphics;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
+
 import modelo.Enemigo;
 import modelo.Juego;
 import modelo.Nave;
 import modelo.Proyectil;
-import modelo.Tabla;
 
 
 /**

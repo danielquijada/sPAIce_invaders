@@ -17,9 +17,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import modelo.EnemigoBasico;
 import modelo.Fuentes;
-import modelo.Juego;
 
 
 /**

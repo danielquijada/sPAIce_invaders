@@ -15,8 +15,6 @@ package vista;
 
 import javax.swing.JFrame;
 
-import modelo.Fuentes;
-import modelo.Juego;
 import controlador.ListenForKey;
 
 
@@ -24,6 +22,7 @@ import controlador.ListenForKey;
 /**
  * TODO Descripción de la clase.
  */
+@SuppressWarnings("serial")
 public class VentanaJuego extends JFrame {
 
    private AppletJuego applet;

@@ -16,8 +16,6 @@ package vista;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import modelo.Juego;
-
 
 /**
  * Representa los proyectiles dibujables.

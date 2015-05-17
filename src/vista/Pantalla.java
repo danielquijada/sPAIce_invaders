@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 /**
  * Clase abstracta que representará distintas pantallas.
  */
+@SuppressWarnings("serial")
 public abstract class Pantalla extends JPanel {
 
 }

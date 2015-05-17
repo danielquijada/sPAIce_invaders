@@ -18,8 +18,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
+
 import javax.swing.Timer;
-import vista.EnemigoBasicoDibujable;
+
 import controlador.OyenteTimers;
 
 

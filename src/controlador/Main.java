@@ -14,7 +14,6 @@
 
 package controlador;
 
-import modelo.Fuentes;
 import modelo.Juego;
 import modelo.Master;
 import modelo.Menu;

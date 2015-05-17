@@ -15,8 +15,6 @@ package vista;
 
 import java.awt.Graphics;
 
-import modelo.Juego;
-
 
 /**
  * Clase abstracta que representa a todos los objetos dibujables.

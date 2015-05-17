@@ -41,7 +41,11 @@ public class PantallaMenu extends Pantalla implements Observer {
 	private static final int OFFSETY_SELECTOR = 17;
 	private static final int DIAMETRO = 15; //Tama�o del selector
 	
-	private Fuentes fuentes;
+	private Font fontinv = Fuentes.getInvadersFont().deriveFont(Font.PLAIN, 80);
+	private Font fontchess = Fuentes.getChessFont().deriveFont(Font.PLAIN, 80);
+	private Font fontarcade = Fuentes.getArcadeFont().deriveFont(Font.PLAIN, 30);
+	private Font fontsafety = Fuentes.getSafetyFont().deriveFont(Font.PLAIN, 70);
+	
 	private static PantallaMenu pantallaMenu;
 	private Menu menu;
    /**
@@ -49,13 +53,12 @@ public class PantallaMenu extends Pantalla implements Observer {
     */
    private PantallaMenu (Fuentes fuentes) {
 	   setBackground(Color.BLACK);
-	   setFuentes(fuentes);
 	   setMenu (Menu.getInstance ());
    }
 
    public static PantallaMenu getInstance () {
       if (getPantallaMenu () == null)
-         setPantallaMenu (new PantallaMenu (new Fuentes ()));
+         setPantallaMenu (new PantallaMenu (new Fuentes()));
       return getPantallaMenu ();
    }
 
@@ -66,13 +69,13 @@ public class PantallaMenu extends Pantalla implements Observer {
 			int mitadAlto = getHeight() / 2 - OFFSETY;
 			
 			g.setColor(Color.WHITE);
-			g.setFont(getFuentes().getInvadersFont().deriveFont(Font.PLAIN, 80));
+			g.setFont(fontinv);
 			g.drawString("BDFL", mitadAncho - 80, 100);
-			g.setFont(getFuentes().getChessFont().deriveFont(Font.PLAIN, 80));
+			g.setFont(fontchess);
 			g.drawString("SPAICE", mitadAncho - 60, 170);
-			g.setFont(getFuentes().getSafetyFont().deriveFont(Font.PLAIN,70));
+			g.setFont(fontsafety);
 			g.drawString("INVADERS", mitadAncho - 80, 250);		
-			g.setFont(getFuentes().getArcadeFont().deriveFont(Font.PLAIN, 30));
+			g.setFont(fontarcade);
 			
 			for (int i = 0; i < getMenu ().getOpciones ().size (); i++) {
 			   g.drawString (getMenu ().getOpciones ().get (i), mitadAncho, mitadAlto + SEPARACION * i);
@@ -92,15 +95,6 @@ public class PantallaMenu extends Pantalla implements Observer {
 		repaint();
 	}
 		
-	
-	public void setFuentes(Fuentes fuentes) {
-		this.fuentes = fuentes;
-	}
-	
-	public Fuentes getFuentes() {
-		return fuentes;
-	}
-
    
    /**
     * @return the pantallaMenu

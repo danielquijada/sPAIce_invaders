@@ -16,6 +16,7 @@ package vista;
 /**
  * TODO La pantalla de settings
  */
+@SuppressWarnings("serial")
 public class PantallaOpciones extends Pantalla {
 	   /**
 	    * 
