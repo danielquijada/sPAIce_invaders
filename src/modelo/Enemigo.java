@@ -19,8 +19,11 @@ package modelo;
  */
 public abstract class Enemigo extends Vivo {
 
-	public Enemigo(int posX, int posY) {
+	public Enemigo(int posX, int posY, int tipo) {
 		setX(posX);
 		setY(posY);
+		setTipo(tipo);
 	}
+	
+	
 }

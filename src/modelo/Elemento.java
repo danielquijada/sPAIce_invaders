@@ -26,12 +26,21 @@ public abstract class Elemento {
 
 	private Point coordenadas;
 	private Point size; // Tamaño tanto en X como en Y.
-
+	private int tipo;//tipo enemigo
+	
 	public Elemento() {
 		setCoordenadas(new Point());
 		setSize(ANCHO, ALTO);
 	}
 
+	public int getTipo() {
+		return tipo;
+	}
+	
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
+	
 	public int getX() {
 		return (int) coordenadas.getX();
 	}

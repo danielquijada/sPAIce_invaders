@@ -24,9 +24,10 @@ public class EnemigoBasico extends Enemigo {
    public static final int ALTO  = 40;
    private final int        VIDAS = 1;
 
-   public EnemigoBasico (int posX, int posY) {
-      super (posX, posY);
+   public EnemigoBasico (int posX, int posY, int tipo) {
+      super (posX, posY,tipo);
       setSize (ANCHO, ALTO);
       setVidas (VIDAS);
    }
+
 }

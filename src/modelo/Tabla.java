@@ -43,10 +43,23 @@ public class Tabla implements Iterable {
       int posY = inicialY;
       int separacionX = EnemigoBasico.ANCHO * 2;
       int separacionY = EnemigoBasico.ALTO + EnemigoBasico.ALTO / 2;
+      int tipo = 0;
       for (int i = 0; i < tamanioX; i++) {
          for (int j = 0; j < tamanioY; j++) {
-            setEnemigo (i, j, new EnemigoBasico (posX, posY));
-            posY += separacionY;
+        	 
+        	 if (j == 0) {
+        		 tipo = 0;
+        	 }
+        	 else if (j == 1)  {
+        		 tipo = 1;
+        	 }
+        	 else  if (j == 3) {
+        		 tipo = 2;
+        	 }
+    		         	 
+             setEnemigo (i, j, new EnemigoBasico (posX, posY, tipo));
+             posY += separacionY;        		 
+
          }
          posY = inicialY;
          posX += separacionX;

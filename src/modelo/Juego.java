@@ -21,6 +21,7 @@ import java.util.Observable;
 
 import javax.swing.Timer;
 
+import vista.EnemigoBasicoDibujable;
 import controlador.OyenteTimers;
 
 
@@ -60,7 +61,7 @@ public class Juego extends Observable implements Estado {
    private static final int     MOVIMIENTO              = 5;
    private static final int     MOVIMIENTO_ENEMIGOS     = 15;
    private static final int     DELAY                   = 15;
-   private static final int     RETRASO_ENEMIGOS        = 10;
+   private static final int     RETRASO_ENEMIGOS        = 30;
 
    /**
     * 
@@ -107,6 +108,8 @@ public class Juego extends Observable implements Estado {
    }
 
    public void moverEnemigos () {
+	   
+	   EnemigoBasicoDibujable.animacion = !EnemigoBasicoDibujable.animacion;
 
       if (getDireccionEnemigos () == IZQUIERDA) {
          if (getEnemigos ().izquierda ().getX () - MOVIMIENTO_ENEMIGOS < MARGEN_LATERAL) { // Caso especial, llega al
@@ -128,6 +131,7 @@ public class Juego extends Observable implements Estado {
    }
 
    public void step () {
+ 
       moverProyectiles ();
       if (getContadorMovimientoEnemigos () == RETRASO_ENEMIGOS) {
          setContadorMovimientoEnemigos (0);
@@ -190,10 +194,22 @@ public class Juego extends Observable implements Estado {
          }
       if (elemento instanceof Enemigo) {
          if (!((Enemigo) elemento).isVivo ()) {
-            return;
+        	 return;
          }
       }
       if (chocan (proyectil, elemento)) {
+    	  
+    	  if(elemento.getTipo() == 0) {
+    		  getNaves().get(0).setPuntuacion(getNaves().get(0).getPuntuacion() + 40);  
+    	  }
+    	  else if(elemento.getTipo() == 1) {
+    		  getNaves().get(0).setPuntuacion(getNaves().get(0).getPuntuacion() + 20);
+    	  }
+    	  else if(elemento.getTipo() == 2) {
+    		  getNaves().get(0).setPuntuacion(getNaves().get(0).getPuntuacion() + 10);
+    	  }
+    	  
+    	  
          int a = Math.min (proyectil.getColision (), elemento.getColision ());
          proyectil.setColision (proyectil.getColision () - a);
          elemento.setColision (elemento.getColision () - a);

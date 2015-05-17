@@ -70,7 +70,7 @@ public class PantallaJuego extends Pantalla implements Observer {
             int y = (int) ((double) enemy.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
             int tamX = (int) ((enemy.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
             int tamY = (int) ((enemy.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
-            new EnemigoBasicoDibujable ().dibujar (g, x, y, tamX, tamY);
+            new EnemigoBasicoDibujable ().dibujar (g, x, y, tamX, enemy.getTipo());
          }
       }
 
