@@ -13,23 +13,22 @@
  */
 package modelo;
 
-
-
 /**
- * Clase que representa un tipo de nave especÃ­fica.
- * ReÃºne aquellas caracterÃ­sticas especÃ­ficas o Ãºnicas y capacidades de una nave bÃ¡sica frente a los demÃ¡s.
+ * Clase que representa un tipo de nave específica. Reúne aquellas
+ * características específicas o únicas y capacidades de una nave básica frente
+ * a los demás.
  */
 public class NaveBasica extends Nave {
 
-   public static final int ALTO = 70;
-   public static final int ANCHO = 70;
-   private final int VIDA_NAVE_BASICA = 3;
+	public static final int ALTO = 70;
+	public static final int ANCHO = 70;
+	private final int VIDA_NAVE_BASICA = 3;
 	private int puntuacion_inicial = 0;
-	
-	public NaveBasica(int posX, int posY){
+
+	public NaveBasica(int posX, int posY) {
 		super(posX, posY);
 		setVidas(VIDA_NAVE_BASICA);
-		setSize (ANCHO, ALTO);
+		setSize(ANCHO, ALTO);
 		setPuntuacion(puntuacion_inicial);
 	}
 }

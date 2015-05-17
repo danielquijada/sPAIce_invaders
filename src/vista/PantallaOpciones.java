@@ -14,7 +14,8 @@
 package vista;
 
 /**
- * TODO La pantalla de settings
+ * Representa la pantalla de las opciones de juego
+ * Dificultad, sonido, tipo de nave
  */
 @SuppressWarnings("serial")
 public class PantallaOpciones extends Pantalla {

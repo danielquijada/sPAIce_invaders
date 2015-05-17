@@ -27,7 +27,8 @@ import modelo.Proyectil;
 
 
 /**
- * Pantalla en la que se mostrará el juego. Muestra: * Fondo * Actores (nave, enemigos) * HUD
+ * Pantalla en la que se mostrará el juego. 
+ *  Muestra: * Fondo * Actores (nave, enemigos) * Proyectiles * HUD
  */
 @SuppressWarnings ("serial")
 public class PantallaJuego extends Pantalla implements Observer {

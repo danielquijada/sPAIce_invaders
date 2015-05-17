@@ -14,6 +14,7 @@
 
 package controlador;
 
+import modelo.Fuentes;
 import modelo.Juego;
 import modelo.Master;
 import modelo.Menu;
@@ -30,6 +31,7 @@ public class Main {
 
    public static void main (String args[]) {
 
+	  new Fuentes();
       Juego juego = Juego.getInstance ();
       VentanaJuego ventanaJuego = new VentanaJuego (new ListenForKey ());
       Master.getInstance ().addObserver (ventanaJuego.getApplet ());

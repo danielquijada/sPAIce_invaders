@@ -13,45 +13,39 @@
  */
 package modelo;
 
-
 /**
- * Clase abstracta que representa a todos los objetos que tienen vida.
+ * Clase abstracta que representa a todos los objetos que tienen vida. Naves y
+ * enemigos
  */
 public abstract class Vivo extends Elemento {
 
-   private int vidas;
-   
-   public void moverX(int desplazamiento){
-	   setX(getX() + desplazamiento);
-   }
-   
-   public void moverY(int desplazamiento){
-	   setY(getY() + desplazamiento);
-   }
+	private int vidas;
 
-   /**
-    * @return the vidas
-    */
-   public int getVidas () {
-      return vidas;
-   }
-   
-   /**
-    * @param vidas the vidas to set
-    */
-   public void setVidas (int vidas) {
-      this.vidas = vidas;
-   }
+	public void moverX(int desplazamiento) {
+		setX(getX() + desplazamiento);
+	}
 
-   public boolean isVivo () {
-      return (getVidas () > 0);
-   }
-   
-   public int getColision () {
-      return getVidas ();
-   }
-   
-   public void setColision (int colision) {
-      setVidas (colision);
-   }
+	public void moverY(int desplazamiento) {
+		setY(getY() + desplazamiento);
+	}
+
+	public int getVidas() {
+		return vidas;
+	}
+
+	public void setVidas(int vidas) {
+		this.vidas = vidas;
+	}
+
+	public boolean isVivo() {
+		return (getVidas() > 0);
+	}
+
+	public int getColision() {
+		return getVidas();
+	}
+
+	public void setColision(int colision) {
+		setVidas(colision);
+	}
 }

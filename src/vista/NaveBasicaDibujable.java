@@ -21,7 +21,7 @@ import modelo.Fuentes;
 
 
 /**
- * TODO Descripción de la clase.
+ * Representacion grafica de la nave protagonista
  */
 public class NaveBasicaDibujable extends NaveDibujable {
 

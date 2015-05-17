@@ -17,222 +17,207 @@ package modelo;
 import java.util.ArrayList;
 import java.util.Observable;
 
-
 /**
- * TODO Descripción de la clase.
+ * Contiene las opciones del menu principal
+ * Nuevo juego, continar, opciones, salir.
  */
 public class Menu extends Observable implements Estado {
 
-   private static final String NEW = "Nuevo Juego";
-   private static final String LOAD = "Continuar";
-   private static final String OPC = "Opciones";
-   private static final String EXIT = "Salir";
-   private ArrayList<String>   opciones;
-   private int                 seleccionada;
+	private static final String NEW = "Nuevo Juego";
+	private static final String LOAD = "Continuar";
+	private static final String OPC = "Opciones";
+	private static final String EXIT = "Salir";
+	private ArrayList<String> opciones;
+	private int seleccionada;
 
-   private static Menu menu;
-   
-   /**
+	private static Menu menu;
+
+	private Menu() {
+		setSeleccionada(0);
+		setOpciones(new ArrayList<String>());
+		getOpciones().add(NEW);
+		getOpciones().add(LOAD);
+		getOpciones().add(EXIT);
+	}
+
+	public static Menu getInstance() {
+		if (getMenu() == null)
+			setMenu(new Menu());
+		return getMenu();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#izquierda()
+	 */
+	@Override
+	public void izquierda() {
+		// No hace nada
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#derecha()
+	 */
+	@Override
+	public void derecha() {
+		seleccionar();
+		setChanged();
+		notifyObservers();
+	}
+
+	/**
     * 
     */
-   private Menu () {
-      setSeleccionada (0);
-      setOpciones (new ArrayList<String> ());
-      getOpciones ().add (NEW);
-      getOpciones ().add (LOAD);
-      getOpciones ().add (EXIT);
-   }
-   
-   public static Menu getInstance () {
-      if (getMenu () == null)
-         setMenu (new Menu ());
-      return getMenu ();
-   }
+	private void seleccionar() {
+		// TODO Añadir todas las opciones, o quitar las que no sean
+		// implementadas por ahora
+		switch (getOpciones().get(seleccionada)) {
+		case NEW:
+			Juego.getInstance().nuevo();
+			Master.getInstance().cambiarEstado(Master.JUEGO);
+			break;
+		case LOAD:
+			Master.getInstance().cambiarEstado(Master.JUEGO);
+			break;
+		case EXIT:
+			System.exit(0);
+			break;
+		}
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see modelo.Estado#izquierda()
-    */
-   @Override
-   public void izquierda () {
-      // No hace nada
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#arriba()
+	 */
+	@Override
+	public void arriba() {
+		setSeleccionada((getSeleccionada() - 1 + getOpciones().size())
+				% getOpciones().size());
+		setChanged();
+		notifyObservers();
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see modelo.Estado#derecha()
-    */
-   @Override
-   public void derecha () {
-      seleccionar ();
-      setChanged ();
-      notifyObservers ();
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#abajo()
+	 */
+	@Override
+	public void abajo() {
+		setSeleccionada((getSeleccionada() + 1) % getOpciones().size());
+		setChanged();
+		notifyObservers();
+	}
 
-   /**
-    * 
-    */
-   private void seleccionar () {
-      // TODO Añadir todas las opciones, o quitar las que no sean implementadas por ahora
-      switch (getOpciones ().get (seleccionada)) {
-         case NEW:
-            Juego.getInstance ().nuevo ();
-            Master.getInstance ().cambiarEstado (Master.JUEGO);
-            break;
-         case LOAD:
-            Master.getInstance ().cambiarEstado (Master.JUEGO);
-            break;
-         case EXIT:
-            System.exit (0);
-            break;
-      }
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#accion()
+	 */
+	@Override
+	public void accion() {
+		seleccionar();
+		setChanged();
+		notifyObservers();
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see modelo.Estado#arriba()
-    */
-   @Override
-   public void arriba () {
-      setSeleccionada ((getSeleccionada () - 1 + getOpciones ().size ()) % getOpciones ().size ());
-      setChanged ();
-      notifyObservers ();
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#salir()
+	 */
+	@Override
+	public void salir() {
+		setSeleccionada(getOpciones().size() - 1);
+		setChanged();
+		notifyObservers();
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see modelo.Estado#abajo()
-    */
-   @Override
-   public void abajo () {
-      setSeleccionada ((getSeleccionada () + 1) % getOpciones ().size ());
-      setChanged ();
-      notifyObservers ();
-   }
+	public ArrayList<String> getOpciones() {
+		return opciones;
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see modelo.Estado#accion()
-    */
-   @Override
-   public void accion () {
-      seleccionar ();
-      setChanged ();
-      notifyObservers ();
-   }
+	public void setOpciones(ArrayList<String> opciones) {
+		this.opciones = opciones;
+	}
 
-   /*
-    * (non-Javadoc)
-    * 
-    * @see modelo.Estado#salir()
-    */
-   @Override
-   public void salir () {
-      setSeleccionada (getOpciones ().size () - 1);
-      setChanged ();
-      notifyObservers ();
-   }
+	public int getSeleccionada() {
+		return seleccionada;
+	}
 
+	public void setSeleccionada(int seleccionada) {
+		this.seleccionada = seleccionada;
+	}
 
-   /**
-    * @return the opciones
-    */
-   public ArrayList<String> getOpciones () {
-      return opciones;
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#paraIzquierda()
+	 */
+	@Override
+	public void paraIzquierda() {
+		// Nada
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#paraDerecha()
+	 */
+	@Override
+	public void paraDerecha() {
+		// Nada
+	}
 
-   /**
-    * @param opciones
-    *           the opciones to set
-    */
-   public void setOpciones (ArrayList<String> opciones) {
-      this.opciones = opciones;
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#paraArriba()
+	 */
+	@Override
+	public void paraArriba() {
+		// Nada
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#paraAbajo()
+	 */
+	@Override
+	public void paraAbajo() {
+		// Nada
+	}
 
-   /**
-    * @return the seleccionada
-    */
-   public int getSeleccionada () {
-      return seleccionada;
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#paraAccion()
+	 */
+	@Override
+	public void paraAccion() {
+		// Nada
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see modelo.Estado#paraSalir()
+	 */
+	@Override
+	public void paraSalir() {
+		// Nada
+	}
 
-   /**
-    * @param seleccionada
-    *           the seleccionada to set
-    */
-   public void setSeleccionada (int seleccionada) {
-      this.seleccionada = seleccionada;
-   }
+	public static Menu getMenu() {
+		return menu;
+	}
 
-   /* (non-Javadoc)
-    * @see modelo.Estado#paraIzquierda()
-    */
-   @Override
-   public void paraIzquierda () {
-      // Nada
-   }
-
-   /* (non-Javadoc)
-    * @see modelo.Estado#paraDerecha()
-    */
-   @Override
-   public void paraDerecha () {
-      // Nada
-   }
-
-   /* (non-Javadoc)
-    * @see modelo.Estado#paraArriba()
-    */
-   @Override
-   public void paraArriba () {
-      // Nada
-   }
-
-   /* (non-Javadoc)
-    * @see modelo.Estado#paraAbajo()
-    */
-   @Override
-   public void paraAbajo () {
-      // Nada
-   }
-
-   /* (non-Javadoc)
-    * @see modelo.Estado#paraAccion()
-    */
-   @Override
-   public void paraAccion () {
-      // Nada
-   }
-
-   /* (non-Javadoc)
-    * @see modelo.Estado#paraSalir()
-    */
-   @Override
-   public void paraSalir () {
-      // Nada
-   }
-
-   
-   /**
-    * @return the menu
-    */
-   public static Menu getMenu () {
-      return menu;
-   }
-
-   
-   /**
-    * @param menu the menu to set
-    */
-   public static void setMenu (Menu menu) {
-      Menu.menu = menu;
-   }
+	public static void setMenu(Menu menu) {
+		Menu.menu = menu;
+	}
 }

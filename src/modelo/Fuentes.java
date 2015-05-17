@@ -19,7 +19,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * TODO Descripción de la clase.
+ * Carga y almacena de manera estática todos 
+ * los tipos de fuentes usados en la aplicacion
  */
 public class Fuentes {
 

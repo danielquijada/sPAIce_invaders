@@ -16,6 +16,7 @@ package vista;
 
 /**
  * Clase abstracta de elementos intertes dibujables.
+ * Proyectiles y escudos
  */
 public abstract class InerteDibujable extends ElementoDibujable {
 

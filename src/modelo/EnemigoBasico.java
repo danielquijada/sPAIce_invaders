@@ -15,7 +15,7 @@
 package modelo;
 
 /**
- * Clase que describe el enemigo mÃ¡s bÃ¡sico del juego ReÃºne las caracterÃ­siticas especÃ­ficas o Ãºnicas de este enemigo
+ * Clase que describe el enemigo más básico del juego Reúne las caracterísiticas específicas o únicas de este enemigo
  * frente a otro tipo de enemigos.
  */
 public class EnemigoBasico extends Enemigo {

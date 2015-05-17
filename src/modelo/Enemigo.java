@@ -14,12 +14,12 @@
 package modelo;
 
 /**
- * Clase que describe la lÃ³gica de los enemigos, que son entidades vivas capaces de disparar.
- * No son controlables por el usuario.
+ * Clase que describe la lógica de los enemigos, que son entidades vivas capaces
+ * de disparar. No son controlables por el usuario.
  */
 public abstract class Enemigo extends Vivo {
-	
-	public Enemigo(int posX, int posY){
+
+	public Enemigo(int posX, int posY) {
 		setX(posX);
 		setY(posY);
 	}

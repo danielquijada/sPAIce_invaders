@@ -16,6 +16,7 @@ package vista;
 
 /**
  * Clase abstracta de elementos dibujables vivos.
+ * Naves y enemigos
  */
 public abstract class VivoDibujable extends ElementoDibujable {
 

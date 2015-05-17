@@ -18,6 +18,7 @@ import java.awt.Graphics;
 
 /**
  * Clase abstracta que representa a todos los objetos dibujables.
+ * Naves, enemigos, proyectiles y escudos
  */
 public abstract class ElementoDibujable {
 

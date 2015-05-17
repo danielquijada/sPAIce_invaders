@@ -23,7 +23,7 @@ import modelo.Menu;
 
 
 /**
- * Pantalla que muestra el menú con distintas opciones:
+ * Pantalla que muestra el menú inicial con distintas opciones:
  *    * Nuevo Juego
  *    * Cargar Juego
  *    * Settings
@@ -48,17 +48,18 @@ public class PantallaMenu extends Pantalla implements Observer {
 	
 	private static PantallaMenu pantallaMenu;
 	private Menu menu;
+	
    /**
     * 
     */
-   private PantallaMenu (Fuentes fuentes) {
+   private PantallaMenu () {
 	   setBackground(Color.BLACK);
 	   setMenu (Menu.getInstance ());
    }
 
    public static PantallaMenu getInstance () {
       if (getPantallaMenu () == null)
-         setPantallaMenu (new PantallaMenu (new Fuentes()));
+         setPantallaMenu (new PantallaMenu ());
       return getPantallaMenu ();
    }
 

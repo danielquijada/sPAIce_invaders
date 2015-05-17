@@ -23,7 +23,9 @@ import modelo.Fuentes;
 import modelo.Juego;
 
 /**
- * TODO Descripciï¿½n de la clase.
+ * Heads Up Display
+ * Representa la información que está siempre visible en pantalla
+ * Puntuaciones,vidas y margen inferior.
  */
 @SuppressWarnings("serial")
 public class Hud extends Pantalla{
