@@ -38,7 +38,7 @@ public class Juego extends Observable implements Estado {
    /**
     * 
     */
-
+	private static int playing = 0;
    private Timer                bucleJuego;
    private Tabla                enemigos;
    private ArrayList<Nave>      naves;
@@ -124,7 +124,11 @@ public class Juego extends Observable implements Estado {
    }
 
    public void moverEnemigos () {
-
+		if (playing == 4) {
+			playing = 0;
+		}
+		playFondo(playing);
+		playing++;
       EnemigoBasicoDibujable.animacion = !EnemigoBasicoDibujable.animacion;
 
       if (getDireccionEnemigos () == IZQUIERDA) {
@@ -421,6 +425,56 @@ public class Juego extends Observable implements Estado {
       }
    }
 
+   private void playFondo(int playing) {
+		File soundFile1 = new File("./res/sounds/playing1.wav");
+		File soundFile2 = new File("./res/sounds/playing2.wav");	
+		File soundFile3 = new File("./res/sounds/playing3.wav");	
+		File soundFile4 = new File("./res/sounds/playing4.wav");	
+		
+		AudioInputStream audioIn0;
+		AudioInputStream audioIn1;
+		AudioInputStream audioIn2;
+		AudioInputStream audioIn3;
+		
+		Clip clip0;
+		Clip clip1;
+		Clip clip2;
+		Clip clip3;
+
+		
+		try {
+			audioIn0 = AudioSystem.getAudioInputStream(soundFile1);
+			audioIn1 = AudioSystem.getAudioInputStream(soundFile2);
+			audioIn2 = AudioSystem.getAudioInputStream(soundFile3);
+			audioIn3 = AudioSystem.getAudioInputStream(soundFile4);
+			clip0 = AudioSystem.getClip();
+			clip1 = AudioSystem.getClip();
+			clip2 = AudioSystem.getClip();
+			clip3 = AudioSystem.getClip();
+
+			clip0.open(audioIn0);
+			clip1.open(audioIn1);
+			clip2.open(audioIn2);
+			clip3.open(audioIn3);
+
+			if(playing == 0) {
+				clip0.start();
+			}
+			else if(playing == 1) {
+				clip1.start();
+			}
+			else if(playing == 2) {
+				clip2.start();
+			}
+			else if(playing == 3) {
+				clip3.start();
+			}
+			
+		} catch (UnsupportedAudioFileException | LineUnavailableException| IOException e) {
+			e.printStackTrace();
+		}
+	}
+   
    /*
     * (non-Javadoc)
     * 
