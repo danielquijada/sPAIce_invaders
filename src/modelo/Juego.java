@@ -172,6 +172,7 @@ public class Juego extends Observable implements Estado {
    public void step () {
       Random rand = new Random ();
       if (getOvniTimer () == OVNI_SPAWN) {
+    	  sonidoOvni ();
          if (rand.nextBoolean ()) {
             EnemigoOvni enemigo = new EnemigoOvni (MARGEN_LATERAL, ALTURA_INICIAL_ENEMIGOS);
             getEnemigosEspeciales ().add (enemigo);
@@ -181,6 +182,7 @@ public class Juego extends Observable implements Estado {
             }
          }
          setOvniTimer (0);
+         
       } else
          setOvniTimer (getOvniTimer () + DELAY + 5);
 
@@ -449,7 +451,24 @@ public class Juego extends Observable implements Estado {
          e.printStackTrace ();
       }
    }
-
+   
+	/**
+	 * Reproduce un sonido cuando aparece el ovni
+	 */
+   private void sonidoOvni () {
+	      File soundFile = new File ("./res/sounds/ovni.wav");
+	      AudioInputStream audioIn;
+	      Clip clip;
+	      try {
+	         audioIn = AudioSystem.getAudioInputStream (soundFile);
+	         clip = AudioSystem.getClip ();
+	         clip.open (audioIn);
+	         clip.start ();
+	      } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+	         e.printStackTrace ();
+	      }
+	   }
+   
    /**
     * Reproduce el sonido de que un enemigo sea asesinado.
     */

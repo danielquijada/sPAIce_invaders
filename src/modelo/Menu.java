@@ -14,12 +14,20 @@
 
 package modelo;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 /**
- * Contiene las opciones del menu principal
- * Nuevo juego, continar, opciones, salir.
+ * Contiene las opciones del menu principal Nuevo juego, continar, opciones,
+ * salir.
  */
 public class Menu extends Observable implements Estado {
 
@@ -29,10 +37,12 @@ public class Menu extends Observable implements Estado {
 	private static final String EXIT = "Salir";
 	private ArrayList<String> opciones;
 	private int seleccionada;
+	private static Clip clip;
 
 	private static Menu menu;
 
 	private Menu() {
+		sonidoMenu();
 		setSeleccionada(0);
 		setOpciones(new ArrayList<String>());
 		getOpciones().add(NEW);
@@ -72,6 +82,7 @@ public class Menu extends Observable implements Estado {
     * 
     */
 	private void seleccionar() {
+		clip.stop();
 		// TODO Añadir todas las opciones, o quitar las que no sean
 		// implementadas por ahora
 		switch (getOpciones().get(seleccionada)) {
@@ -219,5 +230,20 @@ public class Menu extends Observable implements Estado {
 
 	public static void setMenu(Menu menu) {
 		Menu.menu = menu;
+	}
+
+	private void sonidoMenu() {
+		File soundFile = new File("./res/sounds/menusoundtrack.wav");
+		AudioInputStream audioIn;
+		
+		try {
+			audioIn = AudioSystem.getAudioInputStream(soundFile);
+			clip = AudioSystem.getClip();
+			clip.open(audioIn);
+			clip.start();
+		} catch (UnsupportedAudioFileException | LineUnavailableException
+				| IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
