@@ -49,7 +49,7 @@ public class Juego extends Observable implements Estado {
    private static final int     N                       = 6;
    public static final int      TOTAL_X                 = 1000;
    public static final int      TOTAL_Y                 = 1000;
-   public static final int      ALTURA_INICIAL_ENEMIGOS = 500;
+   public static final int      ALTURA_INICIAL_ENEMIGOS = 100;
    public static final int      ALTURA_SUELO            = 50;
    public static final int      MARGEN_LATERAL          = 40;
    public static final int      NAVES                   = 1;
