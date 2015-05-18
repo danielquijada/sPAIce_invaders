@@ -60,4 +60,32 @@ public class EnemigoBasicoDibujable extends EnemigoDibujable {
 
 
 	}
+   
+   /**
+    * @return the font
+    */
+   public Font getFont () {
+      return font;
+   }
+   
+   /**
+    * @param font the font to set
+    */
+   public void setFont (Font font) {
+      this.font = font;
+   }
+   
+   /**
+    * @return the animacion
+    */
+   public static boolean isAnimacion () {
+      return animacion;
+   }
+   
+   /**
+    * @param animacion the animacion to set
+    */
+   public static void setAnimacion (boolean animacion) {
+      EnemigoBasicoDibujable.animacion = animacion;
+   }
 }
