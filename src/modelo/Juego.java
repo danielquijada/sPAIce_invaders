@@ -36,6 +36,7 @@ import controlador.OyenteTimers;
  */
 public class Juego extends Observable implements Estado {
 
+<<<<<<< HEAD
    private Timer                  bucleJuego;
    private Tabla                  enemigos;
    private ArrayList<Nave>        naves;
@@ -66,6 +67,42 @@ public class Juego extends Observable implements Estado {
    private static final int       MOVIMIENTO_ENEMIGOS     = 15;
    private static final int       DELAY                   = 15;
    private static final int       RETRASO_ENEMIGOS        = 30;
+=======
+   /**
+    * 
+    */
+	private static int playing = 0;
+   private Timer                bucleJuego;
+   private Tabla                enemigos;
+   private ArrayList<Nave>      naves;
+   private ArrayList<Proyectil> proyectiles;
+   private ArrayList<Enemigo>   enemigosEspeciales;
+   private int                  estadoEnemigos;
+   private int                  direccionEnemigos;
+   private int                  dir;
+   private static Juego         juego;
+   private int                  contadorMovimientoEnemigos;
+   private int                  ovniTimer;
+
+   private static final int     M                       = 10;
+   private static final int     N                       = 6;
+   public static final int      TOTAL_X                 = 1000;
+   public static final int      TOTAL_Y                 = 1000;
+   public static final int      ALTURA_INICIAL_ENEMIGOS = 50;
+   public static final int      ALTURA_SUELO            = 50;
+   public static final int      MARGEN_LATERAL          = 40;
+   public static final int      NAVES                   = 1;
+   public static final int      VELOCIDAD_BASE          = 5;
+   public static final int      OVNI_SPAWN              = 12000;
+
+   public static final int      IZQUIERDA               = 1;
+   public static final int      DERECHA                 = 2;
+   public static final int      INMOVIL                 = 0;
+   private static final int     MOVIMIENTO              = 5;
+   private static final int     MOVIMIENTO_ENEMIGOS     = 15;
+   private static final int     DELAY                   = 15;
+   private static final int     RETRASO_ENEMIGOS        = 30;
+>>>>>>> origin/master
 
    /**
     * Constructor por defecto. Inicializa el juego creando un juego nuevo. Es privado debido a que utilizamos el patrón
@@ -139,7 +176,11 @@ public class Juego extends Observable implements Estado {
     * Hace que los enemigos den un "paso" en la dirección que toque.
     */
    public void moverEnemigos () {
-
+		if (playing == 4) {
+			playing = 0;
+		}
+		playFondo(playing);
+		playing++;
       EnemigoBasicoDibujable.animacion = !EnemigoBasicoDibujable.animacion;
 
       if (getDireccionEnemigos () == IZQUIERDA) {
@@ -464,6 +505,56 @@ public class Juego extends Observable implements Estado {
       }
    }
 
+   private void playFondo(int playing) {
+		File soundFile1 = new File("./res/sounds/playing1.wav");
+		File soundFile2 = new File("./res/sounds/playing2.wav");	
+		File soundFile3 = new File("./res/sounds/playing3.wav");	
+		File soundFile4 = new File("./res/sounds/playing4.wav");	
+		
+		AudioInputStream audioIn0;
+		AudioInputStream audioIn1;
+		AudioInputStream audioIn2;
+		AudioInputStream audioIn3;
+		
+		Clip clip0;
+		Clip clip1;
+		Clip clip2;
+		Clip clip3;
+
+		
+		try {
+			audioIn0 = AudioSystem.getAudioInputStream(soundFile1);
+			audioIn1 = AudioSystem.getAudioInputStream(soundFile2);
+			audioIn2 = AudioSystem.getAudioInputStream(soundFile3);
+			audioIn3 = AudioSystem.getAudioInputStream(soundFile4);
+			clip0 = AudioSystem.getClip();
+			clip1 = AudioSystem.getClip();
+			clip2 = AudioSystem.getClip();
+			clip3 = AudioSystem.getClip();
+
+			clip0.open(audioIn0);
+			clip1.open(audioIn1);
+			clip2.open(audioIn2);
+			clip3.open(audioIn3);
+
+			if(playing == 0) {
+				clip0.start();
+			}
+			else if(playing == 1) {
+				clip1.start();
+			}
+			else if(playing == 2) {
+				clip2.start();
+			}
+			else if(playing == 3) {
+				clip3.start();
+			}
+			
+		} catch (UnsupportedAudioFileException | LineUnavailableException| IOException e) {
+			e.printStackTrace();
+		}
+	}
+   
    /*
     * (non-Javadoc)
     * 
