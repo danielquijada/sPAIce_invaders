@@ -48,13 +48,13 @@ public class Tabla implements Iterable {
          for (int j = 0; j < tamanioY; j++) {
         	 
         	 if (j == 0) {
-        		 tipo = 0;
+        		 tipo = Enemigo.TRIANGULAR;
         	 }
         	 else if (j == 1)  {
-        		 tipo = 1;
+        		 tipo = Enemigo.ANTENAS;
         	 }
         	 else  if (j == 3) {
-        		 tipo = 2;
+        		 tipo = Enemigo.REDONDO;
         	 }
     		         	 
              setEnemigo (i, j, new EnemigoBasico (posX, posY, tipo));

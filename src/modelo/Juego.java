@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
+import java.util.Random;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -35,40 +36,36 @@ import controlador.OyenteTimers;
  */
 public class Juego extends Observable implements Estado {
 
-   /**
-    * 
-    */
+   private Timer                  bucleJuego;
+   private Tabla                  enemigos;
+   private ArrayList<Nave>        naves;
+   private ArrayList<Proyectil>   proyectiles;
+   private ArrayList<EnemigoOvni> enemigosEspeciales;
+   private int                    estadoEnemigos;
+   private int                    direccionEnemigos;
+   private int                    dir;
+   private static Juego           juego;
+   private int                    contadorMovimientoEnemigos;
+   private int                    ovniTimer;
 
-   private Timer                bucleJuego;
-   private Tabla                enemigos;
-   private ArrayList<Nave>      naves;
-   private ArrayList<Proyectil> proyectiles;
-   private ArrayList<Enemigo>   enemigosEspeciales;
-   private int                  estadoEnemigos;
-   private int                  direccionEnemigos;
-   private int                  dir;
-   private static Juego         juego;
-   private int                  contadorMovimientoEnemigos;
-   private int                  ovniTimer;
+   private static final int       M                       = 10;
+   private static final int       N                       = 6;
+   public static final int        TOTAL_X                 = 1000;
+   public static final int        TOTAL_Y                 = 1000;
+   public static final int        ALTURA_INICIAL_ENEMIGOS = 50;
+   public static final int        ALTURA_SUELO            = 50;
+   public static final int        MARGEN_LATERAL          = 40;
+   public static final int        NAVES                   = 1;
+   public static final int        VELOCIDAD_BASE          = 5;
+   public static final int        OVNI_SPAWN              = 12000;
 
-   private static final int     M                       = 10;
-   private static final int     N                       = 6;
-   public static final int      TOTAL_X                 = 1000;
-   public static final int      TOTAL_Y                 = 1000;
-   public static final int      ALTURA_INICIAL_ENEMIGOS = 50;
-   public static final int      ALTURA_SUELO            = 50;
-   public static final int      MARGEN_LATERAL          = 40;
-   public static final int      NAVES                   = 1;
-   public static final int      VELOCIDAD_BASE          = 5;
-   public static final int      OVNI_SPAWN              = 12000;
-
-   public static final int      IZQUIERDA               = 1;
-   public static final int      DERECHA                 = 2;
-   public static final int      INMOVIL                 = 0;
-   private static final int     MOVIMIENTO              = 5;
-   private static final int     MOVIMIENTO_ENEMIGOS     = 15;
-   private static final int     DELAY                   = 15;
-   private static final int     RETRASO_ENEMIGOS        = 30;
+   public static final int        IZQUIERDA               = 1;
+   public static final int        DERECHA                 = 2;
+   public static final int        INMOVIL                 = 0;
+   private static final int       MOVIMIENTO              = 5;
+   private static final int       MOVIMIENTO_ENEMIGOS     = 15;
+   private static final int       DELAY                   = 15;
+   private static final int       RETRASO_ENEMIGOS        = 30;
 
    /**
     * Constructor por defecto. Inicializa el juego creando un juego nuevo. Es privado debido a que utilizamos el patrón
@@ -91,6 +88,7 @@ public class Juego extends Observable implements Estado {
 
    /**
     * Inicializa las naves con el número de naves a ser colocadas.
+    * 
     * @param numeroNaves
     */
    private void inicializarNaves (int numeroNaves) {
@@ -101,6 +99,14 @@ public class Juego extends Observable implements Estado {
       }
    }
 
+   /**
+    * Mueve la nave seleccionada en la direccion indicada.
+    * 
+    * @param nave
+    *           nave a mover.
+    * @param direccion
+    *           direccion en la que se mueve.
+    */
    public void moverNave (int nave, int direccion) {
       switch (direccion) {
          case IZQUIERDA:
@@ -114,6 +120,12 @@ public class Juego extends Observable implements Estado {
       }
    }
 
+   /**
+    * Crea un proyectil disparado por la nave seleccionada.
+    * 
+    * @param nave
+    *           nave a disparar.
+    */
    public void disparar (int nave) {
       getProyectiles ().add (
             new ProyectilBasico (getNaves ().get (nave).getX () + NaveBasica.ANCHO * 3 / 10, getNaves ().get (nave)
@@ -123,6 +135,9 @@ public class Juego extends Observable implements Estado {
       notifyObservers ();
    }
 
+   /**
+    * Hace que los enemigos den un "paso" en la dirección que toque.
+    */
    public void moverEnemigos () {
 
       EnemigoBasicoDibujable.animacion = !EnemigoBasicoDibujable.animacion;
@@ -146,9 +161,22 @@ public class Juego extends Observable implements Estado {
       }
    }
 
+   /**
+    * Realiza una iteración del bucle de juego. Se calculan todas las acciones aquí y movimientos.
+    */
    public void step () {
+      Random rand = new Random ();
       if (getOvniTimer () == OVNI_SPAWN) {
-         getEnemigosEspeciales ().add (new EnemigoOvni (TOTAL_X, ALTURA_INICIAL_ENEMIGOS));
+         System.out.print ("A");
+         if (rand.nextBoolean ()) {
+            System.out.println ("B");
+            EnemigoOvni enemigo = new EnemigoOvni (MARGEN_LATERAL, ALTURA_INICIAL_ENEMIGOS);
+            getEnemigosEspeciales ().add (enemigo);
+            if (rand.nextBoolean ()) {
+               enemigo.setVelocidad (-1 * enemigo.getVelocidad ());
+               enemigo.setX (TOTAL_X);
+            }
+         }
          setOvniTimer (0);
       } else
          setOvniTimer (getOvniTimer () + DELAY + 5);
@@ -175,12 +203,12 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
- * 
- */
+    * Mueve el ovni.
+    */
    private void moverOvnis () {
 
-      for (Enemigo ovni : getEnemigosEspeciales ()) {
-         ovni.setX (ovni.getX () + Enemigo.VELOCIDAD);
+      for (EnemigoOvni ovni : getEnemigosEspeciales ()) {
+         ovni.setX (ovni.getX () + ovni.getVelocidad ());
       }
    }
 
@@ -188,8 +216,6 @@ public class Juego extends Observable implements Estado {
     * 
     */
    private void calcularColisiones () {
-      @SuppressWarnings ("unused")
-      int i = 0;
       for (Proyectil proyectil : getProyectiles ()) {
          for (Proyectil proyectil2 : getProyectiles ()) {
             if (!proyectil.equals (proyectil2))
@@ -221,12 +247,17 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
+    * Comprueba las colisiones entre 2 Elementos, y realiza las acciones correspondientes en su caso. El primero es un
+    * proyectil, pero el segundo puede cualquier tipo de Elemento.
+    * 
     * @param proyectil
-    * @param proyectil2
+    *           proyectil que se quiere comprobar.
+    * @param elemento
+    *           elemento que puede o no chocar con el proyectil.
     */
    private void comprobarColisiones (Proyectil proyectil, Elemento elemento) {
       if (elemento instanceof Proyectil)
-         if ((proyectil.VELOCIDAD * ((Proyectil) elemento).VELOCIDAD) > 0) {
+         if ((proyectil.getVelocidad () * ((Proyectil) elemento).getVelocidad ()) > 0) {
             return;
          }
       if (elemento instanceof Enemigo) {
@@ -236,12 +267,14 @@ public class Juego extends Observable implements Estado {
       }
       if (chocan (proyectil, elemento)) {
          sonidoMatado ();
-         if (elemento.getTipo () == 0) {
+         if (elemento.getTipo () == Enemigo.TRIANGULAR) {
             getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 40);
-         } else if (elemento.getTipo () == 1) {
+         } else if (elemento.getTipo () == Enemigo.ANTENAS) {
             getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 20);
-         } else if (elemento.getTipo () == 2) {
+         } else if (elemento.getTipo () == Enemigo.REDONDO) {
             getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 10);
+         } else if (elemento.getTipo () == Enemigo.NODRIZA) {
+            getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 100);
          }
 
          int a = Math.min (proyectil.getColision (), elemento.getColision ());
@@ -251,9 +284,13 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
+    * Booleano que comprueba si 2 elementos chocan.
+    * 
     * @param proyectil
+    *           proyectil a comprobar.
     * @param elemento
-    * @return
+    *           elemento a comprobar.
+    * @return si esos elementos chocan o no.
     */
    private boolean chocan (Proyectil proyectil, Elemento elemento) {
       Rectangle proyect = new Rectangle (proyectil.getX (), proyectil.getY (), proyectil.getSize ().x, proyectil
@@ -264,7 +301,7 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
-    * 
+    * Mueve los proyectiles.
     */
    private void moverProyectiles () {
       for (Proyectil proyectil : getProyectiles ()) {
@@ -393,6 +430,9 @@ public class Juego extends Observable implements Estado {
       sonidoDisparo ();
    }
 
+   /**
+    * Reproduce el sonido de disparo.
+    */
    private void sonidoDisparo () {
       File soundFile = new File ("./res/sounds/disparo.wav");
       AudioInputStream audioIn;
@@ -407,6 +447,9 @@ public class Juego extends Observable implements Estado {
       }
    }
 
+   /**
+    * Reproduce el sonido de que un enemigo sea asesinado.
+    */
    private void sonidoMatado () {
       File soundFile = new File ("./res/sounds/invasorMuerto.wav");
       AudioInputStream audioIn;
@@ -507,14 +550,13 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
-    * @param timerListener
-    * 
+    * Crea una nueva partida. Inicializa los valores a los iniciales.
     */
    public void nuevo () {
       setEnemigos (new Tabla (M, N, TOTAL_X, TOTAL_Y - ALTURA_INICIAL_ENEMIGOS));
       inicializarNaves (NAVES);
       setProyectiles (new ArrayList<Proyectil> ());
-      setEnemigosEspeciales (new ArrayList<Enemigo> ());
+      setEnemigosEspeciales (new ArrayList<EnemigoOvni> ());
       setEstadoEnemigos (1);
       setDireccionEnemigos (IZQUIERDA);
       setOvniTimer (0);
@@ -540,11 +582,11 @@ public class Juego extends Observable implements Estado {
       this.bucleJuego = bucleJuego;
    }
 
-   public ArrayList<Enemigo> getEnemigosEspeciales () {
+   public ArrayList<EnemigoOvni> getEnemigosEspeciales () {
       return enemigosEspeciales;
    }
 
-   public void setEnemigosEspeciales (ArrayList<Enemigo> enemigosEspeciales) {
+   public void setEnemigosEspeciales (ArrayList<EnemigoOvni> enemigosEspeciales) {
       this.enemigosEspeciales = enemigosEspeciales;
    }
 

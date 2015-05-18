@@ -15,19 +15,18 @@
 package modelo;
 
 /**
- * Clase que describe el enemigo más básico del juego Reúne las caracterísiticas específicas o únicas de este enemigo
+ * Clase que describe el enemigo mï¿½s bï¿½sico del juego Reï¿½ne las caracterï¿½siticas especï¿½ficas o ï¿½nicas de este enemigo
  * frente a otro tipo de enemigos.
  */
 public class EnemigoBasico extends Enemigo {
 
    public static final int ANCHO = 40;
    public static final int ALTO  = 40;
-   private final int        VIDAS = 1;
+   private final int       VIDAS = 1;
 
    public EnemigoBasico (int posX, int posY, int tipo) {
-      super (posX, posY,tipo);
+      super (posX, posY, tipo);
       setSize (ANCHO, ALTO);
       setVidas (VIDAS);
    }
-
 }

@@ -11,16 +11,12 @@
  *    Francisco J. Palacios Rodríguez.
  *    Héctor Rodríguez Pérez
  */
+
 package modelo;
 
 /**
- * Clase que describe todo elemento que no tiene vida. En este caso, nuestro
- * juego tiene escudos o proyectiles como elementos carentes de vida.
+ * Clase que describe todo elemento que no tiene vida. En este caso, nuestro juego tiene proyectiles como
+ * elementos carentes de vida.
  */
 public abstract class Inerte extends Elemento {
-
-	public Inerte() {
-		// TODO Auto-generated constructor stub
-	}
-
 }

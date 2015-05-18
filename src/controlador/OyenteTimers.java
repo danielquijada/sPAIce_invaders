@@ -11,6 +11,7 @@
  *    Francisco J. Palacios Rodríguez.
  *    Héctor Rodríguez Pérez
  */
+
 package controlador;
 
 import java.awt.event.ActionEvent;
@@ -19,11 +20,13 @@ import modelo.Juego;
 
 
 /**
- * TODO Descripción de la clase.
+ * Oyente simple para el timer del bucle de juego.
  */
 public class OyenteTimers implements ActionListener {
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
     */
    @Override

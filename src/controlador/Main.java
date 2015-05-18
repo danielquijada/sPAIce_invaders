@@ -24,7 +24,7 @@ import vista.VentanaJuego;
 
 
 /**
- * TODO Descripci�n de la clase.
+ * Simple Main que inicializa lo necesario.
  */
 public class Main {
 
@@ -33,8 +33,8 @@ public class Main {
 
 	  new Fuentes();
       Juego juego = Juego.getInstance ();
-      VentanaJuego ventanaJuego = new VentanaJuego (new ListenForKey ());
-      Master.getInstance ().addObserver (ventanaJuego.getApplet ());
+      VentanaJuego ventanaJuego = new VentanaJuego (new ListenForKey ()); // Añade a la ventana el KeyListener.
+      Master.getInstance ().addObserver (ventanaJuego.getApplet ()); // Añade observers.
       juego.addObserver (PantallaJuego.getInstance ());
       Menu.getInstance ().addObserver (PantallaMenu.getInstance ());
       ventanaJuego.setVisible (true);

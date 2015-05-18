@@ -18,22 +18,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
-
 import modelo.Estado;
 import modelo.Master;
 
 /**
- * TODO Descripci�n de la clase.
+ * Clase encargada de atender a los eventos de teclado. Cuando es presionada una tecla envía la acción correspondiente
+ * al Estado activo.
  */
 public class ListenForKey implements KeyListener, Observer {
 
-   private Estado estado;
+   private Estado estado; // Estado actual. Puede ser el juego o el menú; aunque se podría ampliar.
 
    /**
-    * 
+    * Inicializa el estado (cogiéndolo de Master) y se añade a si mismo como observer de Master, para reaccionar cuando
+    * haya algún cambio.
     */
    public ListenForKey () {
-      setEstado (Master.getInstance ().getEstado ()); //TODO Modificar estado inicial.
+      setEstado (Master.getInstance ().getEstado ());
       Master.getInstance ().addObserver (this);
    }
 
@@ -89,7 +90,7 @@ public class ListenForKey implements KeyListener, Observer {
          getEstado ().paraSalir ();
       }
    }
-   
+
    /**
     * @return the estado
     */
@@ -97,15 +98,18 @@ public class ListenForKey implements KeyListener, Observer {
       return estado;
    }
 
-   
+
    /**
-    * @param estado the estado to set
+    * @param estado
+    *           the estado to set
     */
    public void setEstado (Estado estado) {
       this.estado = estado;
    }
 
-   /* (non-Javadoc)
+   /*
+    * (non-Javadoc)
+    * 
     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
     */
    @Override

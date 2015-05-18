@@ -18,7 +18,7 @@ import java.util.Iterator;
 
 
 /**
- * TODO Descripción de la clase.
+ * Iterador que recorre la tabla.
  */
 public class IteratorTabla implements Iterator<Enemigo> {
 
