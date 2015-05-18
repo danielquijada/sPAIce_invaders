@@ -233,7 +233,7 @@ public class Juego extends Observable implements Estado {
 			}
 		}
 		if (chocan(proyectil, elemento)) {
-			playKilledSound();
+			sonidoMatado();
 			if (elemento.getTipo() == 0) {
 				getNaves().get(0).setPuntuacion(
 						getNaves().get(0).getPuntuacion() + 40);
@@ -391,10 +391,10 @@ public class Juego extends Observable implements Estado {
 	@Override
 	public void accion() {
 		disparar(0);
-		playShootSound();
+		sonidoDisparo();
 	}
 
-	private void playShootSound() {
+	private void sonidoDisparo() {
 		File soundFile = new File("./res/sounds/shoot.wav");																
 		AudioInputStream audioIn;
 		Clip clip;
@@ -408,7 +408,7 @@ public class Juego extends Observable implements Estado {
 		}
 	}
 
-	private void playKilledSound() {
+	private void sonidoMatado() {
 		File soundFile = new File("./res/sounds/invaderkilled.wav");																
 		AudioInputStream audioIn;
 		Clip clip;

@@ -16,6 +16,8 @@ package vista;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
@@ -37,13 +39,15 @@ public class PantallaJuego extends Pantalla implements Observer {
    private static final int		TAMY = 10;
    private Juego                juego;
    private static PantallaJuego pantallaJuego;
-
+   private Image img = Toolkit.getDefaultToolkit().getImage("./res/img/ingame_background.png");
+   
    /**
     * @param juego
     */
    private PantallaJuego (Juego juego) {
       setJuego (juego);
       setBackground(Color.BLACK);
+      
    }
 
    public static PantallaJuego getInstance () {
@@ -60,6 +64,7 @@ public class PantallaJuego extends Pantalla implements Observer {
    @Override
    protected void paintComponent (Graphics g) {
       super.paintComponent (g);
+      g.drawImage(img, 0, 0,getWidth(),getHeight(), null);
       Iterator<Enemigo> iter = getJuego ().getEnemigos ().iterator ();
 
       while (iter.hasNext ()) {
