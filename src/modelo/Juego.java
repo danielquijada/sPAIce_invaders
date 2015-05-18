@@ -395,7 +395,7 @@ public class Juego extends Observable implements Estado {
 	}
 
 	private void sonidoDisparo() {
-		File soundFile = new File("./res/sounds/shoot.wav");																
+		File soundFile = new File("./res/sounds/disparo.wav");																
 		AudioInputStream audioIn;
 		Clip clip;
 		try {
@@ -409,7 +409,7 @@ public class Juego extends Observable implements Estado {
 	}
 
 	private void sonidoMatado() {
-		File soundFile = new File("./res/sounds/invaderkilled.wav");																
+		File soundFile = new File("./res/sounds/invasorMuerto.wav");																
 		AudioInputStream audioIn;
 		Clip clip;
 		try {
