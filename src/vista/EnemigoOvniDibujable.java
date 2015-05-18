@@ -36,7 +36,7 @@ public class EnemigoOvniDibujable extends EnemigoDibujable {
 	 */
 	@Override
 	public void dibujar(Graphics g, int x, int y, int tamX, int tipo) {
-		g.setColor(Color.WHITE);
+		g.setColor(Color.RED);
 		g.setFont(font.deriveFont(Font.PLAIN, tamX));
 
 		g.drawString("v", x, y);
