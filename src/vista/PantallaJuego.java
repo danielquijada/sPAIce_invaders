@@ -61,7 +61,6 @@ public class PantallaJuego extends Pantalla implements Observer {
    protected void paintComponent (Graphics g) {
       super.paintComponent (g);
       Iterator<Enemigo> iter = getJuego ().getEnemigos ().iterator ();
-      Iterator<Proyectil> it = getJuego ().getProyectiles ().iterator ();
 
       while (iter.hasNext ()) {
          Enemigo enemy = iter.next ();
@@ -74,14 +73,6 @@ public class PantallaJuego extends Pantalla implements Observer {
          }
       }
 
-      for (Nave nave : getJuego ().getNaves ()) {
-         int x = (int) ((double) nave.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
-         int y = (int) ((double) nave.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
-         int tamX = (int) ((nave.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
-         int tamY = (int) ((nave.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
-         new NaveBasicaDibujable ().dibujar (g, x, y, tamX, tamY);
-      }
-      
       for (Enemigo ovni : getJuego ().getEnemigosEspeciales() ) {
     	  if(ovni.isVivo()){
 	          int x = (int) ((double) ovni.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
@@ -93,11 +84,13 @@ public class PantallaJuego extends Pantalla implements Observer {
        }
     	  
 
+      Iterator<Proyectil> it = getJuego ().getProyectiles ().iterator ();
+
       while (it.hasNext ()) {
          Proyectil proyectil = it.next ();
          int x = (int) ((double) proyectil.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
          int y = (int) ((double) proyectil.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
-         new ProyectilBasicoDibujable ().dibujar (g, x, y, TAMX,TAMY);
+         new ProyectilBasicoDibujable ().dibujar (g, x, y, proyectil.getSize ().x,proyectil.getSize ().y);
          if (proyectil.getY () < 0) {
             it.remove ();
          }
@@ -105,6 +98,14 @@ public class PantallaJuego extends Pantalla implements Observer {
 
       // HUD
       new Hud (getJuego ()).dibujar (g, getWidth (), getHeight());
+
+      for (Nave nave : getJuego ().getNaves ()) {
+         int x = (int) ((double) nave.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
+         int y = (int) ((double) nave.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
+         int tamX = (int) ((nave.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
+         int tamY = (int) ((nave.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
+         new NaveBasicaDibujable ().dibujar (g, x, y, tamX, tamY);
+      }
    }
 
    /**

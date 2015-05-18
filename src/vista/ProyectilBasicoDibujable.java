@@ -25,6 +25,6 @@ public  class ProyectilBasicoDibujable extends InerteDibujable {
 	   @Override
 	   public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
 		   g.setColor(Color.WHITE);
-		   g.fillRect (x + 17, y - 30, 5, 10);
+         g.fillRect (x, y, tamX, tamY);
 	   }
 }

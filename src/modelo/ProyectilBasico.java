@@ -11,24 +11,27 @@
  *    Francisco J. Palacios RodrÃ­guez.
  *    HÃ©ctor RodrÃ­guez PÃ©rez
  */
+
 package modelo;
 
 /**
- * Clase que representa un proyectil específico. Con ciertas características
- * únicas tales como su velocidad.
+ * Clase que representa un proyectil especï¿½fico. Con ciertas caracterï¿½sticas ï¿½nicas tales como su velocidad.
  */
 public class ProyectilBasico extends Proyectil {
 
-	public static final int DAMAGE = 1;
-	public static final int VELOCIDAD = -12;
+   public static final int DAMAGE    = 1;
+   public static final int VELOCIDAD = -12;
+   public static final int TAMX      = 10;
+   public static final int TAMY      = 10;
 
-	public ProyectilBasico(int posX, int posY, double velocidad) {
-		super(posX, posY);
-		setDamage(DAMAGE);
-	}
+   public ProyectilBasico (int posX, int posY, double velocidad) {
+      super (posX, posY);
+      setDamage (DAMAGE);
+      setSize (TAMX, TAMY);
+   }
 
-	@Override
-	public int getVelocidad() {
-		return VELOCIDAD;
-	}
+   @Override
+   public int getVelocidad () {
+      return VELOCIDAD;
+   }
 }

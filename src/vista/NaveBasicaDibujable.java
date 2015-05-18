@@ -32,9 +32,25 @@ public class NaveBasicaDibujable extends NaveDibujable {
     */
    @Override
    public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
-	   g.setFont(font.deriveFont(Font.PLAIN, tamX));
+	   g.setFont(getFont ().deriveFont(Font.PLAIN, tamX));
 	   g.setColor(Color.GREEN);
 	   g.drawString("w", x, y);
+   }
+
+   
+   /**
+    * @return the font
+    */
+   public Font getFont () {
+      return font;
+   }
+
+   
+   /**
+    * @param font the font to set
+    */
+   public void setFont (Font font) {
+      this.font = font;
    }
 
 }

@@ -105,7 +105,7 @@ public class Juego extends Observable implements Estado {
 
    public void disparar (int nave) {
       getProyectiles ().add (
-            new ProyectilBasico (getNaves ().get (nave).getX (), getNaves ().get (nave).getY (), VELOCIDAD_BASE));
+            new ProyectilBasico (getNaves ().get (nave).getX () + NaveBasica.ANCHO * 3 / 10, getNaves ().get (nave).getY () - NaveBasica.ALTO / 2, VELOCIDAD_BASE));
       setChanged ();
       notifyObservers ();
    }
