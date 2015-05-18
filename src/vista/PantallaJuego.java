@@ -33,7 +33,7 @@ import modelo.Proyectil;
 @SuppressWarnings ("serial")
 public class PantallaJuego extends Pantalla implements Observer {
 
-   private static final int     TAMX = 5; //tamaño del proyectil
+   private static final int     TAMX = 5; //tamaï¿½o del proyectil
    private static final int		TAMY = 10;
    private Juego                juego;
    private static PantallaJuego pantallaJuego;
@@ -81,6 +81,17 @@ public class PantallaJuego extends Pantalla implements Observer {
          int tamY = (int) ((nave.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
          new NaveBasicaDibujable ().dibujar (g, x, y, tamX, tamY);
       }
+      
+      for (Enemigo ovni : getJuego ().getEnemigosEspeciales() ) {
+    	  if(ovni.isVivo()){
+	          int x = (int) ((double) ovni.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
+	          int y = (int) ((double) ovni.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
+	          int tamX = (int) ((ovni.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
+	          int tamY = (int) ((ovni.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
+	          new EnemigoOvniDibujable ().dibujar (g, x, y, tamX, tamY);
+    	  }
+       }
+    	  
 
       while (it.hasNext ()) {
          Proyectil proyectil = it.next ();

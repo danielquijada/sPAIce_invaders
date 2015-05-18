@@ -19,12 +19,12 @@ package modelo;
  */
 public class EnemigoOvni extends Enemigo {
 
-   public static final int ANCHO = 40;
-   public static final int ALTO  = 40;
-   private final int        VIDAS = 1;
+   public static final int ANCHO      = 40;
+   public static final int ALTO       = 40;
+   private final int       VIDAS      = 1;
 
-   public EnemigoOvni (int posX, int posY, int tipo) {
-      super (posX, posY,tipo);
+   public EnemigoOvni (int posX, int posY) {
+      super (posX, posY,0);
       setSize (ANCHO, ALTO);
       setVidas (VIDAS);
    }

@@ -39,21 +39,24 @@ public class Juego extends Observable implements Estado {
    private Tabla                enemigos;
    private ArrayList<Nave>      naves;
    private ArrayList<Proyectil> proyectiles;
+   private ArrayList<Enemigo>   enemigosEspeciales;
    private int                  estadoEnemigos;
    private int                  direccionEnemigos;
    private int                  dir;
    private static Juego         juego;
    private int                  contadorMovimientoEnemigos;
+   private int                  ovniTimer;
 
    private static final int     M                       = 10;
    private static final int     N                       = 6;
    public static final int      TOTAL_X                 = 1000;
    public static final int      TOTAL_Y                 = 1000;
-   public static final int      ALTURA_INICIAL_ENEMIGOS = 100;
+   public static final int      ALTURA_INICIAL_ENEMIGOS = 50;
    public static final int      ALTURA_SUELO            = 50;
    public static final int      MARGEN_LATERAL          = 40;
    public static final int      NAVES                   = 1;
    public static final int      VELOCIDAD_BASE          = 5;
+   public static final int      OVNI_SPAWN              = 12000;
 
    public static final int      IZQUIERDA               = 1;
    public static final int      DERECHA                 = 2;
@@ -131,8 +134,15 @@ public class Juego extends Observable implements Estado {
    }
 
    public void step () {
+	   if(getOvniTimer() == OVNI_SPAWN){
+		   getEnemigosEspeciales().add(new EnemigoOvni(TOTAL_X, ALTURA_INICIAL_ENEMIGOS));
+		   setOvniTimer(0);
+	   }
+	   else
+		   setOvniTimer(getOvniTimer() + DELAY + 5);
  
       moverProyectiles ();
+      moverOvnis ();
       if (getContadorMovimientoEnemigos () == RETRASO_ENEMIGOS) {
          setContadorMovimientoEnemigos (0);
          moverEnemigos ();
@@ -153,21 +163,36 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
+ * 
+ */
+	private void moverOvnis() {
+		
+		for (Enemigo ovni : getEnemigosEspeciales () ) {
+	        ovni.setX (ovni.getX () + Enemigo.VELOCIDAD);
+	     }		
+	}
+
+/**
     * 
     */
    private void calcularColisiones () {
-      int i = 0;
+      @SuppressWarnings("unused")
+	int i = 0;
       for (Proyectil proyectil : getProyectiles ()) {
          for (Proyectil proyectil2 : getProyectiles ()) {
             if (!proyectil.equals (proyectil2))
                comprobarColisiones (proyectil, proyectil2);
          }
          Iterator<Enemigo> iter = getEnemigos ().iterator ();
-         if (proyectil.getVelocidad () < 0)
+         if (proyectil.getVelocidad () < 0){
             while (iter.hasNext ()) {
                Enemigo enemigo = iter.next ();
                comprobarColisiones (proyectil, enemigo);
             }
+	         for (Enemigo ovni : getEnemigosEspeciales () ) {
+	        	 comprobarColisiones (proyectil, ovni);
+	 	     }
+         }
       }
       limpiarProyectiles ();
    }
@@ -456,8 +481,10 @@ public class Juego extends Observable implements Estado {
       setEnemigos (new Tabla (M, N, TOTAL_X, TOTAL_Y - ALTURA_INICIAL_ENEMIGOS));
       inicializarNaves (NAVES);
       setProyectiles (new ArrayList<Proyectil> ());
+      setEnemigosEspeciales(new ArrayList<Enemigo>());
       setEstadoEnemigos (1);
       setDireccionEnemigos (IZQUIERDA);
+      setOvniTimer(0);
 
       Timer bucleJuego = new Timer (DELAY, new OyenteTimers ());
       setBucleJuego (bucleJuego);
@@ -481,4 +508,22 @@ public class Juego extends Observable implements Estado {
    public void setBucleJuego (Timer bucleJuego) {
       this.bucleJuego = bucleJuego;
    }
+
+public ArrayList<Enemigo> getEnemigosEspeciales() {
+	return enemigosEspeciales;
+}
+
+public void setEnemigosEspeciales(ArrayList<Enemigo> enemigosEspeciales) {
+	this.enemigosEspeciales = enemigosEspeciales;
+}
+
+public int getOvniTimer() {
+	return ovniTimer;
+}
+
+public void setOvniTimer(int ovniTimer) {
+	this.ovniTimer = ovniTimer;
+}
+   
+   
 }
