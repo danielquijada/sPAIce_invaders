@@ -36,7 +36,6 @@ import controlador.OyenteTimers;
  */
 public class Juego extends Observable implements Estado {
 
-<<<<<<< HEAD
    private Timer                  bucleJuego;
    private Tabla                  enemigos;
    private ArrayList<Nave>        naves;
@@ -48,6 +47,7 @@ public class Juego extends Observable implements Estado {
    private static Juego           juego;
    private int                    contadorMovimientoEnemigos;
    private int                    ovniTimer;
+   private int playing;
 
    private static final int       M                       = 10;
    private static final int       N                       = 6;
@@ -67,42 +67,6 @@ public class Juego extends Observable implements Estado {
    private static final int       MOVIMIENTO_ENEMIGOS     = 15;
    private static final int       DELAY                   = 15;
    private static final int       RETRASO_ENEMIGOS        = 30;
-=======
-   /**
-    * 
-    */
-	private static int playing = 0;
-   private Timer                bucleJuego;
-   private Tabla                enemigos;
-   private ArrayList<Nave>      naves;
-   private ArrayList<Proyectil> proyectiles;
-   private ArrayList<Enemigo>   enemigosEspeciales;
-   private int                  estadoEnemigos;
-   private int                  direccionEnemigos;
-   private int                  dir;
-   private static Juego         juego;
-   private int                  contadorMovimientoEnemigos;
-   private int                  ovniTimer;
-
-   private static final int     M                       = 10;
-   private static final int     N                       = 6;
-   public static final int      TOTAL_X                 = 1000;
-   public static final int      TOTAL_Y                 = 1000;
-   public static final int      ALTURA_INICIAL_ENEMIGOS = 50;
-   public static final int      ALTURA_SUELO            = 50;
-   public static final int      MARGEN_LATERAL          = 40;
-   public static final int      NAVES                   = 1;
-   public static final int      VELOCIDAD_BASE          = 5;
-   public static final int      OVNI_SPAWN              = 12000;
-
-   public static final int      IZQUIERDA               = 1;
-   public static final int      DERECHA                 = 2;
-   public static final int      INMOVIL                 = 0;
-   private static final int     MOVIMIENTO              = 5;
-   private static final int     MOVIMIENTO_ENEMIGOS     = 15;
-   private static final int     DELAY                   = 15;
-   private static final int     RETRASO_ENEMIGOS        = 30;
->>>>>>> origin/master
 
    /**
     * Constructor por defecto. Inicializa el juego creando un juego nuevo. Es privado debido a que utilizamos el patrón
@@ -176,12 +140,12 @@ public class Juego extends Observable implements Estado {
     * Hace que los enemigos den un "paso" en la dirección que toque.
     */
    public void moverEnemigos () {
-		if (playing == 4) {
-			playing = 0;
+		if (getPlaying () == 4) {
+			setPlaying (0);
 		}
-		playFondo(playing);
-		playing++;
-      EnemigoBasicoDibujable.animacion = !EnemigoBasicoDibujable.animacion;
+		playFondo(getPlaying ());
+		setPlaying (getPlaying () + 1);;
+      EnemigoBasicoDibujable.setAnimacion (!EnemigoBasicoDibujable.isAnimacion ());
 
       if (getDireccionEnemigos () == IZQUIERDA) {
          if (getEnemigos ().izquierda ().getX () - MOVIMIENTO_ENEMIGOS < MARGEN_LATERAL) { // Caso especial, llega al
@@ -208,9 +172,7 @@ public class Juego extends Observable implements Estado {
    public void step () {
       Random rand = new Random ();
       if (getOvniTimer () == OVNI_SPAWN) {
-         System.out.print ("A");
          if (rand.nextBoolean ()) {
-            System.out.println ("B");
             EnemigoOvni enemigo = new EnemigoOvni (MARGEN_LATERAL, ALTURA_INICIAL_ENEMIGOS);
             getEnemigosEspeciales ().add (enemigo);
             if (rand.nextBoolean ()) {
@@ -687,6 +649,22 @@ public class Juego extends Observable implements Estado {
 
    public void setOvniTimer (int ovniTimer) {
       this.ovniTimer = ovniTimer;
+   }
+
+   
+   /**
+    * @return the playing
+    */
+   public int getPlaying () {
+      return playing;
+   }
+
+   
+   /**
+    * @param playing the playing to set
+    */
+   public void setPlaying (int playing) {
+      this.playing = playing;
    }
 
 }
