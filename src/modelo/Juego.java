@@ -239,7 +239,9 @@ public class Juego extends Observable implements Estado {
 
       } else
          setOvniTimer (getOvniTimer () + DELAY + 5);
-
+      
+      limpiarProyectilFueraDeVista();
+      
       moverProyectiles ();
       moverOvnis ();
       if (getContadorMovimientoEnemigos () == RETRASO_ENEMIGOS) {
@@ -460,15 +462,20 @@ public class Juego extends Observable implements Estado {
     	  if(proyectil.getY() > getNaves().get(0).getY() - 10) {
     		  sonidoPerderVida(); //Si la posicion del proyectil esta en el rango de impacto reproduce un sonido
     		  NaveBasicaDibujable.setHit(true);
-    		  
-    		  System.out.println(proyectil.getY());
-    		  System.out.println(getProyectiles().size());
     	  }
       }
 
       return proyect.intersects (element);
    }
 
+   private void limpiarProyectilFueraDeVista() {
+	   for(int i = 0; i < getProyectiles().size();i++) {
+		   if((getProyectiles().get(i).getY() >= getNaves().get(0).getY() + getNaves().get(0).getSize().y) || (getProyectiles().get(i).getY() < 0)) {
+			   getProyectiles().remove(i);
+		   }
+	   }
+   }
+   
    /**
     * Mueve los proyectiles.
     */
