@@ -40,7 +40,6 @@ public class NaveBasicaDibujable extends NaveDibujable {
 		
 		if (hit) {
 			g.setColor(Color.RED);
-			setHit(false);
 		}
 		
 		g.drawString("w", x, y);

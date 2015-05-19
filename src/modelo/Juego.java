@@ -173,7 +173,11 @@ public class Juego extends Observable implements Estado {
     * Hace que los enemigos den un "paso" en la dirección que toque.
     */
    public void moverEnemigos () {
+	   
+	   NaveBasicaDibujable.setHit(false); //Vuelve a la nave al color normal
+	   
       if (getPlaying () == 4) {
+    	  
          setPlaying (0);
       }
       playFondo (getPlaying ());
