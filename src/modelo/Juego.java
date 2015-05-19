@@ -21,14 +21,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Random;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Timer;
-
 import vista.EnemigoBasicoDibujable;
 import vista.NaveBasicaDibujable;
 import controlador.OyenteTimers;
@@ -57,6 +55,8 @@ public class Juego extends Observable implements Estado {
    private int                    contadorPreStart;
    private int                    contadorDisparosEnemigos;
    private int                    contadorDisparos;
+   private boolean                invadido;
+   private int                    nivel;
 
    private static final int       M                                      = 10;
    private static final int       N                                      = 6;
@@ -68,19 +68,21 @@ public class Juego extends Observable implements Estado {
    public static final int        NAVES                                  = 1;
    public static final int        VELOCIDAD_BASE                         = 5;
    public static final int        OVNI_SPAWN                             = 12000;
+   public static final int        ALTURA_MUERTE                          = 300;
 
    public static final int        IZQUIERDA                              = 1;
    public static final int        DERECHA                                = 2;
    public static final int        INMOVIL                                = 0;
    private static final int       MOVIMIENTO                             = 5;
    private static final int       MOVIMIENTO_ENEMIGOS                    = 15;
-   private static final int       DELAY                                  = 15;
+   private int                    retraso                                = 15;
    private static final int       RETRASO_ENEMIGOS                       = 30;
    private static final int       RETRASO_PRESTART                       = 60;
-   private static final int       RETRASO_DISPAROS_NAVE                  = 20;
+   private static final int       RETRASO_DISPAROS_NAVE                  = 1;
    private static final int       RETRASO_DISPAROS_ENEMIGOS_TRIANGULARES = 90;
    private static final int       RETRASO_DISPAROS_ENEMIGOS_ANTENAS      = 300;
    private static final int       RETRASO_DISPAROS_ENEMIGOS_REDONDOS     = 600;
+   private static final double    AUMENTO                                = 0.20;
 
    /**
     * Constructor por defecto. Inicializa el juego creando un juego nuevo. Es privado debido a que utilizamos el patrón
@@ -90,10 +92,13 @@ public class Juego extends Observable implements Estado {
       nuevo ();
    }
 
-   /**
-    * Crea una nueva partida. Inicializa los valores a los iniciales.
-    */
    public void nuevo () {
+      nuevo (1);
+   }
+
+   /**
+    */
+   public void nuevo (int nivel) {
       setEnemigos (new Tabla (M, N, TOTAL_X, TOTAL_Y - ALTURA_INICIAL_ENEMIGOS));
       inicializarNaves (NAVES);
       setProyectiles (new ArrayList<Proyectil> ());
@@ -103,9 +108,12 @@ public class Juego extends Observable implements Estado {
       setOvniTimer (0);
       setPreStart (3);
       setWin (false);
+      setInvadido (false);
+      setNivel (nivel);
 
       setGameOver (false);
-      Timer bucleJuego = new Timer (DELAY, new OyenteTimers ());
+      int retraso = (int) (getRetraso () * (1 - (AUMENTO * (nivel - 1))));
+      Timer bucleJuego = new Timer (retraso, new OyenteTimers ());
       setBucleJuego (bucleJuego);
    }
 
@@ -173,11 +181,11 @@ public class Juego extends Observable implements Estado {
     * Hace que los enemigos den un "paso" en la dirección que toque.
     */
    public void moverEnemigos () {
-	   
-	   NaveBasicaDibujable.setHit(false); //Vuelve a la nave al color normal
-	   
+
+      NaveBasicaDibujable.setHit (false); // Vuelve a la nave al color normal
+
       if (getPlaying () == 4) {
-    	  
+
          setPlaying (0);
       }
       playFondo (getPlaying ());
@@ -224,7 +232,14 @@ public class Juego extends Observable implements Estado {
          getBucleJuego ().stop ();
          return;
       }
-
+      if (isInvadido () && getEnemigos ().arriba ().getY () - getEnemigos ().arriba ().getSize ().y > TOTAL_Y) {
+         setGameOver (true);
+         sonidoGameOver ();
+         setChanged ();
+         notifyObservers ();
+         return;
+      } else if (isInvadido ())
+         getEnemigos ().moverAbajo (MOVIMIENTO_ENEMIGOS);
       setContadorDisparos (getContadorDisparos () + 1);
       setContadorDisparosEnemigos (getContadorDisparosEnemigos () + 1);
       dispararEnemigos ();
@@ -242,8 +257,8 @@ public class Juego extends Observable implements Estado {
          setOvniTimer (0);
 
       } else
-         setOvniTimer (getOvniTimer () + DELAY + 5);
-      
+         setOvniTimer (getOvniTimer () + retraso + 5);
+
       moverProyectiles ();
       moverOvnis ();
       if (getContadorMovimientoEnemigos () == RETRASO_ENEMIGOS) {
@@ -262,12 +277,24 @@ public class Juego extends Observable implements Estado {
       calcularColisiones ();
 
       if (getNaves ().get (0).getVidas () == 0) {
-    	  sonidoGameOver ();
-    	  setGameOver (true);
+         sonidoGameOver ();
+         setGameOver (true);
+      }
+
+      Enemigo abajo = getEnemigos ().abajo ();
+      if (abajo.getY () > TOTAL_Y - ALTURA_MUERTE) {
+         invasionAcabada ();
       }
 
       setChanged ();
       notifyObservers ();
+   }
+
+   /**
+    * 
+    */
+   private void invasionAcabada () {
+      setInvadido (true);
    }
 
    /**
@@ -304,7 +331,9 @@ public class Juego extends Observable implements Estado {
     * @param seleccionado
     */
    private void dispararEnemigo (Enemigo seleccionado) {
-      getProyectiles ().add (new ProyectilEnemigo (seleccionado.getX () + seleccionado.getSize ().x / 2, seleccionado.getY (), VELOCIDAD_BASE));
+      getProyectiles ().add (
+            new ProyectilEnemigo (seleccionado.getX () + seleccionado.getSize ().x / 2, seleccionado.getY (),
+                  VELOCIDAD_BASE));
       setChanged ();
       notifyObservers ();
    }
@@ -357,7 +386,7 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
-    * 
+    * Calcula las colisiones entre todos los elementos y los proyectiles.
     */
    private void calcularColisiones () {
       for (Proyectil proyectil : getProyectiles ()) {
@@ -387,13 +416,13 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
-    * 
+    * Limpia los proyectiles que hayan colisionado.
     */
    private void limpiarProyectiles () {
       Iterator<Proyectil> iter = getProyectiles ().iterator ();
       while (iter.hasNext ()) {
          if (iter.next ().getColision () <= 0) {
-        	 iter.remove ();    	 
+            iter.remove ();
          }
       }
    }
@@ -421,25 +450,25 @@ public class Juego extends Observable implements Estado {
          int a = Math.min (proyectil.getColision (), elemento.getColision ());
          proyectil.setColision (proyectil.getColision () - a);
          elemento.setColision (elemento.getColision () - a);
-         
+
 
          if (elemento.getColision () <= 0) {
             if (elemento.getTipo () == Enemigo.TRIANGULAR) {
-            	sonidoMatado ();
+               sonidoMatado ();
                getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 40);
             } else if (elemento.getTipo () == Enemigo.ANTENAS) {
-            	sonidoMatado ();
+               sonidoMatado ();
                getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 20);
             } else if (elemento.getTipo () == Enemigo.REDONDO) {
-            	sonidoMatado ();
+               sonidoMatado ();
                getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 10);
             } else if (elemento.getTipo () == Enemigo.NODRIZA) {
-            	sonidoMatado ();
-            	getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 100);
+               sonidoMatado ();
+               getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 100);
             }
-            if (getEnemigos ().isEmpty () && getEnemigosEspeciales ().isEmpty ()) {
-            	setWin (true);
-            	sonidoVictoria ();
+            if (getEnemigos ().isEmpty ()) {
+               setWin (true);
+               sonidoVictoria ();
             }
          }
       }
@@ -459,12 +488,13 @@ public class Juego extends Observable implements Estado {
             .getSize ().y);
       Rectangle element = new Rectangle (elemento.getX (), elemento.getY (), elemento.getSize ().x,
             elemento.getSize ().y);
-      
-      if ((proyectil.getX() > getNaves().get(0).getX()) && (proyectil.getX() < getNaves().get(0).getX() + getNaves().get(0).getSize().x)) {  	 
-    	  if(proyectil.getY() > getNaves().get(0).getY() - 10) {
-    		  sonidoPerderVida(); //Si la posicion del proyectil esta en el rango de impacto reproduce un sonido
-    		  NaveBasicaDibujable.setHit(true);
-    	  }
+
+      if ((proyectil.getX () > getNaves ().get (0).getX ())
+            && (proyectil.getX () < getNaves ().get (0).getX () + getNaves ().get (0).getSize ().x)) {
+         if (proyectil.getY () > getNaves ().get (0).getY () - 10) {
+            sonidoPerderVida (); // Si la posicion del proyectil esta en el rango de impacto reproduce un sonido
+            NaveBasicaDibujable.setHit (true);
+         }
       }
 
       return proyect.intersects (element);
@@ -518,7 +548,14 @@ public class Juego extends Observable implements Estado {
 	 */
    @Override
    public void accion () {
-      if (getPreStart () >= 0)
+      if (isWin ()) {
+         nuevo (getNivel () + 1);
+         getBucleJuego ().start ();
+         setChanged ();
+         notifyObservers ();
+         return;
+      }
+      if (getPreStart () >= 0 || isGameOver ())
          return;
       if (getContadorDisparos () < RETRASO_DISPAROS_NAVE)
          return;
@@ -639,56 +676,58 @@ public class Juego extends Observable implements Estado {
     * Reproduce un sonido cuando muere la nave
     */
    private void sonidoGameOver () {
-	      File soundFile = new File ("./res/sounds/lost.wav");
-	      AudioInputStream audioIn;
-	      Clip clip;
-	      try {
-	         audioIn = AudioSystem.getAudioInputStream (soundFile);
-	         clip = AudioSystem.getClip ();
-	         clip.open (audioIn);
-	         clip.start ();
-	      } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-	         e.printStackTrace ();
-	      }
-	   }
-   
+      File soundFile = new File ("./res/sounds/lost.wav");
+      AudioInputStream audioIn;
+      Clip clip;
+      try {
+         audioIn = AudioSystem.getAudioInputStream (soundFile);
+         clip = AudioSystem.getClip ();
+         clip.open (audioIn);
+         clip.start ();
+      } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+         e.printStackTrace ();
+      }
+   }
+
    /**
     * Reproduce un sonido cuando se gana una partida
     */
    private void sonidoVictoria () {
-	      File soundFile = new File ("./res/sounds/win.wav");
-	      AudioInputStream audioIn;
-	      Clip clip;
-	      try {
-	         audioIn = AudioSystem.getAudioInputStream (soundFile);
-	         clip = AudioSystem.getClip ();
-	         clip.open (audioIn);
-	         clip.start ();
-	      } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-	         e.printStackTrace ();
-	      }
-	   }
-   
+      File soundFile = new File ("./res/sounds/win.wav");
+      AudioInputStream audioIn;
+      Clip clip;
+      try {
+         audioIn = AudioSystem.getAudioInputStream (soundFile);
+         clip = AudioSystem.getClip ();
+         clip.open (audioIn);
+         clip.start ();
+      } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+         e.printStackTrace ();
+      }
+   }
+
    /**
     * Reproduce un sonido cuando la nave es golpeada
     */
    private void sonidoPerderVida () {
-	      File soundFile = new File ("./res/sounds/vidaPerdida.wav");
-	      AudioInputStream audioIn;
-	      Clip clip;
-	      try {
-	         audioIn = AudioSystem.getAudioInputStream (soundFile);
-	         clip = AudioSystem.getClip ();
-	         clip.open (audioIn);
-	         clip.start ();
-	      } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-	         e.printStackTrace ();
-	      }
-	   }
-   
+      File soundFile = new File ("./res/sounds/vidaPerdida.wav");
+      AudioInputStream audioIn;
+      Clip clip;
+      try {
+         audioIn = AudioSystem.getAudioInputStream (soundFile);
+         clip = AudioSystem.getClip ();
+         clip.open (audioIn);
+         clip.start ();
+      } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+         e.printStackTrace ();
+      }
+   }
+
    /**
     * Reproduce el sonido de fondo.
-    * @param playing reproduce 1 de los 4 sonidas
+    * 
+    * @param playing
+    *           reproduce 1 de los 4 sonidas
     */
    private void playFondo (int playing) {
       File soundFile1 = new File ("./res/sounds/playing1.wav");
@@ -934,6 +973,56 @@ public class Juego extends Observable implements Estado {
     */
    public void setContadorDisparos (int contadorDisparos) {
       this.contadorDisparos = contadorDisparos;
+   }
+
+
+   /**
+    * @return the invadido
+    */
+   public boolean isInvadido () {
+      return invadido;
+   }
+
+
+   /**
+    * @param invadido
+    *           the invadido to set
+    */
+   public void setInvadido (boolean invadido) {
+      this.invadido = invadido;
+   }
+
+   /**
+    * @return the retraso
+    */
+   public int getRetraso () {
+      return retraso;
+   }
+
+
+   /**
+    * @param retraso
+    *           the retraso to set
+    */
+   public void setRetraso (int retraso) {
+      this.retraso = retraso;
+   }
+
+
+   /**
+    * @return the nivel
+    */
+   public int getNivel () {
+      return nivel;
+   }
+
+
+   /**
+    * @param nivel
+    *           the nivel to set
+    */
+   public void setNivel (int nivel) {
+      this.nivel = nivel;
    }
 
 }
