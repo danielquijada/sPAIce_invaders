@@ -42,6 +42,9 @@ public class Menu extends Observable implements Estado {
 
 	private static Menu menu;
 
+	/**
+	 * Crea una lista de opciones para el menu principal
+	 */
 	private Menu() {
 		sonidoMenu();
 		setSeleccionada(0);
@@ -51,33 +54,19 @@ public class Menu extends Observable implements Estado {
 		getOpciones().add(EXIT);
 	}
 
+	/**
+	 * Crea una instancia de Menu
+	 * @return
+	 */
 	public static Menu getInstance() {
 		if (getMenu() == null)
 			setMenu(new Menu());
 		return getMenu();
 	}
 
-	/*
-	 * Este metodo no tiene funcionalidad en el menu
-	 */
-	@Override
-	public void izquierda() {
-		// No hace nada
-	}
-
-	/*
-	 * Selecciona la opcion actual
-	 */
-	@Override
-	public void derecha() {
-		seleccionar();
-		setChanged();
-		notifyObservers();
-	}
-
 	/**
-    * 
-    */
+	 * Elige la opcion actualmente marcada y cambia la pantalla de menu por la elegida
+	 */
 	private void seleccionar() {
 		musicaFondo.stop();
 		sonidoSeleccionarOpcion();
@@ -95,6 +84,16 @@ public class Menu extends Observable implements Estado {
 			System.exit(0);
 			break;
 		}
+	}
+
+	/*
+	 * Selecciona la opcion actual
+	 */
+	@Override
+	public void derecha() {
+		seleccionar();
+		setChanged();
+		notifyObservers();
 	}
 
 	/*
@@ -138,6 +137,14 @@ public class Menu extends Observable implements Estado {
 		setSeleccionada(getOpciones().size() - 1);
 		setChanged();
 		notifyObservers();
+	}
+
+	/*
+	 * Este metodo no tiene funcionalidad en el menu
+	 */
+	@Override
+	public void izquierda() {
+		// No hace nada
 	}
 
 	/*
@@ -188,27 +195,27 @@ public class Menu extends Observable implements Estado {
 		// Nada
 	}
 
-
 	/**
 	 * Carga y reproduce la musica de fondo en el menu principal
 	 */
 	private void sonidoMenu() {
 		File soundFile = new File("./res/sounds/menusoundtrack.wav");
 		AudioInputStream audioIn;
-		
+
 		try {
 			audioIn = AudioSystem.getAudioInputStream(soundFile);
 			musicaFondo = AudioSystem.getClip();
 			musicaFondo.open(audioIn);
-			FloatControl gainControl = (FloatControl) musicaFondo.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(-15.0f); //Baja el volumen
+			FloatControl gainControl = (FloatControl) musicaFondo
+					.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(-15.0f); // Baja el volumen
 			musicaFondo.start();
 		} catch (UnsupportedAudioFileException | LineUnavailableException
 				| IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Reproduce un sonido al mover el selector
 	 */
@@ -216,7 +223,7 @@ public class Menu extends Observable implements Estado {
 		File soundFile = new File("./res/sounds/optionmove.wav");
 		AudioInputStream audioIn;
 		Clip clip;
-		
+
 		try {
 			audioIn = AudioSystem.getAudioInputStream(soundFile);
 			clip = AudioSystem.getClip();
@@ -227,7 +234,7 @@ public class Menu extends Observable implements Estado {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Reproduce un sonido al elegir una opcion
 	 */
@@ -235,7 +242,7 @@ public class Menu extends Observable implements Estado {
 		File soundFile = new File("./res/sounds/optionselect.wav");
 		AudioInputStream audioIn;
 		Clip clip;
-		
+
 		try {
 			audioIn = AudioSystem.getAudioInputStream(soundFile);
 			clip = AudioSystem.getClip();
@@ -246,7 +253,7 @@ public class Menu extends Observable implements Estado {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static Menu getMenu() {
 		return menu;
 	}
@@ -255,7 +262,6 @@ public class Menu extends Observable implements Estado {
 		Menu.menu = menu;
 	}
 
-	
 	public ArrayList<String> getOpciones() {
 		return opciones;
 	}
