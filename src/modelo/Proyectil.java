@@ -18,13 +18,15 @@ package modelo;
  */
 public abstract class Proyectil extends Inerte {
 
-	public static final int VELOCIDAD = 0;
+   public static final int VELOCIDAD = 0;
+   public static final int PROYECTIL = -100;
 
 	private int damage;
 
 	public Proyectil(int posX, int posY) {
 		setX(posX);
 		setY(posY);
+		setTipo (PROYECTIL);
 	}
 
 	public abstract int getVelocidad();

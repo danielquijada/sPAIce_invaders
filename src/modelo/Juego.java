@@ -52,26 +52,32 @@ public class Juego extends Observable implements Estado {
    private boolean                win;
    private int                    preStart;
    private int                    contadorPreStart;
+   private int                    contadorDisparosEnemigos;
+   private int                    contadorDisparos;
 
-   private static final int       M                       = 10;
-   private static final int       N                       = 6;
-   public static final int        TOTAL_X                 = 1000;
-   public static final int        TOTAL_Y                 = 1000;
-   public static final int        ALTURA_INICIAL_ENEMIGOS = 50;
-   public static final int        ALTURA_SUELO            = 50;
-   public static final int        MARGEN_LATERAL          = 40;
-   public static final int        NAVES                   = 1;
-   public static final int        VELOCIDAD_BASE          = 5;
-   public static final int        OVNI_SPAWN              = 12000;
+   private static final int       M                                      = 10;
+   private static final int       N                                      = 6;
+   public static final int        TOTAL_X                                = 1000;
+   public static final int        TOTAL_Y                                = 1000;
+   public static final int        ALTURA_INICIAL_ENEMIGOS                = 50;
+   public static final int        ALTURA_SUELO                           = 50;
+   public static final int        MARGEN_LATERAL                         = 40;
+   public static final int        NAVES                                  = 1;
+   public static final int        VELOCIDAD_BASE                         = 5;
+   public static final int        OVNI_SPAWN                             = 12000;
 
-   public static final int        IZQUIERDA               = 1;
-   public static final int        DERECHA                 = 2;
-   public static final int        INMOVIL                 = 0;
-   private static final int       MOVIMIENTO              = 5;
-   private static final int       MOVIMIENTO_ENEMIGOS     = 15;
-   private static final int       DELAY                   = 15;
-   private static final int       RETRASO_ENEMIGOS        = 30;
-   private static final int       RETRASO_PRESTART        = 60;
+   public static final int        IZQUIERDA                              = 1;
+   public static final int        DERECHA                                = 2;
+   public static final int        INMOVIL                                = 0;
+   private static final int       MOVIMIENTO                             = 5;
+   private static final int       MOVIMIENTO_ENEMIGOS                    = 15;
+   private static final int       DELAY                                  = 15;
+   private static final int       RETRASO_ENEMIGOS                       = 30;
+   private static final int       RETRASO_PRESTART                       = 60;
+   private static final int       RETRASO_DISPAROS_NAVE                  = 20;
+   private static final int       RETRASO_DISPAROS_ENEMIGOS_TRIANGULARES = 90;
+   private static final int       RETRASO_DISPAROS_ENEMIGOS_ANTENAS      = 300;
+   private static final int       RETRASO_DISPAROS_ENEMIGOS_REDONDOS     = 600;
 
    /**
     * Constructor por defecto. Inicializa el juego creando un juego nuevo. Es privado debido a que utilizamos el patrón
@@ -211,6 +217,9 @@ public class Juego extends Observable implements Estado {
          getBucleJuego ().stop ();
          return;
       }
+      setContadorDisparos (getContadorDisparos () + 1);
+      setContadorDisparosEnemigos (getContadorDisparosEnemigos () + 1);
+      dispararEnemigos ();
       Random rand = new Random ();
       if (getOvniTimer () == OVNI_SPAWN) {
          if (rand.nextBoolean ()) {
@@ -252,6 +261,78 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
+    * 
+    */
+   private void dispararEnemigos () {
+      if (getContadorDisparosEnemigos () % RETRASO_DISPAROS_ENEMIGOS_ANTENAS == 0)
+         dispararAntenas ();
+      if (getContadorDisparosEnemigos () % RETRASO_DISPAROS_ENEMIGOS_REDONDOS == 0)
+         dispararRedondos ();
+      if (getContadorDisparosEnemigos () % RETRASO_DISPAROS_ENEMIGOS_TRIANGULARES == 0)
+         dispararTriangulares ();
+   }
+
+   /**
+    * @param triangular
+    * @return
+    */
+   private ArrayList<Enemigo> obtenerEnemigos (int tipo) {
+      ArrayList<Enemigo> enemigos = new ArrayList<> ();
+      Iterator<Enemigo> iter = getEnemigos ().iterator ();
+      while (iter.hasNext ()) {
+         Enemigo enemy = iter.next ();
+         if (enemy.getTipo () == tipo && enemy.isVivo ())
+            enemigos.add (enemy);
+      }
+
+      return enemigos;
+   }
+
+
+
+   /**
+    * @param seleccionado
+    */
+   private void dispararEnemigo (Enemigo seleccionado) {
+      getProyectiles ().add (new ProyectilEnemigo (seleccionado.getX () + seleccionado.getSize ().x / 2, seleccionado.getY (), VELOCIDAD_BASE));
+      setChanged ();
+      notifyObservers ();
+   }
+
+   /**
+    * 
+    */
+   private void dispararTriangulares () {
+      ArrayList<Enemigo> validos = obtenerEnemigos (Enemigo.TRIANGULAR);
+      if (validos.size () == 0)
+         return;
+      Enemigo seleccionado = validos.get (new Random ().nextInt (validos.size ()));
+      dispararEnemigo (seleccionado);
+   }
+
+   /**
+    * 
+    */
+   private void dispararRedondos () {
+      ArrayList<Enemigo> validos = obtenerEnemigos (Enemigo.REDONDO);
+      if (validos.size () == 0)
+         return;
+      Enemigo seleccionado = validos.get (new Random ().nextInt (validos.size ()));
+      dispararEnemigo (seleccionado);
+   }
+
+   /**
+    * 
+    */
+   private void dispararAntenas () {
+      ArrayList<Enemigo> validos = obtenerEnemigos (Enemigo.ANTENAS);
+      if (validos.size () == 0)
+         return;
+      Enemigo seleccionado = validos.get (new Random ().nextInt (validos.size ()));
+      dispararEnemigo (seleccionado);
+   }
+
+   /**
     * Mueve el ovni.
     */
    private void moverOvnis () {
@@ -282,6 +363,13 @@ public class Juego extends Observable implements Estado {
             }
             for (Enemigo ovni : getEnemigosEspeciales ()) {
                comprobarColisiones (proyectil, ovni);
+            }
+         }
+         Iterator<Nave> iterN = getNaves ().iterator ();
+         if (proyectil.getVelocidad () > 0) {
+            while (iterN.hasNext ()) {
+               Nave nave = iterN.next ();
+               comprobarColisiones (proyectil, nave);
             }
          }
       }
@@ -403,8 +491,11 @@ public class Juego extends Observable implements Estado {
    public void accion () {
       if (getPreStart () >= 0)
          return;
+      if (getContadorDisparos () < RETRASO_DISPAROS_NAVE)
+         return;
       disparar (0);
       sonidoDisparo ();
+      setContadorDisparos (0);
    }
 
    /*
@@ -725,6 +816,40 @@ public class Juego extends Observable implements Estado {
     */
    public void setWin (boolean win) {
       this.win = win;
+   }
+
+
+   /**
+    * @return the contadorDisparosEnemigos
+    */
+   public int getContadorDisparosEnemigos () {
+      return contadorDisparosEnemigos;
+   }
+
+
+   /**
+    * @param contadorDisparosEnemigos
+    *           the contadorDisparosEnemigos to set
+    */
+   public void setContadorDisparosEnemigos (int contadorDisparosEnemigos) {
+      this.contadorDisparosEnemigos = contadorDisparosEnemigos;
+   }
+
+
+   /**
+    * @return the contadorDisparos
+    */
+   public int getContadorDisparos () {
+      return contadorDisparos;
+   }
+
+
+   /**
+    * @param contadorDisparos
+    *           the contadorDisparos to set
+    */
+   public void setContadorDisparos (int contadorDisparos) {
+      this.contadorDisparos = contadorDisparos;
    }
 
 }
