@@ -15,37 +15,37 @@
 package vista;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
-
 import modelo.Enemigo;
+import modelo.Fuentes;
 import modelo.Juego;
 import modelo.Nave;
 import modelo.Proyectil;
 
 
 /**
- * Pantalla en la que se mostrará el juego. 
- *  Muestra: * Fondo * Actores (nave, enemigos) * Proyectiles * HUD
+ * Pantalla en la que se mostrará el juego. Muestra: * Fondo * Actores (nave, enemigos) * Proyectiles * HUD
  */
 @SuppressWarnings ("serial")
 public class PantallaJuego extends Pantalla implements Observer {
 
    private Juego                juego;
    private static PantallaJuego pantallaJuego;
-   private Image img = Toolkit.getDefaultToolkit().getImage("./res/img/ingame_background.png");
-   
+   private Image                img = Toolkit.getDefaultToolkit ().getImage ("./res/img/ingame_background.png");
+
    /**
     * @param juego
     */
    private PantallaJuego (Juego juego) {
       setJuego (juego);
-      setBackground(Color.BLACK);
-      
+      setBackground (Color.BLACK);
+
    }
 
    public static PantallaJuego getInstance () {
@@ -62,7 +62,7 @@ public class PantallaJuego extends Pantalla implements Observer {
    @Override
    protected void paintComponent (Graphics g) {
       super.paintComponent (g);
-      g.drawImage(img, 0, 0,getWidth(),getHeight(), null);
+      g.drawImage (img, 0, 0, getWidth (), getHeight (), null);
       Iterator<Enemigo> iter = getJuego ().getEnemigos ().iterator ();
 
       while (iter.hasNext ()) {
@@ -72,20 +72,20 @@ public class PantallaJuego extends Pantalla implements Observer {
             int y = (int) ((double) enemy.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
             int tamX = (int) ((enemy.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
             int tamY = (int) ((enemy.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
-            new EnemigoBasicoDibujable ().dibujar (g, x, y, tamX, enemy.getTipo());
+            new EnemigoBasicoDibujable ().dibujar (g, x, y, tamX, enemy.getTipo ());
          }
       }
 
-      for (Enemigo ovni : getJuego ().getEnemigosEspeciales() ) {
-    	  if(ovni.isVivo()){
-	          int x = (int) ((double) ovni.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
-	          int y = (int) ((double) ovni.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
-	          int tamX = (int) ((ovni.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
-	          int tamY = (int) ((ovni.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
-	          new EnemigoOvniDibujable ().dibujar (g, x, y, tamX, tamY);
-    	  }
-       }
-    	  
+      for (Enemigo ovni : getJuego ().getEnemigosEspeciales ()) {
+         if (ovni.isVivo ()) {
+            int x = (int) ((double) ovni.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
+            int y = (int) ((double) ovni.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
+            int tamX = (int) ((ovni.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
+            int tamY = (int) ((ovni.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
+            new EnemigoOvniDibujable ().dibujar (g, x, y, tamX, tamY);
+         }
+      }
+
 
       Iterator<Proyectil> it = getJuego ().getProyectiles ().iterator ();
 
@@ -93,14 +93,14 @@ public class PantallaJuego extends Pantalla implements Observer {
          Proyectil proyectil = it.next ();
          int x = (int) ((double) proyectil.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
          int y = (int) ((double) proyectil.getY () * (double) getHeight () / (double) Juego.TOTAL_Y);
-         new ProyectilBasicoDibujable ().dibujar (g, x, y, proyectil.getSize ().x,proyectil.getSize ().y);
+         new ProyectilBasicoDibujable ().dibujar (g, x, y, proyectil.getSize ().x, proyectil.getSize ().y);
          if (proyectil.getY () < 0) {
             it.remove ();
          }
       }
 
       // HUD
-      new Hud (getJuego ()).dibujar (g, getWidth (), getHeight());
+      new Hud (getJuego ()).dibujar (g, getWidth (), getHeight ());
 
       for (Nave nave : getJuego ().getNaves ()) {
          int x = (int) ((double) nave.getX () * (double) getWidth () / (double) Juego.TOTAL_X);
@@ -108,6 +108,20 @@ public class PantallaJuego extends Pantalla implements Observer {
          int tamX = (int) ((nave.getSize ().getX () * getHeight ()) / (double) Juego.TOTAL_X);
          int tamY = (int) ((nave.getSize ().getY () * getHeight ()) / (double) Juego.TOTAL_Y);
          new NaveBasicaDibujable ().dibujar (g, x, y, tamX, tamY);
+      }
+      Font fontarcade = Fuentes.getArcadeFont ().deriveFont (Font.PLAIN, 50);
+      g.setColor (Color.WHITE);
+      g.setFont (fontarcade);
+      if (getJuego ().getPreStart () > 0) {
+         g.drawString (getJuego ().getPreStart () + "", getWidth () / 2, getHeight () / 2);
+      } else if (getJuego ().getPreStart () == 0) {
+         g.drawString ("START!", getWidth () / 2 - getWidth () / 15, getHeight () / 2);
+      }
+      if (getJuego ().isGameOver ()) {
+         g.drawString ("GAME OVER", getWidth () / 2 - getWidth () / 8, getHeight () / 2);
+      }
+      if (getJuego ().isWin ()) {
+         g.drawString ("VICTORY!", getWidth () / 2 - getWidth () / 8, getHeight () / 2);
       }
    }
 

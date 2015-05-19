@@ -234,4 +234,19 @@ public class Tabla implements Iterable {
          iter.next ().moverX (movimiento);
       }
    }
+
+   /**
+    * @return
+    */
+   public boolean isEmpty () {
+      boolean vacia = true;
+      
+      Iterator<Enemigo> iter = iterator ();
+      while (iter.hasNext ()) {
+         if (iter.next ().isVivo ())
+            vacia = false;
+      }
+      
+      return vacia;
+   }
 }
