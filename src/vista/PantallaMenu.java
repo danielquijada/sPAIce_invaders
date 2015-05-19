@@ -34,28 +34,22 @@ public class PantallaMenu extends Pantalla implements Observer {
 
 	private static final int OFFSETX = 100;
 	private static final int OFFSETY = 30;
-	private static final int SEPARACION = 50; // Separacion vertical entre las
-												// opciones
+	private static final int SEPARACION = 50; // Separacion vertical entre las opciones
 
 	private static final int OFFSETX_SELECTOR = 20;
 	private static final int OFFSETY_SELECTOR = 17;
-	private static final int DIAMETRO = 15; // Tama�o del selector
+	private static final int DIAMETRO = 15; // Tamanio del selector
 
 	private Font fontinv = Fuentes.getInvadersFont().deriveFont(Font.PLAIN, 80);
 	private Font fontchess = Fuentes.getChessFont().deriveFont(Font.PLAIN, 80);
-	private Font fontarcade = Fuentes.getArcadeFont()
-			.deriveFont(Font.PLAIN, 30);
-	private Font fontsafety = Fuentes.getSafetyFont()
-			.deriveFont(Font.PLAIN, 70);
+	private Font fontarcade = Fuentes.getArcadeFont().deriveFont(Font.PLAIN, 30);
+	private Font fontsafety = Fuentes.getSafetyFont().deriveFont(Font.PLAIN, 70);
 
 	private static PantallaMenu pantallaMenu;
 	private Menu menu;
 	private boolean nosleep = false;
 	private float alpha = 0.0f;
 
-	/**
-    * 
-    */
 	private PantallaMenu() {
 		setBackground(Color.BLACK);
 		setMenu(Menu.getInstance());
@@ -72,13 +66,11 @@ public class PantallaMenu extends Pantalla implements Observer {
 
 		Graphics2D g2d = (Graphics2D) g;
 
-		// set the opacity
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-				alpha));
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		//Inicializa la opacidad
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha));
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		// increase the opacity and repaint
+		//Va incrementando la opacidad y repinta
 		alpha += 0.05f;
 		if (alpha >= 1.0f) {
 			alpha = 1.0f;
@@ -87,6 +79,7 @@ public class PantallaMenu extends Pantalla implements Observer {
 			repaint();
 		}
 
+		//Hace una pequenia pausa cada vez que repinta, hasta que termine el efecto
 		if (nosleep == false) {
 			try {
 				Thread.sleep(100);
@@ -98,9 +91,16 @@ public class PantallaMenu extends Pantalla implements Observer {
 		int mitadAncho = getWidth() / 2 - OFFSETX;
 		int mitadAlto = getHeight() / 2 - OFFSETY;
 
-		g.setColor(Color.WHITE);
+		g.setColor(Color.RED);
 		g.setFont(fontinv);
-		g.drawString("BDFL", mitadAncho - 80, 100);
+		g.drawString("B", mitadAncho - 80, 100);
+		g.setColor(Color.GREEN);
+		g.drawString("D", mitadAncho - 80 + 95, 100);
+		g.setColor(Color.CYAN);
+		g.drawString("F", mitadAncho - 80 + 165, 100);
+		g.setColor(Color.YELLOW);
+		g.drawString("L", mitadAncho - 80 + 265, 100);
+		g.setColor(Color.WHITE);
 		g.setFont(fontchess);
 		g.drawString("SPAICE", mitadAncho - 60, 170);
 		g.setFont(fontsafety);

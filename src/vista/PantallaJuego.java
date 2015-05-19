@@ -35,8 +35,6 @@ import modelo.Proyectil;
 @SuppressWarnings ("serial")
 public class PantallaJuego extends Pantalla implements Observer {
 
-   private static final int     TAMX = 5; //tama�o del proyectil
-   private static final int		TAMY = 10;
    private Juego                juego;
    private static PantallaJuego pantallaJuego;
    private Image img = Toolkit.getDefaultToolkit().getImage("./res/img/ingame_background.png");
