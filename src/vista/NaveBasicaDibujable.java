@@ -19,38 +19,58 @@ import java.awt.Graphics;
 
 import modelo.Fuentes;
 
-
 /**
  * Representacion grafica de la nave protagonista
  */
 public class NaveBasicaDibujable extends NaveDibujable {
 
 	private Font font = Fuentes.getInvadersFont();
-	
-   /* (non-Javadoc)
-    * @see vista.ElementoDibujable#dibujar(java.awt.Graphics, int, int, int, int)
-    */
-   @Override
-   public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
-	   g.setFont(getFont ().deriveFont(Font.PLAIN, tamX));
-	   g.setColor(Color.GREEN);
-	   g.drawString("w", x, y);
-   }
+	public static boolean hit = false;
 
-   
-   /**
-    * @return the font
-    */
-   public Font getFont () {
-      return font;
-   }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see vista.ElementoDibujable#dibujar(java.awt.Graphics, int, int, int,
+	 * int)
+	 */
+	@Override
+	public void dibujar(Graphics g, int x, int y, int tamX, int tamY) {
+		g.setFont(getFont().deriveFont(Font.PLAIN, tamX));
+		g.setColor(Color.GREEN);
+		
+		if (hit) {
+			g.setColor(Color.RED);
+			setHit(false);
+		}
+		
+		g.drawString("w", x, y);
+	}
 
-   
-   /**
-    * @param font the font to set
-    */
-   public void setFont (Font font) {
-      this.font = font;
-   }
+	public static boolean isHit() {
+		return hit;
+	}
+
+	/**
+	 * @param animacion
+	 *            the animacion to set
+	 */
+	public static void setHit(boolean hit) {
+		NaveBasicaDibujable.hit = hit;
+	}
+
+	/**
+	 * @return the font
+	 */
+	public Font getFont() {
+		return font;
+	}
+
+	/**
+	 * @param font
+	 *            the font to set
+	 */
+	public void setFont(Font font) {
+		this.font = font;
+	}
 
 }

@@ -21,13 +21,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Random;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Timer;
+
 import vista.EnemigoBasicoDibujable;
+import vista.NaveBasicaDibujable;
 import controlador.OyenteTimers;
 
 /**
@@ -217,6 +220,7 @@ public class Juego extends Observable implements Estado {
          getBucleJuego ().stop ();
          return;
       }
+
       setContadorDisparos (getContadorDisparos () + 1);
       setContadorDisparosEnemigos (getContadorDisparosEnemigos () + 1);
       dispararEnemigos ();
@@ -384,8 +388,9 @@ public class Juego extends Observable implements Estado {
    private void limpiarProyectiles () {
       Iterator<Proyectil> iter = getProyectiles ().iterator ();
       while (iter.hasNext ()) {
-         if (iter.next ().getColision () <= 0)
-            iter.remove ();
+         if (iter.next ().getColision () <= 0) {
+        	 iter.remove ();    	 
+         }
       }
    }
 
@@ -412,17 +417,21 @@ public class Juego extends Observable implements Estado {
          int a = Math.min (proyectil.getColision (), elemento.getColision ());
          proyectil.setColision (proyectil.getColision () - a);
          elemento.setColision (elemento.getColision () - a);
-         sonidoMatado ();
+         
 
          if (elemento.getColision () <= 0) {
             if (elemento.getTipo () == Enemigo.TRIANGULAR) {
+            	sonidoMatado ();
                getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 40);
             } else if (elemento.getTipo () == Enemigo.ANTENAS) {
+            	sonidoMatado ();
                getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 20);
             } else if (elemento.getTipo () == Enemigo.REDONDO) {
+            	sonidoMatado ();
                getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 10);
             } else if (elemento.getTipo () == Enemigo.NODRIZA) {
-               getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 100);
+            	sonidoMatado ();
+            	getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 100);
             }
             if (getEnemigos ().isEmpty () && getEnemigosEspeciales ().isEmpty ()) {
             	setWin (true);
@@ -446,6 +455,17 @@ public class Juego extends Observable implements Estado {
             .getSize ().y);
       Rectangle element = new Rectangle (elemento.getX (), elemento.getY (), elemento.getSize ().x,
             elemento.getSize ().y);
+      
+      if ((proyectil.getX() > getNaves().get(0).getX()) && (proyectil.getX() < getNaves().get(0).getX() + getNaves().get(0).getSize().x)) {  	 
+    	  if(proyectil.getY() > getNaves().get(0).getY() - 10) {
+    		  sonidoPerderVida(); //Si la posicion del proyectil esta en el rango de impacto reproduce un sonido
+    		  NaveBasicaDibujable.setHit(true);
+    		  
+    		  System.out.println(proyectil.getY());
+    		  System.out.println(getProyectiles().size());
+    	  }
+      }
+
       return proyect.intersects (element);
    }
 
@@ -628,10 +648,27 @@ public class Juego extends Observable implements Estado {
 	   }
    
    /**
-    * Reproduce un sonido cuando muere la nave
+    * Reproduce un sonido cuando se gana una partida
     */
    private void sonidoVictoria () {
 	      File soundFile = new File ("./res/sounds/win.wav");
+	      AudioInputStream audioIn;
+	      Clip clip;
+	      try {
+	         audioIn = AudioSystem.getAudioInputStream (soundFile);
+	         clip = AudioSystem.getClip ();
+	         clip.open (audioIn);
+	         clip.start ();
+	      } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+	         e.printStackTrace ();
+	      }
+	   }
+   
+   /**
+    * Reproduce un sonido cuando la nave es golpeada
+    */
+   private void sonidoPerderVida () {
+	      File soundFile = new File ("./res/sounds/vidaPerdida.wav");
 	      AudioInputStream audioIn;
 	      Clip clip;
 	      try {
