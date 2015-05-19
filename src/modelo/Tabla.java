@@ -116,7 +116,7 @@ public class Tabla implements Iterable {
       while (iter.hasNext ()) {
          Enemigo aux = iter.next ();
 
-         if (aux.isVivo () && aux.getY () > limite.getY ()) {
+         if (aux.isVivo () && aux.getY () < limite.getY ()) {
             limite = aux;
          }
       }
@@ -128,7 +128,7 @@ public class Tabla implements Iterable {
       Enemigo limite = iter.next ();
       while (iter.hasNext ()) {
          Enemigo aux = iter.next ();
-         if (aux.isVivo () && aux.getY () < limite.getY ()) {
+         if (aux.isVivo () && aux.getY () > limite.getY ()) {
             limite = aux;
          }
       }

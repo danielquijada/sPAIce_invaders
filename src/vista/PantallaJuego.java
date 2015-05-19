@@ -99,6 +99,9 @@ public class PantallaJuego extends Pantalla implements Observer {
          }
       }
 
+      g.setColor (Color.RED);
+      g.drawLine (0, getHeight () - Juego.ALTURA_MUERTE * getHeight () / Juego.TOTAL_X, getWidth (), getHeight ()
+            - Juego.ALTURA_MUERTE * getHeight () / Juego.TOTAL_X);
       // HUD
       new Hud (getJuego ()).dibujar (g, getWidth (), getHeight ());
 
@@ -113,7 +116,8 @@ public class PantallaJuego extends Pantalla implements Observer {
       g.setColor (Color.WHITE);
       g.setFont (fontarcade);
       if (getJuego ().getPreStart () > 0) {
-         g.drawString (getJuego ().getPreStart () + "", getWidth () / 2, getHeight () / 2);
+         g.drawString (getJuego ().getPreStart () + "", getWidth () / 2, getHeight () * 12 / 20);
+         g.drawString ("Nivel " + getJuego ().getNivel () + "!", getWidth () / 2 - getWidth () / 12, getHeight () / 2);
       } else if (getJuego ().getPreStart () == 0) {
          g.drawString ("START!", getWidth () / 2 - getWidth () / 15, getHeight () / 2);
       }
