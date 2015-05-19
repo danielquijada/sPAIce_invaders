@@ -22,6 +22,7 @@ import java.util.Observable;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -37,7 +38,7 @@ public class Menu extends Observable implements Estado {
 	private static final String EXIT = "Salir";
 	private ArrayList<String> opciones;
 	private int seleccionada;
-	private static Clip clip;
+	private static Clip musicaFondo;
 
 	private static Menu menu;
 
@@ -57,9 +58,7 @@ public class Menu extends Observable implements Estado {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#izquierda()
+	 * Este metodo no tiene funcionalidad en el menu
 	 */
 	@Override
 	public void izquierda() {
@@ -67,9 +66,7 @@ public class Menu extends Observable implements Estado {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#derecha()
+	 * Selecciona la opcion actual
 	 */
 	@Override
 	public void derecha() {
@@ -82,7 +79,8 @@ public class Menu extends Observable implements Estado {
     * 
     */
 	private void seleccionar() {
-		clip.stop();
+		musicaFondo.stop();
+		sonidoSeleccionarOpcion();
 		// TODO Añadir todas las opciones, o quitar las que no sean
 		// implementadas por ahora
 		switch (getOpciones().get(seleccionada)) {
@@ -100,12 +98,11 @@ public class Menu extends Observable implements Estado {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#arriba()
+	 * Mueve el selector a la opcion de arriba
 	 */
 	@Override
 	public void arriba() {
+		sonidoCambiarOpcion();
 		setSeleccionada((getSeleccionada() - 1 + getOpciones().size())
 				% getOpciones().size());
 		setChanged();
@@ -113,21 +110,18 @@ public class Menu extends Observable implements Estado {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#abajo()
+	 * Mueve el selector al a opcion de abajo
 	 */
 	@Override
 	public void abajo() {
+		sonidoCambiarOpcion();
 		setSeleccionada((getSeleccionada() + 1) % getOpciones().size());
 		setChanged();
 		notifyObservers();
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#accion()
+	 * Elige la opcion actual
 	 */
 	@Override
 	public void accion() {
@@ -137,9 +131,7 @@ public class Menu extends Observable implements Estado {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#salir()
+	 * Selecciona la opcion salir
 	 */
 	@Override
 	public void salir() {
@@ -148,6 +140,122 @@ public class Menu extends Observable implements Estado {
 		notifyObservers();
 	}
 
+	/*
+	 * Este metodo no tiene funcionalidad en el menu
+	 */
+	@Override
+	public void paraIzquierda() {
+		// Nada
+	}
+
+	/*
+	 * Este metodo no tiene funcionalidad en el menu
+	 */
+	@Override
+	public void paraDerecha() {
+		// Nada
+	}
+
+	/*
+	 * Este metodo no tiene funcionalidad en el menu
+	 */
+	@Override
+	public void paraArriba() {
+		// Nada
+	}
+
+	/*
+	 * Este metodo no tiene funcionalidad en el menu
+	 */
+	@Override
+	public void paraAbajo() {
+		// Nada
+	}
+
+	/*
+	 * Este metodo no tiene funcionalidad en el menu
+	 */
+	@Override
+	public void paraAccion() {
+		// Nada
+	}
+
+	/*
+	 * Este metodo no tiene funcionalidad en el menu
+	 */
+	@Override
+	public void paraSalir() {
+		// Nada
+	}
+
+
+	/**
+	 * Carga y reproduce la musica de fondo en el menu principal
+	 */
+	private void sonidoMenu() {
+		File soundFile = new File("./res/sounds/menusoundtrack.wav");
+		AudioInputStream audioIn;
+		
+		try {
+			audioIn = AudioSystem.getAudioInputStream(soundFile);
+			musicaFondo = AudioSystem.getClip();
+			musicaFondo.open(audioIn);
+			FloatControl gainControl = (FloatControl) musicaFondo.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(-15.0f); //Baja el volumen
+			musicaFondo.start();
+		} catch (UnsupportedAudioFileException | LineUnavailableException
+				| IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Reproduce un sonido al mover el selector
+	 */
+	private void sonidoCambiarOpcion() {
+		File soundFile = new File("./res/sounds/optionmove.wav");
+		AudioInputStream audioIn;
+		Clip clip;
+		
+		try {
+			audioIn = AudioSystem.getAudioInputStream(soundFile);
+			clip = AudioSystem.getClip();
+			clip.open(audioIn);
+			clip.start();
+		} catch (UnsupportedAudioFileException | LineUnavailableException
+				| IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Reproduce un sonido al elegir una opcion
+	 */
+	private void sonidoSeleccionarOpcion() {
+		File soundFile = new File("./res/sounds/optionselect.wav");
+		AudioInputStream audioIn;
+		Clip clip;
+		
+		try {
+			audioIn = AudioSystem.getAudioInputStream(soundFile);
+			clip = AudioSystem.getClip();
+			clip.open(audioIn);
+			clip.start();
+		} catch (UnsupportedAudioFileException | LineUnavailableException
+				| IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static Menu getMenu() {
+		return menu;
+	}
+
+	public static void setMenu(Menu menu) {
+		Menu.menu = menu;
+	}
+
+	
 	public ArrayList<String> getOpciones() {
 		return opciones;
 	}
@@ -162,88 +270,5 @@ public class Menu extends Observable implements Estado {
 
 	public void setSeleccionada(int seleccionada) {
 		this.seleccionada = seleccionada;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#paraIzquierda()
-	 */
-	@Override
-	public void paraIzquierda() {
-		// Nada
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#paraDerecha()
-	 */
-	@Override
-	public void paraDerecha() {
-		// Nada
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#paraArriba()
-	 */
-	@Override
-	public void paraArriba() {
-		// Nada
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#paraAbajo()
-	 */
-	@Override
-	public void paraAbajo() {
-		// Nada
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#paraAccion()
-	 */
-	@Override
-	public void paraAccion() {
-		// Nada
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelo.Estado#paraSalir()
-	 */
-	@Override
-	public void paraSalir() {
-		// Nada
-	}
-
-	public static Menu getMenu() {
-		return menu;
-	}
-
-	public static void setMenu(Menu menu) {
-		Menu.menu = menu;
-	}
-
-	private void sonidoMenu() {
-		File soundFile = new File("./res/sounds/menusoundtrack.wav");
-		AudioInputStream audioIn;
-		
-		try {
-			audioIn = AudioSystem.getAudioInputStream(soundFile);
-			clip = AudioSystem.getClip();
-			clip.open(audioIn);
-			clip.start();
-		} catch (UnsupportedAudioFileException | LineUnavailableException
-				| IOException e) {
-			e.printStackTrace();
-		}
 	}
 }
