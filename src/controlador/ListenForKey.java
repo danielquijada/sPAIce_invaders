@@ -66,7 +66,10 @@ public class ListenForKey implements KeyListener, Observer {
          getEstado ().accion ();
       } else if (e.getKeyCode () == KeyEvent.VK_ESCAPE) {
          getEstado ().salir ();
-      }
+      } else if (e.getKeyCode () == KeyEvent.VK_ENTER) {
+         getEstado ().accion ();
+      } 
+      
    }
 
    /*

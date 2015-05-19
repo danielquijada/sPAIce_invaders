@@ -38,24 +38,22 @@ public class Hud extends Pantalla{
 	private static final int OFFSET_Y_VIDAS = 20;
 	private static final int OFFSET_X_VIDAS = 60;
 
-	private static final int OFFSET_LINEAINFERIOR = 70;
 	private static final int SEPARACION = 20;
 	
 	private Font fontArcade = Fuentes.getArcadeFont().deriveFont(Font.PLAIN, 20);
 	private Font fontInvader = Fuentes.getInvadersFont().deriveFont(Font.PLAIN, 25);
 	private Font normal = new Font("Monospace",Font.PLAIN,20);
+	
 	public Hud(Juego juego) {
-		setJuego(juego);
-		
+		setJuego(juego);	
 	}
 
-	
 	public void dibujar(Graphics g, int width, int height) {
 		//Linea inferior
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setColor(Color.GREEN);
 		g2d.setStroke(new BasicStroke(3));
-		g2d.drawLine(8, height - OFFSET_LINEAINFERIOR, width - 10, height - OFFSET_LINEAINFERIOR);
+		g2d.drawLine(8, height - (height/10), width - 10, height - (height/10));
 		
 		g.setColor(Color.WHITE);
 		//Caracter especial
