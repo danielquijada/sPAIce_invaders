@@ -253,8 +253,10 @@ public class Juego extends Observable implements Estado {
 
       calcularColisiones ();
 
-      if (getNaves ().get (0).getVidas () == 0)
-         setGameOver (true);
+      if (getNaves ().get (0).getVidas () == 0) {
+    	  sonidoGameOver ();
+    	  setGameOver (true);
+      }
 
       setChanged ();
       notifyObservers ();
@@ -422,8 +424,10 @@ public class Juego extends Observable implements Estado {
             } else if (elemento.getTipo () == Enemigo.NODRIZA) {
                getNaves ().get (0).setPuntuacion (getNaves ().get (0).getPuntuacion () + 100);
             }
-            if (getEnemigos ().isEmpty () && getEnemigosEspeciales ().isEmpty ())
-               setWin (true);
+            if (getEnemigos ().isEmpty () && getEnemigosEspeciales ().isEmpty ()) {
+            	setWin (true);
+            	sonidoVictoria ();
+            }
          }
       }
    }
@@ -606,6 +610,44 @@ public class Juego extends Observable implements Estado {
       }
    }
 
+   /**
+    * Reproduce un sonido cuando muere la nave
+    */
+   private void sonidoGameOver () {
+	      File soundFile = new File ("./res/sounds/lost.wav");
+	      AudioInputStream audioIn;
+	      Clip clip;
+	      try {
+	         audioIn = AudioSystem.getAudioInputStream (soundFile);
+	         clip = AudioSystem.getClip ();
+	         clip.open (audioIn);
+	         clip.start ();
+	      } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+	         e.printStackTrace ();
+	      }
+	   }
+   
+   /**
+    * Reproduce un sonido cuando muere la nave
+    */
+   private void sonidoVictoria () {
+	      File soundFile = new File ("./res/sounds/win.wav");
+	      AudioInputStream audioIn;
+	      Clip clip;
+	      try {
+	         audioIn = AudioSystem.getAudioInputStream (soundFile);
+	         clip = AudioSystem.getClip ();
+	         clip.open (audioIn);
+	         clip.start ();
+	      } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+	         e.printStackTrace ();
+	      }
+	   }
+   
+   /**
+    * Reproduce el sonido de fondo.
+    * @param playing reproduce 1 de los 4 sonidas
+    */
    private void playFondo (int playing) {
       File soundFile1 = new File ("./res/sounds/playing1.wav");
       File soundFile2 = new File ("./res/sounds/playing2.wav");

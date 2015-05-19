@@ -62,8 +62,8 @@ public class Hud extends Pantalla{
 		g.drawString(":", width - 145, OFFSET_Y_STRING);
 		//Puntuacion y vidas
 		g.setFont(fontArcade);
-		g.drawString("PUNTOS   " + getJuego ().getNaves().get(0).getPuntuacion(), 10, OFFSET_Y_STRING);
-		g.drawString("VIDAS ", width - OFFSET_X_STRING, OFFSET_Y_STRING);
+		g.drawString("SCORE   " + getJuego ().getNaves().get(0).getPuntuacion(), 10, OFFSET_Y_STRING);
+		g.drawString("LIVES ", width - OFFSET_X_STRING, OFFSET_Y_STRING);
 	
 		g.setColor(Color.GREEN);	
 		g.setFont(fontInvader);
