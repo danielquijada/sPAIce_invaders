@@ -118,7 +118,7 @@ public class PantallaJuego extends Pantalla implements Observer {
       if (getJuego ().getPreStart () > 0) {
     	 g.drawString("BEWARE  THE  INVASION!", getWidth () / 2 - getWidth () / 3, getHeight() / 2 + getHeight () / 5); 
          g.drawString (getJuego ().getPreStart () + "", getWidth () / 2, getHeight () * 12 / 20);
-         g.drawString ("Nivel " + getJuego ().getNivel () + "!", getWidth () / 2 - getWidth () / 12, getHeight () / 2);
+         g.drawString ("Level " + getJuego ().getNivel () + "!", getWidth () / 2 - getWidth () / 12, getHeight () / 2);
       } else if (getJuego ().getPreStart () == 0) {
          g.drawString ("START!", getWidth () / 2 - getWidth () / 15, getHeight () / 2);
       }

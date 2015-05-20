@@ -31,6 +31,13 @@ public class Tabla implements Iterable {
    private int              ancho;
    private int              alto;
 
+   /**
+    * Crea la matriz de enemigos
+    * @param tamanioX filas
+    * @param tamanioY columnas
+    * @param totalX ancho de ventana
+    * @param totalY alto de ventana
+    */
    public Tabla (int tamanioX, int tamanioY, int totalX, int totalY) {
       setMatrizEnemigos (new Enemigo[tamanioX][tamanioY]);
       setAncho (tamanioX);
