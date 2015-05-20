@@ -71,8 +71,6 @@ public class Menu extends Observable implements Estado {
 	private void seleccionar() {
 		musicaFondo.stop();
 		sonidoSeleccionarOpcion();
-		// TODO Añadir todas las opciones, o quitar las que no sean
-		// implementadas por ahora
 		switch (getOpciones().get(seleccionada)) {
 		case NEW:
 			Juego.getInstance().nuevo();
@@ -90,7 +88,7 @@ public class Menu extends Observable implements Estado {
 		}
 	}
 
-	/*
+	/**
 	 * Selecciona la opcion actual
 	 */
 	@Override
@@ -100,7 +98,7 @@ public class Menu extends Observable implements Estado {
 		notifyObservers();
 	}
 
-	/*
+	/**
 	 * Mueve el selector a la opcion de arriba
 	 */
 	@Override
@@ -112,7 +110,7 @@ public class Menu extends Observable implements Estado {
 		notifyObservers();
 	}
 
-	/*
+	/**
 	 * Mueve el selector al a opcion de abajo
 	 */
 	@Override
@@ -123,7 +121,7 @@ public class Menu extends Observable implements Estado {
 		notifyObservers();
 	}
 
-	/*
+	/**
 	 * Elige la opcion actual
 	 */
 	@Override
@@ -133,7 +131,7 @@ public class Menu extends Observable implements Estado {
 		notifyObservers();
 	}
 
-	/*
+	/**
 	 * Selecciona la opcion salir
 	 */
 	@Override
@@ -143,7 +141,7 @@ public class Menu extends Observable implements Estado {
 		notifyObservers();
 	}
 
-	/*
+	/**
 	 * Este metodo no tiene funcionalidad en el menu
 	 */
 	@Override
@@ -151,7 +149,7 @@ public class Menu extends Observable implements Estado {
 		// No hace nada
 	}
 
-	/*
+	/**
 	 * Este metodo no tiene funcionalidad en el menu
 	 */
 	@Override
@@ -159,7 +157,7 @@ public class Menu extends Observable implements Estado {
 		// Nada
 	}
 
-	/*
+	/**
 	 * Este metodo no tiene funcionalidad en el menu
 	 */
 	@Override
@@ -167,7 +165,7 @@ public class Menu extends Observable implements Estado {
 		// Nada
 	}
 
-	/*
+	/**
 	 * Este metodo no tiene funcionalidad en el menu
 	 */
 	@Override
@@ -175,7 +173,7 @@ public class Menu extends Observable implements Estado {
 		// Nada
 	}
 
-	/*
+	/**
 	 * Este metodo no tiene funcionalidad en el menu
 	 */
 	@Override
@@ -183,7 +181,7 @@ public class Menu extends Observable implements Estado {
 		// Nada
 	}
 
-	/*
+	/**
 	 * Este metodo no tiene funcionalidad en el menu
 	 */
 	@Override
@@ -191,7 +189,7 @@ public class Menu extends Observable implements Estado {
 		// Nada
 	}
 
-	/*
+	/**
 	 * Este metodo no tiene funcionalidad en el menu
 	 */
 	@Override

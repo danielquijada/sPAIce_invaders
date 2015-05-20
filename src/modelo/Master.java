@@ -21,7 +21,7 @@ import vista.PantallaMenu;
 
 
 /**
- * TODO Descripción de la clase.
+ * Es la clase encargada de cambiar el estado y ceder protagonismo a la pantalla indicada
  */
 public class Master extends Observable {
 

@@ -59,7 +59,7 @@ public class Juego extends Observable implements Estado {
    private boolean                invadido;
    private int                    nivel;
 
-   private static final int       M                                      = 10;
+   private static final int       M                                      = 10;//Matriz de enemigos
    private static final int       N                                      = 6;
    public static final int        TOTAL_X                                = 1000;
    public static final int        TOTAL_Y                                = 1000;
@@ -98,6 +98,7 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
+    * Inicializacoin de la partida
     */
    public void nuevo (int nivel) {
       setEnemigos (new Tabla (M, N, TOTAL_X, TOTAL_Y - ALTURA_INICIAL_ENEMIGOS));
@@ -341,7 +342,7 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
-    * 
+    * Dispara un enemigo aleatorio de la primera fila
     */
    private void dispararTriangulares () {
       ArrayList<Enemigo> validos = obtenerEnemigos (Enemigo.TRIANGULAR);
@@ -352,7 +353,7 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
-    * 
+    * Dispara un enemigo aleatorio de las ultimas
     */
    private void dispararRedondos () {
       ArrayList<Enemigo> validos = obtenerEnemigos (Enemigo.REDONDO);
@@ -363,7 +364,7 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
-    * 
+    * Dispara un enemigo aleatorio de las fila centrales
     */
    private void dispararAntenas () {
       ArrayList<Enemigo> validos = obtenerEnemigos (Enemigo.ANTENAS);
@@ -503,7 +504,7 @@ public class Juego extends Observable implements Estado {
    }
 
    /**
-    * Mueve los proyectiles.
+    * Mueve los proyectiles y limpia los que esten fuera de la ventana.
     */
    private void moverProyectiles () {
       Iterator<Proyectil> iter = getProyectiles ().iterator ();
@@ -515,7 +516,7 @@ public class Juego extends Observable implements Estado {
       }
    }
 
-   /*
+   /**
     * Mueve la nave al presionar la tecla de movimiento
     */
    @Override
@@ -523,7 +524,7 @@ public class Juego extends Observable implements Estado {
       setDir (Juego.IZQUIERDA);
    }
 
-   /*
+   /**
     * Mueve la nave al presionar la tecla de movimiento
     */
    @Override
@@ -531,23 +532,23 @@ public class Juego extends Observable implements Estado {
       setDir (Juego.DERECHA);
    }
 
-   /*
+   /**
     * Este metodo no tiene funcionalidad en el juego
     */
    @Override
    public void arriba () {
    }
 
-   /*
+   /**
     * Este metodo no tiene funcionalidad en el juego
     */
    @Override
    public void abajo () {
    }
 
-   /*
-	 * 
-	 */
+   /**
+	* 
+	*/
    @Override
    public void accion () {
       if (isWin ()) {
@@ -566,7 +567,7 @@ public class Juego extends Observable implements Estado {
       setContadorDisparos (0);
    }
 
-   /*
+   /**
     * Cambia la pantalla al menu principal
     */
    @Override
@@ -574,7 +575,7 @@ public class Juego extends Observable implements Estado {
       Master.getInstance ().cambiarEstado (Master.MENU);
    }
 
-   /*
+   /**
     * Detiene la nave al soltar la tecla de movimiento
     */
    @Override
@@ -585,7 +586,7 @@ public class Juego extends Observable implements Estado {
 
    }
 
-   /*
+   /**
     * Detiene la nave al soltar la tecla de movimiento
     */
    @Override
@@ -595,28 +596,28 @@ public class Juego extends Observable implements Estado {
       }
    }
 
-   /*
+   /**
     * Este metodo no tiene funcionalidad en el juego
     */
    @Override
    public void paraArriba () {
    }
 
-   /*
+   /**
     * Este metodo no tiene funcionalidad en el juego
     */
    @Override
    public void paraAbajo () {
    }
 
-   /*
+   /**
     * Este metodo no tiene funcionalidad en el juego
     */
    @Override
    public void paraAccion () {
    }
 
-   /*
+   /**
     * Este metodo no tiene funcionalidad en el juego
     */
    @Override

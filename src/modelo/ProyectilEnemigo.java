@@ -15,7 +15,7 @@ package modelo;
 
 
 /**
- * TODO Descripción de la clase.
+ * Proyectiles disparados por el enemigo
  */
 public class ProyectilEnemigo extends ProyectilBasico {
 
