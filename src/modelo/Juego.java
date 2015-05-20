@@ -24,6 +24,7 @@ import java.util.Random;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JOptionPane;
@@ -643,6 +644,9 @@ public class Juego extends Observable implements Estado {
          audioIn = AudioSystem.getAudioInputStream (soundFile);
          clip = AudioSystem.getClip ();
          clip.open (audioIn);
+         FloatControl gainControl = (FloatControl) clip
+               .getControl(FloatControl.Type.MASTER_GAIN);
+         gainControl.setValue(-15.0f); // Baja el volumen
          clip.start ();
       } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
          e.printStackTrace ();
@@ -660,6 +664,9 @@ public class Juego extends Observable implements Estado {
          audioIn = AudioSystem.getAudioInputStream (soundFile);
          clip = AudioSystem.getClip ();
          clip.open (audioIn);
+         FloatControl gainControl = (FloatControl) clip
+               .getControl(FloatControl.Type.MASTER_GAIN);
+         gainControl.setValue(-15.0f); // Baja el volumen
          clip.start ();
       } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
          e.printStackTrace ();
@@ -677,6 +684,9 @@ public class Juego extends Observable implements Estado {
          audioIn = AudioSystem.getAudioInputStream (soundFile);
          clip = AudioSystem.getClip ();
          clip.open (audioIn);
+         FloatControl gainControl = (FloatControl) clip
+               .getControl(FloatControl.Type.MASTER_GAIN);
+         gainControl.setValue(-15.0f); // Baja el volumen
          clip.start ();
       } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
          e.printStackTrace ();
@@ -694,6 +704,9 @@ public class Juego extends Observable implements Estado {
          audioIn = AudioSystem.getAudioInputStream (soundFile);
          clip = AudioSystem.getClip ();
          clip.open (audioIn);
+         FloatControl gainControl = (FloatControl) clip
+               .getControl(FloatControl.Type.MASTER_GAIN);
+         gainControl.setValue(-10.0f); // Baja el volumen
          clip.start ();
       } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
          e.printStackTrace ();
@@ -711,6 +724,9 @@ public class Juego extends Observable implements Estado {
          audioIn = AudioSystem.getAudioInputStream (soundFile);
          clip = AudioSystem.getClip ();
          clip.open (audioIn);
+         FloatControl gainControl = (FloatControl) clip
+               .getControl(FloatControl.Type.MASTER_GAIN);
+         gainControl.setValue(-15.0f); // Baja el volumen
          clip.start ();
       } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
          e.printStackTrace ();
@@ -728,6 +744,9 @@ public class Juego extends Observable implements Estado {
          audioIn = AudioSystem.getAudioInputStream (soundFile);
          clip = AudioSystem.getClip ();
          clip.open (audioIn);
+         FloatControl gainControl = (FloatControl) clip
+               .getControl(FloatControl.Type.MASTER_GAIN);
+         gainControl.setValue(-15.0f); // Baja el volumen
          clip.start ();
       } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
          e.printStackTrace ();

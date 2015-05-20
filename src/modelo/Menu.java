@@ -230,6 +230,9 @@ public class Menu extends Observable implements Estado {
 			audioIn = AudioSystem.getAudioInputStream(soundFile);
 			clip = AudioSystem.getClip();
 			clip.open(audioIn);
+         FloatControl gainControl = (FloatControl) clip
+               .getControl(FloatControl.Type.MASTER_GAIN);
+         gainControl.setValue(-15.0f); // Baja el volumen
 			clip.start();
 		} catch (UnsupportedAudioFileException | LineUnavailableException
 				| IOException e) {
@@ -249,6 +252,9 @@ public class Menu extends Observable implements Estado {
 			audioIn = AudioSystem.getAudioInputStream(soundFile);
 			clip = AudioSystem.getClip();
 			clip.open(audioIn);
+         FloatControl gainControl = (FloatControl) clip
+               .getControl(FloatControl.Type.MASTER_GAIN);
+         gainControl.setValue(-15.0f); // Baja el volumen
 			clip.start();
 		} catch (UnsupportedAudioFileException | LineUnavailableException
 				| IOException e) {
