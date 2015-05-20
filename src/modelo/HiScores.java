@@ -70,13 +70,14 @@ public class HiScores implements Estado {
    }
 
    public boolean entra (int puntuacion) {
-      return getPuntuaciones ().size () < LIMITE || getPuntuaciones ().get (LIMITE) < puntuacion;
+      return getPuntuaciones ().size () < LIMITE || getPuntuaciones ().get (LIMITE - 1) < puntuacion;
    }
 
    public void add (int puntuacion, String nombre) {
+      nombre = nombre.replace (" ", "");
       if (nombre.length () > 3)
          nombre = nombre.substring (0, 3);
-      if (getPuntuaciones ().size () < LIMITE) {
+      if (getPuntuaciones ().size () < LIMITE || entra (puntuacion)) {
          int pos = buscarPosicion (puntuacion);
          if (pos < LIMITE) {
             if (getPuntuaciones ().size () < pos) {
@@ -86,9 +87,10 @@ public class HiScores implements Estado {
                getPuntuaciones ().add (pos, puntuacion);
                getJugadores ().add (pos, nombre);
             }
-            if (getPuntuaciones ().size () > LIMITE) {
-               getPuntuaciones ().remove (getPuntuaciones ().size ());
-               getJugadores ().remove (getJugadores ().size ());
+            for (int i = LIMITE; i < getPuntuaciones ().size (); i++) {
+               getPuntuaciones ().remove (i);
+               getJugadores ().remove (i);
+               i--;
             }
             try {
                guardar ();

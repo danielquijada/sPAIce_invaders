@@ -19,7 +19,7 @@ package modelo;
  */
 public class ProyectilEnemigo extends ProyectilBasico {
 
-   private static final int VELOCIDAD = 6;
+   private static final int VELOCIDAD = 12;
    /**
     * @param posX
     * @param posY

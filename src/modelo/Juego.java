@@ -59,7 +59,7 @@ public class Juego extends Observable implements Estado {
    private boolean                invadido;
    private int                    nivel;
 
-   private static final int       M                                      = 10;//Matriz de enemigos
+   private static final int       M                                      = 10;              // Matriz de enemigos
    private static final int       N                                      = 6;
    public static final int        TOTAL_X                                = 1000;
    public static final int        TOTAL_Y                                = 1000;
@@ -67,22 +67,23 @@ public class Juego extends Observable implements Estado {
    public static final int        ALTURA_SUELO                           = 50;
    public static final int        MARGEN_LATERAL                         = 40;
    public static final int        NAVES                                  = 1;
-   public static final int        VELOCIDAD_BASE                         = 5;
+   public static final int        VELOCIDAD_BASE                         = 10;
    public static final int        OVNI_SPAWN                             = 12000;
    public static final int        ALTURA_MUERTE                          = 300;
 
    public static final int        IZQUIERDA                              = 1;
    public static final int        DERECHA                                = 2;
    public static final int        INMOVIL                                = 0;
-   private static final int       MOVIMIENTO                             = 5;
-   private static final int       MOVIMIENTO_ENEMIGOS                    = 15;
-   private int                    retraso                                = 15;
-   private static final int       RETRASO_ENEMIGOS                       = 30;
-   private static final int       RETRASO_PRESTART                       = 60;
-   private static final int       RETRASO_DISPAROS_NAVE                  = 20;
-   private static final int       RETRASO_DISPAROS_ENEMIGOS_TRIANGULARES = 90;
-   private static final int       RETRASO_DISPAROS_ENEMIGOS_ANTENAS      = 300;
-   private static final int       RETRASO_DISPAROS_ENEMIGOS_REDONDOS     = 600;
+   private static final int       MOVIMIENTO                             = 10;
+   private static final int       MOVIMIENTO_ENEMIGOS                    = 20;
+   private int                    RETRASO_INICIAL                        = 30;
+   private int                    retraso                                = RETRASO_INICIAL;
+   private static final int       RETRASO_ENEMIGOS                       = 15;
+   private static final int       RETRASO_PRESTART                       = 30;
+   private static final int       RETRASO_DISPAROS_NAVE                  = 10;
+   private static final int       RETRASO_DISPAROS_ENEMIGOS_TRIANGULARES = 45;
+   private static final int       RETRASO_DISPAROS_ENEMIGOS_ANTENAS      = 150;
+   private static final int       RETRASO_DISPAROS_ENEMIGOS_REDONDOS     = 300;
    private static final double    AUMENTO                                = 0.20;
 
    /**
@@ -115,7 +116,7 @@ public class Juego extends Observable implements Estado {
       setNivel (nivel);
 
       setGameOver (false);
-      int retraso = (int) (getRetraso () * (1 - (AUMENTO * (nivel - 1))));
+      int retraso = (int) (RETRASO_INICIAL * (1 - (AUMENTO * (nivel))));
       Timer bucleJuego = new Timer (retraso, new OyenteTimers ());
       setBucleJuego (bucleJuego);
    }
@@ -264,7 +265,10 @@ public class Juego extends Observable implements Estado {
 
       moverProyectiles ();
       moverOvnis ();
-      if (getContadorMovimientoEnemigos () == RETRASO_ENEMIGOS) {
+      if (getEnemigos ().quedaUno () && getContadorMovimientoEnemigos () == RETRASO_ENEMIGOS / 3) {
+         setContadorMovimientoEnemigos (0);
+         moverEnemigos ();
+      } else if (getContadorMovimientoEnemigos () == RETRASO_ENEMIGOS) {
          setContadorMovimientoEnemigos (0);
          moverEnemigos ();
       } else {
@@ -454,6 +458,10 @@ public class Juego extends Observable implements Estado {
          proyectil.setColision (proyectil.getColision () - a);
          elemento.setColision (elemento.getColision () - a);
 
+         if (elemento instanceof Nave) {
+            sonidoPerderVida (); // Si la posicion del proyectil esta en el rango de impacto reproduce un sonido
+            NaveBasicaDibujable.setHit (true);
+         }
 
          if (elemento.getColision () <= 0) {
             if (elemento.getTipo () == Enemigo.TRIANGULAR) {
@@ -492,13 +500,13 @@ public class Juego extends Observable implements Estado {
       Rectangle element = new Rectangle (elemento.getX (), elemento.getY (), elemento.getSize ().x,
             elemento.getSize ().y);
 
-      if ((proyectil.getX () > getNaves ().get (0).getX ())
-            && (proyectil.getX () < getNaves ().get (0).getX () + getNaves ().get (0).getSize ().x)) {
-         if (proyectil.getY () > getNaves ().get (0).getY () - 10) {
-            sonidoPerderVida (); // Si la posicion del proyectil esta en el rango de impacto reproduce un sonido
-            NaveBasicaDibujable.setHit (true);
-         }
-      }
+      // if ((proyectil.getX () > getNaves ().get (0).getX ())
+      // && (proyectil.getX () < getNaves ().get (0).getX () + getNaves ().get (0).getSize ().x)) {
+      // if (proyectil.getY () > getNaves ().get (0).getY () - 10) {
+      // sonidoPerderVida (); // Si la posicion del proyectil esta en el rango de impacto reproduce un sonido
+      // NaveBasicaDibujable.setHit (true);
+      // }
+      // }
 
       return proyect.intersects (element);
    }
@@ -893,7 +901,8 @@ public class Juego extends Observable implements Estado {
       this.gameOver = gameOver;
       if (gameOver) {
          if (HiScores.getInstance ().entra (getNaves ().get (0).getPuntuacion ())) {
-            String nombre = JOptionPane.showInputDialog ("Has hecho una Puntuacion Alta! Introduce tu nombre (3 letras):");
+            String nombre = JOptionPane
+                  .showInputDialog ("Has hecho una Puntuacion Alta! Introduce tu nombre (3 letras):");
             HiScores.getInstance ().add (getNaves ().get (0).getPuntuacion (), nombre);
          }
       }

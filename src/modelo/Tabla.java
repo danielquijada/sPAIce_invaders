@@ -117,13 +117,17 @@ public class Tabla implements Iterable {
       return limite;
    }
 
+   public boolean quedaUno () {
+      return arriba ().equals (abajo ()) && izquierda ().equals (derecha ());
+   }
+   
    public Enemigo arriba () {
       Iterator<Enemigo> iter = this.iterator ();
       Enemigo limite = iter.next ();
       while (iter.hasNext ()) {
          Enemigo aux = iter.next ();
 
-         if (aux.isVivo () && aux.getY () < limite.getY ()) {
+         if (!limite.isVivo () || (aux.isVivo () && aux.getY () < limite.getY ())) {
             limite = aux;
          }
       }
@@ -135,7 +139,7 @@ public class Tabla implements Iterable {
       Enemigo limite = iter.next ();
       while (iter.hasNext ()) {
          Enemigo aux = iter.next ();
-         if (aux.isVivo () && aux.getY () > limite.getY ()) {
+         if (!limite.isVivo () || (aux.isVivo () && aux.getY () > limite.getY ())) {
             limite = aux;
          }
       }

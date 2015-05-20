@@ -20,7 +20,7 @@ package modelo;
 public class ProyectilBasico extends Proyectil {
 
    public static final int DAMAGE    = 1;
-   public static final int VELOCIDAD = -12;
+   public static final int VELOCIDAD = -24;
    public static final int TAMX      = 10;
    public static final int TAMY      = 10;
 
