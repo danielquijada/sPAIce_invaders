@@ -15,6 +15,7 @@ package modelo;
 
 import java.util.Observable;
 import vista.Pantalla;
+import vista.PantallaHiScores;
 import vista.PantallaJuego;
 import vista.PantallaMenu;
 
@@ -31,6 +32,7 @@ public class Master extends Observable {
    
    public static final int MENU = 0;
    public static final int JUEGO = 1;
+   public static final int HISCORES = 2;
    
    public static final int ESTADO_INICIAL = MENU;
    
@@ -52,6 +54,9 @@ public class Master extends Observable {
             ((Juego)getEstado ()).getBucleJuego ().start ();
             setPantalla (PantallaJuego.getInstance ());
             break;
+         case HISCORES:
+            setEstado (HiScores.getInstance ());
+            setPantalla (PantallaHiScores.getInstance ());
       }
       setChanged ();
       notifyObservers ();

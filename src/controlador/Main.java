@@ -15,6 +15,7 @@
 package controlador;
 
 import modelo.Fuentes;
+import modelo.HiScores;
 import modelo.Juego;
 import modelo.Master;
 import modelo.Menu;
@@ -38,6 +39,7 @@ public class Main {
       juego.addObserver (PantallaJuego.getInstance ());
       Menu.getInstance ().addObserver (PantallaMenu.getInstance ());
       ventanaJuego.setVisible (true);
+      HiScores.getInstance ();
    }
 
 

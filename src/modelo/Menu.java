@@ -34,7 +34,7 @@ public class Menu extends Observable implements Estado {
 
 	private static final String NEW = "Nuevo Juego";
 	private static final String LOAD = "Continuar";
-	private static final String OPC = "Opciones";
+	private static final String HIS = "High Scores";
 	private static final String EXIT = "Salir";
 	private ArrayList<String> opciones;
 	private int seleccionada;
@@ -50,7 +50,8 @@ public class Menu extends Observable implements Estado {
 		setSeleccionada(0);
 		setOpciones(new ArrayList<String>());
 		getOpciones().add(NEW);
-		getOpciones().add(LOAD);
+      getOpciones().add(LOAD);
+      getOpciones().add(HIS);
 		getOpciones().add(EXIT);
 	}
 
@@ -77,9 +78,12 @@ public class Menu extends Observable implements Estado {
 			Juego.getInstance().nuevo();
 			Master.getInstance().cambiarEstado(Master.JUEGO);
 			break;
-		case LOAD:
-			Master.getInstance().cambiarEstado(Master.JUEGO);
-			break;
+      case LOAD:
+         Master.getInstance().cambiarEstado(Master.JUEGO);
+         break;
+      case HIS:
+         Master.getInstance().cambiarEstado(Master.HISCORES);
+         break;
 		case EXIT:
 			System.exit(0);
 			break;

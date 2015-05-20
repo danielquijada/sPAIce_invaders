@@ -26,6 +26,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import vista.EnemigoBasicoDibujable;
 import vista.NaveBasicaDibujable;
@@ -78,7 +79,7 @@ public class Juego extends Observable implements Estado {
    private int                    retraso                                = 15;
    private static final int       RETRASO_ENEMIGOS                       = 30;
    private static final int       RETRASO_PRESTART                       = 60;
-   private static final int       RETRASO_DISPAROS_NAVE                  = 1;
+   private static final int       RETRASO_DISPAROS_NAVE                  = 20;
    private static final int       RETRASO_DISPAROS_ENEMIGOS_TRIANGULARES = 90;
    private static final int       RETRASO_DISPAROS_ENEMIGOS_ANTENAS      = 300;
    private static final int       RETRASO_DISPAROS_ENEMIGOS_REDONDOS     = 600;
@@ -100,13 +101,14 @@ public class Juego extends Observable implements Estado {
     */
    public void nuevo (int nivel) {
       setEnemigos (new Tabla (M, N, TOTAL_X, TOTAL_Y - ALTURA_INICIAL_ENEMIGOS));
-      inicializarNaves (NAVES);
+      if (nivel == 1)
+         inicializarNaves (NAVES);
       setProyectiles (new ArrayList<Proyectil> ());
       setEnemigosEspeciales (new ArrayList<EnemigoOvni> ());
       setEstadoEnemigos (1);
       setDireccionEnemigos (IZQUIERDA);
       setOvniTimer (0);
-      setPreStart (3);
+      setPreStart (2 + nivel);
       setWin (false);
       setInvadido (false);
       setNivel (nivel);
@@ -888,6 +890,12 @@ public class Juego extends Observable implements Estado {
     */
    public void setGameOver (boolean gameOver) {
       this.gameOver = gameOver;
+      if (gameOver) {
+         if (HiScores.getInstance ().entra (getNaves ().get (0).getPuntuacion ())) {
+            String nombre = JOptionPane.showInputDialog ("Has hecho una Puntuacion Alta! Introduce tu nombre (3 letras):");
+            HiScores.getInstance ().add (getNaves ().get (0).getPuntuacion (), nombre);
+         }
+      }
    }
 
 

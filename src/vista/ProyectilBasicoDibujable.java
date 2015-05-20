@@ -11,6 +11,7 @@
  *    Francisco J. Palacios Rodríguez.
  *    Héctor Rodríguez Pérez
  */
+
 package vista;
 
 import java.awt.Color;
@@ -20,11 +21,13 @@ import java.awt.Graphics;
 /**
  * Representa los proyectiles dibujables.
  */
-public  class ProyectilBasicoDibujable extends InerteDibujable {
+public class ProyectilBasicoDibujable extends InerteDibujable {
 
-	   @Override
-	   public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
-		 g.setColor(Color.WHITE);
-         g.fillRect (x, y, tamX, tamY);
-	   }
+   @Override
+   public void dibujar (Graphics g, int x, int y, int tamX, int tamY) {
+      g.setColor (Color.WHITE);
+      g.fillRect (x, y, tamX, tamY);
+      g.setColor (Color.BLACK);
+      g.drawRect (x, y, tamX, tamY);
+   }
 }
